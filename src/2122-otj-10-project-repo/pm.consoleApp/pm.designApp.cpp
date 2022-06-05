@@ -22,6 +22,25 @@ namespace pm::designApp
 			pm::tools::consoleCoordinates(x, y + 6);
 			cout << "|_|            (__/                                             (_____|            " << endl;
 		}
+
+		// Function for output login menu title in a current position
+		void loginTitle(int x, int y)
+		{
+			pm::tools::consoleCoordinates(x, y);
+			cout << " _             _                      " << endl;
+			pm::tools::consoleCoordinates(x, y + 1);
+			cout << "| |           (_)                     " << endl;
+			pm::tools::consoleCoordinates(x, y + 2);
+			cout << "| | ___   ____ _ ____      ____  ___  " << endl;
+			pm::tools::consoleCoordinates(x, y + 3);
+			cout << "| |/ _ \\ / _  | |  _ \\    / _  |/___) " << endl;
+			pm::tools::consoleCoordinates(x, y + 4);
+			cout << "| | |_| ( ( | | | | | |  ( ( | |___ | " << endl;
+			pm::tools::consoleCoordinates(x, y + 5);
+			cout << "|_|\\___/ \\_|| |_|_| |_|   \\_||_(___/  " << endl;
+			pm::tools::consoleCoordinates(x, y + 6);
+			cout << "        (_____|                       " << endl;
+		}
 	}
 
 	namespace buttons
@@ -100,10 +119,46 @@ namespace pm::designApp
 				buttons::active::buttonLogin(56, 37, "     EXIT    ", 0, 3);
 			}
 		}
+
+		namespace login
+		{
+			// Function for output first activ login menu button
+			void firstActive()
+			{
+				pm::tools::outputBorder(16, 8, 37);
+				titles::loginTitle(47, 13);
+				buttons::active::buttonLogin(55, 23, "    ADMIN    ", 0, 6);
+				buttons::inactive::buttonLogin(55, 28, "     USER    ");
+				buttons::inactive::buttonLogin(55, 33, "     EXIT    ");
+			}
+
+			// Function for output second activ login menu button
+			void secondActive()
+			{
+				pm::tools::outputBorder(16, 8, 37);
+				titles::loginTitle(47, 13);
+				buttons::inactive::buttonLogin(55, 23, "    ADMIN    ");
+				buttons::active::buttonLogin(55, 28, "     USER    ", 0, 6);
+				buttons::inactive::buttonLogin(55, 33, "     EXIT    ");
+			}
+
+			// Function for output third activ login menu button
+			void thirdActive()
+			{
+				pm::tools::outputBorder(16, 8, 37);
+				titles::loginTitle(47, 13);
+				buttons::inactive::buttonLogin(55, 23, "    ADMIN    ");
+				buttons::inactive::buttonLogin(55, 28, "     USER    ");
+				buttons::active::buttonLogin(55, 33, "     EXIT    ", 0, 6);
+			}
+		}
 	}
 
 	namespace menus
 	{
+		
+		void loginMenu(); // Function prototype
+
 		// Function for movement in main Menu
 		void menu()
 		{
@@ -190,6 +245,7 @@ namespace pm::designApp
 						{
 							system("CLS");
 							choice = 5;
+							loginMenu();
 							break;
 						}
 						case 2:
@@ -219,6 +275,103 @@ namespace pm::designApp
 							break;
 						}
 						}
+					}
+					break;
+				default:
+					break;
+				}
+			}
+		}
+
+		// Function for movement login menu
+		void loginMenu()
+		{
+			int choice;
+			system("CLS");
+			buttons::login::firstActive();
+			choice = 1;
+			while (true) {
+				switch (_getch()) {
+				case KEY_UP:
+					switch (choice)
+					{
+					case 1:
+					{
+						system("CLS");
+						buttons::login::thirdActive();
+						choice = 3;
+						break;
+					}
+					case 2:
+					{
+						system("CLS");
+						buttons::login::firstActive();
+						choice = 1;
+						break;
+					}
+					case 3:
+					{
+						system("CLS");
+						buttons::login::secondActive();
+						choice = 2;
+						break;
+					}
+					}
+					break;
+				case KEY_DOWN:
+					switch (choice)
+					{
+					case 1:
+					{
+						system("CLS");
+						buttons::login::secondActive();
+						choice = 2;
+						break;
+					}
+					case 2:
+					{
+						system("CLS");
+						buttons::login::thirdActive();
+						choice = 3;
+						break;
+					}
+					case 3:
+					{
+						system("CLS");
+						buttons::login::firstActive();
+						choice = 1;
+						break;
+					}
+					}
+					break;
+				case KEY_ENTER:
+					switch (choice)
+					{
+					case 1:
+					{
+						Sleep(200);
+						system("CLS");
+						choice = 4;
+						break;
+					}
+					case 2:
+					{
+						system("CLS");
+						choice = 4;
+						break;
+					}
+					case 3:
+					{
+						return;
+						break;
+					}
+					case 4:
+					{
+						system("CLS");
+						choice = 1;
+						buttons::login::firstActive();
+						break;
+					}
 					}
 					break;
 				default:
