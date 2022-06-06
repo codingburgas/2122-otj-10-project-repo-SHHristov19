@@ -78,7 +78,7 @@ namespace pm::designApp
 			// Function for output first activ main menu button
 			void firstActive()
 			{
-				pm::tools::outputBorder(16, 3, 42);
+				pm::tools::outputBorder(16, 3, 39);
 				titles::projectManagerMenu(25, 7);
 				buttons::active::buttonLogin(56, 19, "    LOGIN    ", 0, 3);
 				buttons::inactive::buttonLogin(56, 25, "   REGISTER  ");
@@ -89,7 +89,7 @@ namespace pm::designApp
 			// Function for output second activ main menu button
 			void secondActive()
 			{
-				pm::tools::outputBorder(16, 3, 42);
+				pm::tools::outputBorder(16, 3, 39);
 				titles::projectManagerMenu(25, 7);
 				buttons::inactive::buttonLogin(56, 19, "    LOGIN    ");
 				buttons::active::buttonLogin(56, 25, "   REGISTER  ", 0, 3);
@@ -100,7 +100,7 @@ namespace pm::designApp
 			// Function for output third activ main menu button
 			void thirdActive()
 			{
-				pm::tools::outputBorder(16, 3, 42);
+				pm::tools::outputBorder(16, 3, 39);
 				titles::projectManagerMenu(25, 7);
 				buttons::inactive::buttonLogin(56, 19, "    LOGIN    ");
 				buttons::inactive::buttonLogin(56, 25, "   REGISTER  ");
@@ -111,7 +111,7 @@ namespace pm::designApp
 			// Function for output fourth activ main menu button
 			void fourthActive()
 			{
-				pm::tools::outputBorder(16, 3, 42);
+				pm::tools::outputBorder(16, 3, 39);
 				titles::projectManagerMenu(25, 7);
 				buttons::inactive::buttonLogin(56, 19, "    LOGIN    ");
 				buttons::inactive::buttonLogin(56, 25, "   REGISTER  ");
@@ -125,7 +125,7 @@ namespace pm::designApp
 			// Function for output first activ login menu button
 			void firstActive()
 			{
-				pm::tools::outputBorder(16, 8, 37);
+				pm::tools::outputBorder(16, 8, 29);
 				titles::loginTitle(47, 13);
 				buttons::active::buttonLogin(55, 23, "    ADMIN    ", 0, 6);
 				buttons::inactive::buttonLogin(55, 28, "     USER    ");
@@ -135,7 +135,7 @@ namespace pm::designApp
 			// Function for output second activ login menu button
 			void secondActive()
 			{
-				pm::tools::outputBorder(16, 8, 37);
+				pm::tools::outputBorder(16, 8, 29);
 				titles::loginTitle(47, 13);
 				buttons::inactive::buttonLogin(55, 23, "    ADMIN    ");
 				buttons::active::buttonLogin(55, 28, "     USER    ", 0, 6);
@@ -145,7 +145,7 @@ namespace pm::designApp
 			// Function for output third activ login menu button
 			void thirdActive()
 			{
-				pm::tools::outputBorder(16, 8, 37);
+				pm::tools::outputBorder(16, 8, 29);
 				titles::loginTitle(47, 13);
 				buttons::inactive::buttonLogin(55, 23, "    ADMIN    ");
 				buttons::inactive::buttonLogin(55, 28, "     USER    ");
@@ -154,9 +154,39 @@ namespace pm::designApp
 		}
 	}
 
+	namespace windows
+	{
+		// Function for output login window as user
+		void loginAsUser()
+		{
+			pm::tools::outputBorder(16, 13, 20);
+			string username, firstName, lastName, password;
+			int age;
+			pm::tools::consoleCoordinates(50, 18);
+			cout << "Username : ";
+			pm::tools::consoleCoordinates(50, 21);
+			cout << "First name : ";
+			pm::tools::consoleCoordinates(50, 24);
+			cout << "Last name : ";
+			pm::tools::consoleCoordinates(50, 27);
+			cout << "Age : ";
+			pm::tools::consoleCoordinates(50, 30);
+			cout << "Password : ";
+			pm::tools::consoleCoordinates(61, 18);
+			cin >> username;
+			pm::tools::consoleCoordinates(63, 21);
+			cin >> firstName;
+			pm::tools::consoleCoordinates(62, 24);
+			cin >> lastName;
+			pm::tools::consoleCoordinates(56, 27);
+			cin >> age;
+			pm::tools::consoleCoordinates(61, 30);
+			cin >> password;
+		}
+	}
+
 	namespace menus
 	{
-		
 		void loginMenu(); // Function prototype
 
 		// Function for movement in main Menu

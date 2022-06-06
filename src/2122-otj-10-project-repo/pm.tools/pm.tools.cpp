@@ -25,7 +25,7 @@ namespace pm::tools
     {
         consoleCoordinates(x, y);
         cout << "_____________________________________________________________________________________________________" << endl;
-        while (y != end)
+        for(int i = 0; i < end; i++)
         {
             y++;
             consoleCoordinates(x, y);

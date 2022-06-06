@@ -64,6 +64,12 @@ namespace pm::designApp
 		}
 	}
 
+	namespace windows
+	{
+		// Function for output login window as user
+		void loginAsUser();
+	}
+
 	namespace menus
 	{
 		// Function for movement in main Menu
