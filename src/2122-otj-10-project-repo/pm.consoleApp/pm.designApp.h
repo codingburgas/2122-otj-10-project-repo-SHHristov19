@@ -17,9 +17,6 @@ namespace pm::designApp
 	{
 		// Function for output main menu title in a current position
 		void projectManagerMenu(int, int);
-
-		// Function for output login menu title in a current position
-		void loginTitle(int, int);
 	}
 
 	namespace buttons
@@ -50,32 +47,17 @@ namespace pm::designApp
 			// Function for output fourth activ main menu button
 			void fourthActive();
 		}
-
-		namespace login
-		{
-			// Function for output first activ login menu button
-			void firstActive();
-
-			// Function for output second activ login menu button
-			void secondActive();
-
-			// Function for output third activ login menu button
-			void thirdActive();
-		}
 	}
 
 	namespace windows
 	{
 		// Function for output login window as user
-		void loginAsUser();
+		void login();
 	}
 
 	namespace menus
 	{
 		// Function for movement in main Menu
 		void menu();
-
-		// Function for movement login menu
-		void loginMenu();
 	}
 }
