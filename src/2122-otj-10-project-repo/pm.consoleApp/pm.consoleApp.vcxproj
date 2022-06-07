@@ -142,6 +142,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="pm.consoleApp.cpp" />
+    <ClCompile Include="pm.designApp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\pm.bll\pm.bll.vcxproj">
@@ -156,6 +157,9 @@
     <ProjectReference Include="..\pm.types\pm.types.vcxproj">
       <Project>{5506118c-432c-42ce-a7ac-5a3d67d09e92}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pm.designApp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

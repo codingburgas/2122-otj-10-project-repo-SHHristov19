@@ -1,9 +1,38 @@
-// pm.tools.cpp : Defines the functions for the static library.
-//
-
 #include "pch.h"
+#include "pm.tools.h"
 
-// TODO: This is an example of a library function
-void fnpmtools()
+namespace pm::tools
 {
+    // Function for displaying text in given console coordinates
+    void consoleCoordinates(int x, int y)
+    {
+        COORD c;
+        c.X = x;
+        c.Y = y;
+
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), c);
+    }
+
+    // Function for outputing the console in given size
+    void setConsoleSize()
+    {
+        HWND console = GetConsoleWindow();
+        MoveWindow(console, 200, 10, 1100, 810, TRUE);
+    }
+
+    // Function for output border with set length
+    void outputBorder(int x, int y, int end)
+    {
+        consoleCoordinates(x, y);
+        cout << "_____________________________________________________________________________________________________" << endl;
+        for(int i = 0; i < end; i++)
+        {
+            y++;
+            consoleCoordinates(x, y);
+            cout << "|                                                                                                   |" << endl;
+        }
+        y++;
+        consoleCoordinates(x, y);
+        cout << "|___________________________________________________________________________________________________|" << endl;
+    }
 }

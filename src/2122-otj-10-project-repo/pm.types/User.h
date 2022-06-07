@@ -3,14 +3,13 @@
 
 namespace pm::types
 {
-	struct User
+	struct USER
 	{
 		size_t id;
+		std::string username;
 		std::string firstName;
 		std::string lastName;
-		std::string email;
-		unsigned short age;
+		uint8_t age;
 		std::string passwordHash;
-		std::tm createdOn;
 	};
 }

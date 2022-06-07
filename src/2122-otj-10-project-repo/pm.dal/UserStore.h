@@ -6,13 +6,15 @@
 
 namespace pm::dal
 {
-	struct UserStore
+	// CRUD - CREATE, READ, UPDATE, DELETE
+
+	struct USER_STORE
 	{
-		void create(pm::types::User user);
-		std::vector <pm::types::User> getAll();
-		void remove(size_t id);
-		void update(pm::types::User user);
-		pm::types::User getById(size_t id);
-		pm::types::User getByEmail(std::string email);
+		void create(pm::types::USER& user);
+		pm::types::USER getById(size_t id);
+		pm::types::USER getByEmail(std::string email);
+		std::vector<pm::types::USER> getAll();
+		void remove(size_t);
+		void update(pm::types::USER user);
 	};
 }

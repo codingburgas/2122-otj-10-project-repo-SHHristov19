@@ -1,6 +1,8 @@
 #include <iostream>
+#include "pm.designApp.h"
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    pm::tools::setConsoleSize();
+    pm::designApp::menus::menu();
 }
