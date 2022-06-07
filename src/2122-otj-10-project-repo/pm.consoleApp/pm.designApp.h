@@ -53,6 +53,9 @@ namespace pm::designApp
 	{
 		// Function for output login window as user
 		void login();
+
+		// Function for output login window as user
+		void registerUser();
 	}
 
 	namespace menus

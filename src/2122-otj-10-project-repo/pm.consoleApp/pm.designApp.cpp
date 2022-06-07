@@ -107,6 +107,21 @@ namespace pm::designApp
 		// Function for output login window as user
 		void login()
 		{
+			pm::tools::outputBorder(24, 17, 13);
+			string username, password;
+			pm::tools::consoleCoordinates(51, 22);
+			cout << "Enter your username : ";
+			pm::tools::consoleCoordinates(51, 25);
+			cout << "Enter your password : ";
+			pm::tools::consoleCoordinates(73, 22);
+			cin >> username;
+			pm::tools::consoleCoordinates(73, 25);
+			cin >> password;
+		}
+
+		// Function for output register windows
+		void registerUser()
+		{
 			pm::tools::outputBorder(24, 13, 20);
 			string username, firstName, lastName, password;
 			int age;
@@ -228,6 +243,7 @@ namespace pm::designApp
 						{
 							system("CLS");
 							choice = 5;
+							windows::registerUser();
 							break;
 						}
 						case 3:
