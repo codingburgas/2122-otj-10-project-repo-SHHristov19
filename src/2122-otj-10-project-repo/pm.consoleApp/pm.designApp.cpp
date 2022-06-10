@@ -1,4 +1,5 @@
 #include "pm.designApp.h"
+#include "../pm.dal/pm.dal.h"
 
 namespace pm::designApp
 {
@@ -104,6 +105,69 @@ namespace pm::designApp
 
 	namespace windows
 	{
+		namespace warnings
+		{
+			// Function for output successfully Login windows on given position
+			void successfullyLogin(int x, int y)
+			{
+				pm::tools::consoleCoordinates(x, y);
+				cout << "\x1b[0;32m" << "                       ___________                        " << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 1);
+				cout << "\x1b[0;32m" << "                     /         __  \\                      " << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 2);
+				cout << "\x1b[0;32m" << "                    |         / /   |                     " << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 3);
+				cout << "\x1b[0;32m" << "                   |   __    / /     |                    " << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 4);
+				cout << "\x1b[0;32m" << "                  |    \\ \\  / /       |                   " << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 5);
+				cout << "\x1b[0;32m" << "                   |    \\ \\/ /       |                    " << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 6);
+				cout << "\x1b[0;32m" << "                    |    \\__/       |                     " << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 7);
+				cout << "\x1b[0;32m" << "                     \\ ___________ /                      " << "\x1b[1;37m" << endl << endl;
+				pm::tools::consoleCoordinates(x, y + 9);
+				cout << " _         _                                    ___     _ " << endl;
+				pm::tools::consoleCoordinates(x, y + 10);
+				cout << "| |___ ___|_|___    ___ _ _ ___ ___ ___ ___ ___|  _|_ _| |" << endl;
+				pm::tools::consoleCoordinates(x, y + 11);
+				cout << "| | . | . | |   |  |_ -| | |  _|  _| -_|_ -|_ -|  _| | | |" << endl;
+				pm::tools::consoleCoordinates(x, y + 12);
+				cout << "|_|___|_  |_|_|_|  |___|___|___|___|___|___|___|_| |___|_|" << endl;
+				pm::tools::consoleCoordinates(x, y + 13);
+				cout << "      |___|                                               " << endl;
+			}
+
+			// Function for output try again windows on given position
+			void tryAgain(int x, int y)
+			{
+				pm::tools::consoleCoordinates(x, y);
+				cout << "\x1b[1;31m" << "            ____________          " << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 1);
+				cout << "\x1b[1;31m" << "           /  __   __   \\         " << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 2);
+				cout << "\x1b[1;31m" << "          |   \\ \\ / /    |        " << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 3);
+				cout << "\x1b[1;31m" << "         |     \\   /      |       " << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 4);
+				cout << "\x1b[1;31m" << "         |     / /\\ \\     |       " << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 5);
+				cout << "\x1b[1;31m" << "          |   /_/  \\_\\   |        " << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 6);
+				cout << "\x1b[1;31m" << "           \\____________/         " << "\x1b[1;37m" << endl << endl;
+				pm::tools::consoleCoordinates(x, y + 7);
+				cout << " _                          _     " << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 8);
+				cout << "| |_ ___ _ _    ___ ___ ___|_|___ " << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 9);
+				cout << "|  _|  _| | |  | .'| . | .'| |   |" << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 10);
+				cout << "|_| |_| |_  |  |__,|_  |__,|_|_|_|" << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 11);
+				cout << "        |___|      |___|          " << "\x1b[1;37m" << endl;
+			}
+		}
+
 		// Function for output login window as user
 		void login()
 		{
@@ -117,6 +181,20 @@ namespace pm::designApp
 			cin >> username;
 			pm::tools::consoleCoordinates(73, 25);
 			cin >> password;
+			if (pm::dal::loginAsFirst(username, password))
+			{
+				system("CLS");
+				pm::tools::outputBorder(24, 14, 17);
+				warnings::successfullyLogin(46, 17);
+				Sleep(1500);
+			}
+			else
+			{
+				system("CLS");
+				pm::tools::outputBorder(24, 14, 17);
+				warnings::tryAgain(56, 18);
+				Sleep(1500);
+			}
 		}
 
 		// Function for output register windows

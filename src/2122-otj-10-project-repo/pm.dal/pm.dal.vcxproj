@@ -154,6 +154,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="pm.dal.h" />
     <ClInclude Include="UserStore.h" />
   </ItemGroup>
   <ItemGroup>
@@ -165,6 +166,9 @@
     </ClCompile>
     <ClCompile Include="pm.dal.cpp" />
     <ClCompile Include="UserStore.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\pm.data\users.csv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

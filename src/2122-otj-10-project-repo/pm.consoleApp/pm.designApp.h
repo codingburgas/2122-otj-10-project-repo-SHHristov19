@@ -51,6 +51,15 @@ namespace pm::designApp
 
 	namespace windows
 	{
+		namespace warnings
+		{
+			// Function for output successfully Login windows on given position
+			void successfullyLogin(int, int);
+
+			// Function for output try again windows on given position
+			void tryAgain(int, int);
+		}
+
 		// Function for output login window as user
 		void login();
 

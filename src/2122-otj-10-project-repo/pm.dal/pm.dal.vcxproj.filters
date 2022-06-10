@@ -21,6 +21,9 @@
     <ClInclude Include="UserStore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="pm.dal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pm.dal.cpp">
@@ -32,5 +35,10 @@
     <ClCompile Include="UserStore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\pm.data\users.csv">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
