@@ -154,6 +154,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="pm.bll.h" />
     <ClInclude Include="UserManager.h" />
   </ItemGroup>
   <ItemGroup>

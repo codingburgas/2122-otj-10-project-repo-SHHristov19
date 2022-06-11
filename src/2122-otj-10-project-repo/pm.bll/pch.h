@@ -8,8 +8,8 @@
 #define PCH_H
 
 #include <iostream>
+#include <time.h>
 #include <string>
 #include <vector>
-using namespace std;
 
 #endif //PCH_H

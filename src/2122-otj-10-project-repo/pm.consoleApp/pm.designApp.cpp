@@ -144,27 +144,72 @@ namespace pm::designApp
 				pm::tools::consoleCoordinates(x, y);
 				cout << "\x1b[1;31m" << "            ____________          " << "\x1b[1;37m" << endl;
 				pm::tools::consoleCoordinates(x, y + 1);
-				cout << "\x1b[1;31m" << "           /  __   __   \\         " << "\x1b[1;37m" << endl;
+				cout << "\x1b[1;31m" << "           /  __    __  \\         " << "\x1b[1;37m" << endl;
 				pm::tools::consoleCoordinates(x, y + 2);
-				cout << "\x1b[1;31m" << "          |   \\ \\ / /    |        " << "\x1b[1;37m" << endl;
+				cout << "\x1b[1;31m" << "          |   \\ \\  / /   |        " << "\x1b[1;37m" << endl;
 				pm::tools::consoleCoordinates(x, y + 3);
-				cout << "\x1b[1;31m" << "         |     \\   /      |       " << "\x1b[1;37m" << endl;
+				cout << "\x1b[1;31m" << "         |     \\ \\/ /     |       " << "\x1b[1;37m" << endl;
 				pm::tools::consoleCoordinates(x, y + 4);
 				cout << "\x1b[1;31m" << "         |     / /\\ \\     |       " << "\x1b[1;37m" << endl;
 				pm::tools::consoleCoordinates(x, y + 5);
 				cout << "\x1b[1;31m" << "          |   /_/  \\_\\   |        " << "\x1b[1;37m" << endl;
 				pm::tools::consoleCoordinates(x, y + 6);
-				cout << "\x1b[1;31m" << "           \\____________/         " << "\x1b[1;37m" << endl << endl;
-				pm::tools::consoleCoordinates(x, y + 7);
-				cout << " _                          _     " << "\x1b[1;37m" << endl;
+				cout << "\x1b[1;31m" << "           \\____________/         " << "\x1b[1;37m" << endl;
 				pm::tools::consoleCoordinates(x, y + 8);
-				cout << "| |_ ___ _ _    ___ ___ ___|_|___ " << "\x1b[1;37m" << endl;
+				cout << " _                          _     " << "\x1b[1;37m" << endl;
 				pm::tools::consoleCoordinates(x, y + 9);
-				cout << "|  _|  _| | |  | .'| . | .'| |   |" << "\x1b[1;37m" << endl;
+				cout << "| |_ ___ _ _    ___ ___ ___|_|___ " << "\x1b[1;37m" << endl;
 				pm::tools::consoleCoordinates(x, y + 10);
-				cout << "|_| |_| |_  |  |__,|_  |__,|_|_|_|" << "\x1b[1;37m" << endl;
+				cout << "|  _|  _| | |  | .'| . | .'| |   |" << "\x1b[1;37m" << endl;
 				pm::tools::consoleCoordinates(x, y + 11);
+				cout << "|_| |_| |_  |  |__,|_  |__,|_|_|_|" << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 12);
 				cout << "        |___|      |___|          " << "\x1b[1;37m" << endl;
+			}
+
+			// Function for output windows for already exists username
+			void theUsernameAlreadyExists(int x, int y)
+			{
+				pm::tools::consoleCoordinates(x, y);
+				cout << "\x1b[1;31m" << "            ____________          " << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 1);
+				cout << "\x1b[1;31m" << "           /  __    __  \\         " << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 2); 
+				cout << "\x1b[1;31m" << "          |   \\ \\  / /   |        " << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 3);		    
+				cout << "\x1b[1;31m" << "         |     \\ \\/ /     |       " << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 4);		    
+				cout << "\x1b[1;31m" << "         |     / /\\ \\     |       " << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 5);		    
+				cout << "\x1b[1;31m" << "          |   /_/  \\_\\   |        " << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 6);
+				cout << "\x1b[1;31m" << "           \\____________/         " << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x - 5, y + 10);
+				cout << "! THIS USERNAME ALREADY EXISTS PLEASE TRY AGAIN !" << endl;
+			}
+
+			// Function for output error for incorrect or incomplete password
+			void incorrectPassword(int x, int y)
+			{
+				pm::tools::consoleCoordinates(x, y);
+				cout << "\x1b[1;31m" << "            ____________          " << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 1);
+				cout << "\x1b[1;31m" << "           /  __    __  \\         " << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 2);
+				cout << "\x1b[1;31m" << "          |   \\ \\  / /   |        " << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 3);
+				cout << "\x1b[1;31m" << "         |     \\ \\/ /     |       " << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 4);
+				cout << "\x1b[1;31m" << "         |     / /\\ \\     |       " << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 5);
+				cout << "\x1b[1;31m" << "          |   /_/  \\_\\   |        " << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 6);
+				cout << "\x1b[1;31m" << "           \\____________/         " << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 9);
+				cout << "! THIS PASSWORD IS INCORRECT OR INCOPLETE PLEASE TRY AGAIN !" << endl;
+				pm::tools::consoleCoordinates(x, y + 10);
+				cout << "The password must contain uppercase, lowercase letters and special characters." << endl
+					 << "         It must be not less than 8 and not more than 20 characters!";
 			}
 		}
 
@@ -181,7 +226,7 @@ namespace pm::designApp
 			cin >> username;
 			pm::tools::consoleCoordinates(73, 25);
 			cin >> password;
-			if (pm::dal::loginAsFirst(username, password))
+			if (pm::dal::loginAsFirst(username, password) || pm::dal::login("../pm.data/users.csv", username, password))
 			{
 				system("CLS");
 				pm::tools::outputBorder(24, 14, 17);
@@ -195,6 +240,38 @@ namespace pm::designApp
 				warnings::tryAgain(56, 18);
 				Sleep(1500);
 			}
+		}
+
+		// Function for checking already existing username
+		bool checkForExistedUser(string fileName, string username)
+		{
+			vector<string> userAndPass = pm::dal::getUsernameAndPassword(fileName);
+			for (auto check : userAndPass)
+			{
+				string checkUsername;
+				int count = 0;
+				for (size_t i = 0; i < check.size(); i++)
+				{
+					if (check[i] == ' ')
+					{
+						count++;
+					}
+					else if(count == 0)
+					{
+						checkUsername += check[i];
+					}
+				}
+				
+				if (username == checkUsername)
+				{
+					system("CLS");
+					pm::tools::outputBorder(24, 14, 17);
+					pm::designApp::windows::warnings::theUsernameAlreadyExists(55, 18);
+					Sleep(2000);
+					return false;
+				}
+			}
+			return true;
 		}
 
 		// Function for output register windows
@@ -223,6 +300,21 @@ namespace pm::designApp
 			cin >> age;
 			pm::tools::consoleCoordinates(62, 30);
 			cin >> password;
+			int check = pm::dal::registerUser("../pm.data/users.csv", firstName, lastName, username, password, to_string(age));
+			if (check == 1)
+			{
+				system("CLS");
+				pm::tools::outputBorder(24, 13, 20);
+				warnings::successfullyLogin(46, 17);
+				Sleep(1500);
+			}
+			else if (check == 3)
+			{
+				system("CLS");
+				pm::tools::outputBorder(24, 13, 20);
+				warnings::tryAgain(56, 18);
+				Sleep(1500);
+			}
 		}
 	}
 

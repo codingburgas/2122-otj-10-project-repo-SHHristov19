@@ -21,6 +21,9 @@
     <ClInclude Include="UserManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="pm.bll.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pm.bll.cpp">
