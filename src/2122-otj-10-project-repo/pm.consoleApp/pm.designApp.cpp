@@ -1,5 +1,6 @@
 #include "pm.designApp.h"
 #include "../pm.dal/pm.dal.h"
+#include "../pm.bll/pm.bll.h"
 
 namespace pm::designApp
 {
@@ -242,38 +243,6 @@ namespace pm::designApp
 			}
 		}
 
-		// Function for checking already existing username
-		bool checkForExistedUser(string fileName, string username)
-		{
-			vector<string> userAndPass = pm::dal::getUsernameAndPassword(fileName);
-			for (auto check : userAndPass)
-			{
-				string checkUsername;
-				int count = 0;
-				for (size_t i = 0; i < check.size(); i++)
-				{
-					if (check[i] == ' ')
-					{
-						count++;
-					}
-					else if(count == 0)
-					{
-						checkUsername += check[i];
-					}
-				}
-				
-				if (username == checkUsername)
-				{
-					system("CLS");
-					pm::tools::outputBorder(24, 14, 17);
-					pm::designApp::windows::warnings::theUsernameAlreadyExists(55, 18);
-					Sleep(2000);
-					return false;
-				}
-			}
-			return true;
-		}
-
 		// Function for output register windows
 		void registerUser()
 		{
@@ -290,6 +259,9 @@ namespace pm::designApp
 			cout << "Age : ";
 			pm::tools::consoleCoordinates(51, 30);
 			cout << "Password : ";
+			pm::tools::consoleCoordinates(36, 32);
+			cout << "\x1b[1;31m" << "The password must contain uppercase, lowercase letters and special characters." << endl
+				<< "\t\t\t\t\t     It must be not less than 8 and not more than 20 characters!" << "\x1b[1;37m";
 			pm::tools::consoleCoordinates(62, 18);
 			cin >> username;
 			pm::tools::consoleCoordinates(64, 21);
@@ -308,10 +280,64 @@ namespace pm::designApp
 				warnings::successfullyLogin(46, 17);
 				Sleep(1500);
 			}
-			else if (check == 3)
+			else if (check == 2)
+			{
+				system("CLS");
+				pm::tools::outputBorder(24, 14, 17);
+				pm::designApp::windows::warnings::theUsernameAlreadyExists(55, 18);
+				Sleep(2000);
+			}
+			else
 			{
 				system("CLS");
 				pm::tools::outputBorder(24, 13, 20);
+				warnings::tryAgain(56, 18);
+				Sleep(1500);
+			}
+		}
+
+		// Function for changing password
+		void changePassword()
+		{	
+			pm::tools::outputBorder(24, 15, 16);
+			string username, password, newPassword;
+			pm::tools::consoleCoordinates(51, 20);
+			cout << "Enter your username : ";
+			pm::tools::consoleCoordinates(51, 23);
+			cout << "Enter your password : ";
+			pm::tools::consoleCoordinates(51, 26);
+			cout << "Enter your NEW password : ";
+			pm::tools::consoleCoordinates(36, 29);
+			cout << "\x1b[1;31m" << "The password must contain uppercase, lowercase letters and special characters." << endl
+				<< "\t\t\t\t\t     It must be not less than 8 and not more than 20 characters!" << "\x1b[1;37m";
+			pm::tools::consoleCoordinates(73, 20);
+			cin >> username;
+			pm::tools::consoleCoordinates(73, 23);
+			cin >> password;
+			if (pm::dal::login("../pm.data/users.csv", username, password))
+			{
+				pm::tools::consoleCoordinates(77, 26);
+				cin >> newPassword;
+				if (pm::bll::checkPassword(newPassword))
+				{
+					pm::dal::cnagePassword("../pm.data/users.csv", username, password, newPassword);
+					system("CLS");
+					pm::tools::outputBorder(24, 14, 17);
+					warnings::successfullyLogin(46, 17);
+					Sleep(1500);
+				}
+				else
+				{
+					system("CLS");
+					pm::tools::outputBorder(24, 14, 17);
+					warnings::tryAgain(56, 18);
+					Sleep(1500);
+				}
+			}
+			else
+			{
+				system("CLS");
+				pm::tools::outputBorder(24, 14, 17);
 				warnings::tryAgain(56, 18);
 				Sleep(1500);
 			}
@@ -420,6 +446,7 @@ namespace pm::designApp
 						{
 							system("CLS");
 							choice = 5;
+							windows::changePassword();
 							break;
 						}
 						case 4:

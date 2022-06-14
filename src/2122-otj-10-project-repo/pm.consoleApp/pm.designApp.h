@@ -69,11 +69,11 @@ namespace pm::designApp
 		// Function for output login window as user
 		void login();
 
-		// Function for checking already existing username
-		bool checkForExistedUser(string, string);
-
 		// Function for output login window as user
 		void registerUser();
+
+		// Function for changing password
+		void changePassword();
 	}
 
 	namespace menus

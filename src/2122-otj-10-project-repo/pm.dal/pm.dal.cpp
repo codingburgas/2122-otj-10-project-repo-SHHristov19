@@ -54,6 +54,8 @@ namespace pm::dal
         return to_string(counter);
     }
 
+    bool checkForExistedUser(string fileName, string username);
+
     // Function for add data in file
     int registerUser(string fileName, string firstName, string lastName, string username, string password, string age)
     {
@@ -66,7 +68,7 @@ namespace pm::dal
             pm::bll::checkStringForSpecialCharacters(lastName) &&
             pm::bll::checkStringForSpecialCharacters(username))
         {
-            if (pm::designApp::windows::checkForExistedUser(fileName, username))
+            if (checkForExistedUser(fileName, username))
             {
                 file << id << ",\"" << firstName << "\"," << "\"" << lastName << "\"," << "\"" << username << "\"," << "\"" << password << "\"," << "\"" << age << "\"," << timeOfRegistration << '\n';
                 file.close();
@@ -206,11 +208,165 @@ namespace pm::dal
         vector<string> userAndPass = getUsernameAndPassword(fileName);
         for (auto check : userAndPass)
         {
-            if ((check.find(username) != string::npos) && (check.find(password) != string::npos))
+            string checkUsername, checkPassword;
+            int count = 0;
+            for (size_t i = 0; i < check.size(); i++)
+            {
+                if (check[i] == ' ')
+                {
+                    count++;
+                }
+                else if (count == 0)
+                {
+                    checkUsername += check[i];
+                }
+                else if (count == 1)
+                {
+                    checkPassword += check[i];
+                }
+            }
+
+            if (username == checkUsername && password == checkPassword)
             {
                 return true;
             }
         }
         return false;
+    }
+
+    // Function for checking already existing username
+    bool checkForExistedUser(string fileName, string username)
+    {
+        vector<string> userAndPass = pm::dal::getUsernameAndPassword(fileName);
+        for (auto check : userAndPass)
+        {
+            string checkUsername;
+            int count = 0;
+            for (size_t i = 0; i < check.size(); i++)
+            {
+                if (check[i] == ' ')
+                {
+                    count++;
+                }
+                else if (count == 0)
+                {
+                    checkUsername += check[i];
+                }
+            }
+
+            if (username == checkUsername)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Function for checking already existing password
+    bool checkForExistsPassword(string fileName, string password)
+    {
+        vector<string> checkPassword = getUsernameAndPassword(fileName);
+        for (auto check : checkPassword)
+        {
+            string checkPassword;
+            int count = 0;
+            for (size_t i = 0; i < check.size(); i++)
+            {
+                if (check[i] == ' ')
+                {
+                    count++;
+                }
+                else if (count == 1)
+                {
+                    checkPassword += check[i];
+                }
+            }
+
+            if (password == checkPassword)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Function for replace password in vector
+    void relaceData(vector<vector<string>>* data, string username, string password, string newPassword)
+    {
+        for (size_t i = 0; i < (*data).size(); i++)
+        {
+            if ((*data)[i][3] == username and (*data)[i][4] == password)
+            {
+                (*data)[i][4].replace(0, (*data)[i][4].size(), newPassword);
+                return;
+            }
+        }
+    }
+
+    // Function for add data infront of the matrix vector
+    vector<vector<string>> pushFrontTitleOfFile(vector<vector<string>> data)
+    {
+        vector<vector<string>> output;
+        vector<string> temp;
+        temp.push_back("id");
+        temp.push_back("firstName");
+        temp.push_back("lastName");
+        temp.push_back("username");
+        temp.push_back("password");
+        temp.push_back("age");
+        temp.push_back("timeOfRegistration");
+        output.push_back(temp);
+        for (size_t i = 0; i < data.size(); i++)
+        {
+            vector<string> temp2;
+            for (size_t j = 0; j < data[i].size(); j++)
+            {
+                temp2.push_back(data[i][j]);
+            }
+            output.push_back(temp2);
+        }
+        return output;
+    }
+
+    // Function for add data in file
+    void printDataInFile(string fileName, vector<vector<string>> data)
+    {
+        ofstream file(fileName, ios::trunc);
+        if (file.is_open())
+        {
+            for (size_t i = 0; i < data.size(); i++)
+            {
+                for (size_t j = 0; j < data[i].size(); j++)
+                {
+                    if (i == 0 && j < data[i].size() - 1)
+                    {
+                        file << data[i][j] << ",";
+                    }
+                    else if (i == 0 && j == data[i].size() - 1)
+                    {
+                        file << data[i][j];
+                    }
+                    else if (j == data[i].size() - 1)
+                    {
+                        file << "\"" << data[i][j] << "\"";
+                    }
+                    else
+                    {
+                        file << "\"" << data[i][j] << "\",";
+                    }
+                }
+                file << "\n";
+            }
+        }
+        file.close();
+    }
+
+    // Function for replacing password in file 
+    void cnagePassword(string fileName, string password, string username, string newPassword)
+    {
+        vector<vector<string>> allDataInFile = readDataForUsersFromFile(fileName);
+        relaceData(&allDataInFile, password, username, newPassword);
+        allDataInFile = pushFrontTitleOfFile(allDataInFile);
+        printDataInFile(fileName, allDataInFile);
     }
 }

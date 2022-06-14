@@ -24,4 +24,22 @@ namespace pm::dal
 
     // Function for check if usename and password are in the file
     bool login(std::string, std::string, std::string);
+
+    // Function for checking already existing username
+    bool checkForExistedUser(std::string fileName, std::string username);
+
+    // Function for checking already existing password
+    bool checkForExistsPassword(std::string fileName, std::string password);
+
+    // Function for replace password in vector
+    void relaceData(std::vector<std::vector<std::string>>*data, std::string password, std::string username, std::string newPassword);
+
+    // Function for add data infront of the matrix vector
+    std::vector<std::vector<std::string>> pushFrontTitleOfFile(std::vector<std::vector<std::string>> data);
+
+    // Function for add data in file
+    void printDataInFile(std::string fileName, std::vector<std::vector<std::string>> data);
+
+    // Function for replacing password in file 
+    void cnagePassword(std::string fileName, std::string password, std::string username, std::string newPassword);
 }
