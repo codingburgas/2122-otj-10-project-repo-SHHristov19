@@ -70,7 +70,7 @@ namespace pm::dal
         {
             if (checkForExistedUser(fileName, username))
             {
-                file << id << ",\"" << firstName << "\"," << "\"" << lastName << "\"," << "\"" << username << "\"," << "\"" << password << "\"," << "\"" << age << "\"," << timeOfRegistration << '\n';
+                file << "\"" << id << "\",\"" << firstName << "\",\"" << lastName << "\",\"" << username << "\",\"" << pm::bll::hashPassword(password) << "\",\"" << age << "\",\"" << timeOfRegistration << "\"\n";
                 file.close();
                 return 1;
             }
@@ -226,7 +226,7 @@ namespace pm::dal
                 }
             }
 
-            if (username == checkUsername && password == checkPassword)
+            if (username == checkUsername && pm::bll::hashPassword(password) == checkPassword)
             {
                 return true;
             }
@@ -282,7 +282,7 @@ namespace pm::dal
                 }
             }
 
-            if (password == checkPassword)
+            if (pm::bll::hashPassword(password) == checkPassword)
             {
                 return true;
             }
@@ -291,13 +291,13 @@ namespace pm::dal
     }
 
     // Function for replace password in vector
-    void relaceData(vector<vector<string>>* data, string username, string password, string newPassword)
+    void replaceData(vector<vector<string>>* data, string username, string password, string newPassword)
     {
         for (size_t i = 0; i < (*data).size(); i++)
         {
-            if ((*data)[i][3] == username and (*data)[i][4] == password)
+            if ((*data)[i][3] == username and (*data)[i][4] == pm::bll::hashPassword(password))
             {
-                (*data)[i][4].replace(0, (*data)[i][4].size(), newPassword);
+                (*data)[i][4].replace(0, (*data)[i][4].size(), pm::bll::hashPassword(newPassword));
                 return;
             }
         }
@@ -365,7 +365,7 @@ namespace pm::dal
     void cnagePassword(string fileName, string password, string username, string newPassword)
     {
         vector<vector<string>> allDataInFile = readDataForUsersFromFile(fileName);
-        relaceData(&allDataInFile, password, username, newPassword);
+        replaceData(&allDataInFile, password, username, newPassword);
         allDataInFile = pushFrontTitleOfFile(allDataInFile);
         printDataInFile(fileName, allDataInFile);
     }

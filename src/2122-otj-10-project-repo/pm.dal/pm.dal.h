@@ -32,7 +32,7 @@ namespace pm::dal
     bool checkForExistsPassword(std::string fileName, std::string password);
 
     // Function for replace password in vector
-    void relaceData(std::vector<std::vector<std::string>>*data, std::string password, std::string username, std::string newPassword);
+    void replaceData(std::vector<std::vector<std::string>>*data, std::string password, std::string username, std::string newPassword);
 
     // Function for add data infront of the matrix vector
     std::vector<std::vector<std::string>> pushFrontTitleOfFile(std::vector<std::vector<std::string>> data);

@@ -15,4 +15,7 @@ namespace pm::bll
 
     // Function for converting the password from type string to type char and checks with checkPasswordForSpecialCharacters()
     bool checkPassword(std::string);
+
+    // Function for hash password
+    std::string hashPassword(std::string password);
 }

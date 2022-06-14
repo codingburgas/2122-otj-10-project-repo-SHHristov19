@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "pm.bll.h"
-
+#include "../pm.tools/md5.h"
 using namespace std;
 
 namespace pm::bll
@@ -75,5 +75,11 @@ namespace pm::bll
             charecter[i] = password.at(i);
         }
         return checkPasswordForSpecialCharacters(charecter, password.size());
+    }
+
+    // Function for hash password
+    string hashPassword(string password)
+    {
+        return md5(password);
     }
 }
