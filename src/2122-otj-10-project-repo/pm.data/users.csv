@@ -1,5 +1,1 @@
 id,firstName,lastName,username,password,age,timeOfRegistration
-"1","Stefan","Hristov","user1","75942adce5a7392ea261320b8c79b745","20","2022-06-14  19:53:472594"
-"2","Petar","Petrov","user2","4561d3b7d3d42a3b9fbb8c2a7ea8d5b4","23","2022-06-14  19:54:332594"
-"3","Ivan","Dragan","user3","8b1c714151ece494520679104898e8e0","34","2022-06-14  19:56:19"
-"4","Dragan","Draganov","user4","f9c4ab4b64eba5b40f1b47c7fe0e24cb","45","2022-06-14  19:59:14"

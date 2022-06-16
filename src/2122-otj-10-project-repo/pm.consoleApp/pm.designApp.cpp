@@ -24,13 +24,32 @@ namespace pm::designApp
 			pm::tools::consoleCoordinates(x, y + 6);
 			cout << "|_|            (__/                                             (_____|            " << endl;
 		}
+
+		// Function for output admin panel title in a current position
+		void adminPanelMenu(int x, int y)
+		{
+			pm::tools::consoleCoordinates(x, y);
+			cout << "   /\\       _       _                                  _ " << endl;
+			pm::tools::consoleCoordinates(x, y + 1);
+			cout << "  /  \\     | |     (_)                                | |" << endl;
+			pm::tools::consoleCoordinates(x, y + 2);
+			cout << " / /\\ \\  _ | |____  _ ____     ____   ____ ____   ____| |" << endl;
+			pm::tools::consoleCoordinates(x, y + 3);
+			cout << "| |__| |/ || |    \\| |  _ \\   |  _ \\ / _  |  _ \\ / _  ) |" << endl;
+			pm::tools::consoleCoordinates(x, y + 4);
+			cout << "|  __  | (_| | | | | | | | |  | | | ( ( | | | | ( (/ /| |" << endl;
+			pm::tools::consoleCoordinates(x, y + 5);
+			cout << "|_|  |_|\\____|_|_|_|_|_| |_|  | ||_/ \\_||_|_| |_|\\____)_|" << endl;
+			pm::tools::consoleCoordinates(x, y + 6);
+			cout << "                              |_|						  " << endl;
+		}
 	}
 
 	namespace buttons
 	{
 		namespace active
 		{
-			// Function for output painted button in a current position with set color
+			// Functions for output painted button in a current position with set color for login panel
 			void buttonLogin(int x, int y, string word, int nuance, int color)
 			{
 				pm::tools::consoleCoordinates(x, y);
@@ -40,11 +59,24 @@ namespace pm::designApp
 				pm::tools::consoleCoordinates(x, y + 2);
 				cout << "\x1b[" << nuance << ";3" << color << "m" << " '-----------------' " << "\x1b[1;37m" << endl;
 			}
+
+			// Function for output painted button in a current position with set color for admin panel
+			void buttonAdminPanel(int x, int y, string word, int nuance, int color)
+			{
+				pm::tools::consoleCoordinates(x, y);
+				cout << "\x1b[" << nuance << ";3" << color << "m" << "  _________________________ " << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 1);
+				cout << "\x1b[" << nuance << ";3" << color << "m" << " /                         \\" << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 2);
+				cout << "\x1b[" << nuance << ";3" << color << "m" << "<" << word << ">" << "\x1b[1;37m" << endl;
+				pm::tools::consoleCoordinates(x, y + 3);
+				cout << "\x1b[" << nuance << ";3" << color << "m" << " \\_________________________/ " << "\x1b[1;37m" << endl;
+			}
 		}
 
-		// Function for output button in a current position
 		namespace inactive
 		{
+			// Function for output button in a current position for login panel
 			void buttonLogin(int x, int y, string word)
 			{
 				pm::tools::consoleCoordinates(x, y);
@@ -53,6 +85,19 @@ namespace pm::designApp
 				cout << "(   " << word << "   )" << endl;
 				pm::tools::consoleCoordinates(x, y + 2);
 				cout << " '-----------------' " << endl;
+			}
+
+			// Function for output button in a current position for admin panel
+			void buttonAdminPanel(int x, int y, string word)
+			{
+				pm::tools::consoleCoordinates(x, y);
+				cout << "  _________________________ " << endl;
+				pm::tools::consoleCoordinates(x, y + 1);
+				cout << " /                         \\" << endl;
+				pm::tools::consoleCoordinates(x, y + 2);
+				cout << "<" << word << ">" << endl;
+				pm::tools::consoleCoordinates(x, y + 3);
+				cout << " \\_________________________/ " << endl;
 			}
 		}
 
@@ -64,9 +109,8 @@ namespace pm::designApp
 				pm::tools::outputBorder(23, 3, 39);
 				titles::projectManagerMenu(32, 7);
 				buttons::active::buttonLogin(63, 19, "    LOGIN    ", 0, 3);
-				buttons::inactive::buttonLogin(63, 25, "   REGISTER  ");
-				buttons::inactive::buttonLogin(63, 31, " CHANGE PASS ");
-				buttons::inactive::buttonLogin(63, 37, "     EXIT    ");
+				buttons::inactive::buttonLogin(63, 25, " CHANGE PASS ");
+				buttons::inactive::buttonLogin(63, 31, "     EXIT    ");
 			}
 
 			// Function for output second activ main menu button
@@ -75,9 +119,8 @@ namespace pm::designApp
 				pm::tools::outputBorder(23, 3, 39);
 				titles::projectManagerMenu(32, 7);
 				buttons::inactive::buttonLogin(63, 19, "    LOGIN    ");
-				buttons::active::buttonLogin(63, 25, "   REGISTER  ", 0, 3);
-				buttons::inactive::buttonLogin(63, 31, " CHANGE PASS ");
-				buttons::inactive::buttonLogin(63, 37, "     EXIT    ");
+				buttons::active::buttonLogin(63, 25, " CHANGE PASS ", 0, 3);
+				buttons::inactive::buttonLogin(63, 31, "     EXIT    ");
 			}
 
 			// Function for output third activ main menu button
@@ -86,20 +129,41 @@ namespace pm::designApp
 				pm::tools::outputBorder(23, 3, 39);
 				titles::projectManagerMenu(32, 7);
 				buttons::inactive::buttonLogin(63, 19, "    LOGIN    ");
-				buttons::inactive::buttonLogin(63, 25, "   REGISTER  ");
-				buttons::active::buttonLogin(63, 31, " CHANGE PASS ", 0, 3);
-				buttons::inactive::buttonLogin(63, 37, "     EXIT    ");
+				buttons::inactive::buttonLogin(63, 25, " CHANGE PASS ");
+				buttons::active::buttonLogin(63, 31, "     EXIT    ", 0, 3);
 			}
+		}
 
-			// Function for output fourth activ main menu button
-			void fourthActive()
+		namespace adminPanel
+		{
+			// Function for output first activ admin panel button
+			void firstActive()
 			{
 				pm::tools::outputBorder(23, 3, 39);
-				titles::projectManagerMenu(32, 7);
-				buttons::inactive::buttonLogin(63, 19, "    LOGIN    ");
-				buttons::inactive::buttonLogin(63, 25, "   REGISTER  ");
-				buttons::inactive::buttonLogin(63, 31, " CHANGE PASS ");
-				buttons::active::buttonLogin(63, 37, "     EXIT    ", 0, 3);
+				titles::adminPanelMenu(45, 8);
+				buttons::active::buttonAdminPanel(60, 19, "      USER MANAGEMENT      ", 0, 6);
+				buttons::inactive::buttonAdminPanel(60, 26, "      TEAMS MANAGEMENT     ");
+				buttons::inactive::buttonAdminPanel(60, 33, "           EXIT            ");
+			}
+
+			// Function for output second activ admin panel button
+			void secondActive()
+			{
+				pm::tools::outputBorder(23, 3, 39);
+				titles::adminPanelMenu(45, 8);
+				buttons::inactive::buttonAdminPanel(60, 19, "      USER MANAGEMENT      ");
+				buttons::active::buttonAdminPanel(60, 26, "      TEAMS MANAGEMENT     ", 0, 6);
+				buttons::inactive::buttonAdminPanel(60, 33, "           EXIT            ");
+			}
+
+			// Function for output third activ admin panel button
+			void thirdActive()
+			{
+				pm::tools::outputBorder(23, 3, 39);
+				titles::adminPanelMenu(45, 8);
+				buttons::inactive::buttonAdminPanel(60, 19, "      USER MANAGEMENT      ");
+				buttons::inactive::buttonAdminPanel(60, 26, "      TEAMS MANAGEMENT     ");
+				buttons::active::buttonAdminPanel(60, 33, "           EXIT            ", 0, 6);
 			}
 		}
 	}
@@ -227,12 +291,20 @@ namespace pm::designApp
 			cin >> username;
 			pm::tools::consoleCoordinates(73, 25);
 			cin >> password;
-			if (pm::dal::loginAsFirst(username, password) || pm::dal::login("../pm.data/users.csv", username, password))
+			if (pm::dal::login("../pm.data/users.csv", username, password))
 			{
 				system("CLS");
 				pm::tools::outputBorder(24, 14, 17);
 				warnings::successfullyLogin(46, 17);
 				Sleep(1500);
+			}
+			else if (pm::dal::loginAsFirst(username, password))
+			{
+				system("CLS");
+				pm::tools::outputBorder(24, 14, 17);
+				warnings::successfullyLogin(46, 17);
+				Sleep(1500);
+				pm::designApp::menus::adminPanel();
 			}
 			else
 			{
@@ -346,6 +418,109 @@ namespace pm::designApp
 
 	namespace menus
 	{
+		// Function for movement in admin panel
+		void adminPanel()
+		{
+			int choice;
+			bool truth;
+			system("CLS");
+			buttons::adminPanel::firstActive();
+			choice = 1;
+			while (true) {
+				truth = true;
+				switch (_getch()) {
+				case KEY_UP:
+					switch (choice)
+					{
+					case 1:
+					{
+						system("CLS");
+						buttons::adminPanel::thirdActive();
+						choice = 3;
+						break;
+					}
+					case 2:
+					{
+						system("CLS");
+						buttons::adminPanel::firstActive();
+						choice = 1;
+						break;
+					}
+					case 3:
+					{
+						system("CLS");
+						buttons::adminPanel::secondActive();
+						choice = 2;
+						break;
+					}
+					}
+					break;
+				case KEY_DOWN:
+					switch (choice)
+					{
+					case 1:
+					{
+						system("CLS");
+						buttons::adminPanel::secondActive();
+						choice = 2;
+						break;
+					}
+					case 2:
+					{
+						system("CLS");
+						buttons::adminPanel::thirdActive();
+						choice = 3;
+						break;
+					}
+					case 3:
+					{
+						system("CLS");
+						buttons::adminPanel::firstActive();
+						choice = 1;
+						break;
+					}
+					}
+					break;
+				case KEY_ENTER:
+					while (truth)
+					{
+						switch (choice)
+						{
+						case 1:
+						{
+							system("CLS");
+							choice = 4;
+							break;
+						}
+						case 2:
+						{
+							system("CLS");
+							choice = 4;
+							break;
+						}
+						case 3:
+						{
+							truth = false;
+							return;
+							break;
+						}
+						case 4:
+						{
+							system("CLS");
+							buttons::adminPanel::firstActive();
+							truth = false;
+							choice = 1;
+							break;
+						}
+						}
+					}
+					break;
+				default:
+					break;
+				}
+			}
+		}
+
 		// Function for movement in main Menu
 		void menu()
 		{
@@ -363,8 +538,8 @@ namespace pm::designApp
 					case 1:
 					{
 						system("CLS");
-						buttons::mainMenu::fourthActive();
-						choice = 4;
+						buttons::mainMenu::thirdActive();
+						choice = 3;
 						break;
 					}
 					case 2:
@@ -379,13 +554,6 @@ namespace pm::designApp
 						system("CLS");
 						buttons::mainMenu::secondActive();
 						choice = 2;
-						break;
-					}
-					case 4:
-					{
-						system("CLS");
-						buttons::mainMenu::thirdActive();
-						choice = 3;
 						break;
 					}
 					}
@@ -410,13 +578,6 @@ namespace pm::designApp
 					case 3:
 					{
 						system("CLS");
-						buttons::mainMenu::fourthActive();
-						choice = 4;
-						break;
-					}
-					case 4:
-					{
-						system("CLS");
 						buttons::mainMenu::firstActive();
 						choice = 1;
 						break;
@@ -431,31 +592,24 @@ namespace pm::designApp
 						case 1:
 						{
 							system("CLS");
-							choice = 5;
+							choice = 4;
 							windows::login();
 							break;
 						}
 						case 2:
 						{
 							system("CLS");
-							choice = 5;
-							windows::registerUser();
-							break;
-						}
-						case 3:
-						{
-							system("CLS");
-							choice = 5;
+							choice = 4;
 							windows::changePassword();
 							break;
 						}
-						case 4:
+						case 3:
 						{
 							truth = false;
 							return;
 							break;
 						}
-						case 5:
+						case 4:
 						{
 							system("CLS");
 							buttons::mainMenu::firstActive();
