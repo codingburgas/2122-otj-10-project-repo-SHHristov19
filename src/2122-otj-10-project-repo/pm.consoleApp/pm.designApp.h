@@ -16,10 +16,13 @@ namespace pm::designApp
 	namespace titles
 	{
 		// Function for output main menu title in a current position
-		void projectManagerMenu(int, int);
+		void mainMenu(int, int);
 
 		// Function for output admin panel title in a current position
-		void adminPanelMenu(int x, int y);
+		void adminPanel(int x, int y);
+
+		// Function for output user panel title in a current position
+		void userPanel(int x, int y);
 	}
 
 	namespace buttons
@@ -30,7 +33,7 @@ namespace pm::designApp
 			void buttonLogin(int, int, string, int, int);
 
 			// Function for output painted button in a current position with set color for admin panel
-			void buttonAdminPanel(int x, int y, string word, int nuance, int color);
+			void buttonAdminAndUserPanel(int x, int y, string word, int nuance, int color);
 		}
 		
 		namespace inactive
@@ -39,7 +42,7 @@ namespace pm::designApp
 			void buttonLogin(int, int, string);
 
 			// Function for output button in a current position for admin panel
-			void buttonAdminPanel(int x, int y, string word);
+			void buttonAdminAndUserPanel(int x, int y, string word);
 		}
 
 		namespace mainMenu
@@ -64,6 +67,21 @@ namespace pm::designApp
 
 			// Function for output third activ admin panel button
 			void thirdActive();
+		}
+
+		namespace userPanel
+		{
+			// Function for output first activ user panel button
+			void firstActive();
+
+			// Function for output second activ user panel button
+			void secondActive();
+
+			// Function for output third activ user panel button
+			void thirdActive();
+
+			// Function for output fourt activ user panel button
+			void fourthActive();
 		}
 	}
 
@@ -98,6 +116,9 @@ namespace pm::designApp
 	{
 		// Function for movement in admin panel
 		void adminPanel();
+
+		// Function for movement in user panel
+		void userPanel();
 
 		// Function for movement in main Menu
 		void menu();
