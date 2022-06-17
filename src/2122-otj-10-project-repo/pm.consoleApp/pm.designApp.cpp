@@ -62,6 +62,25 @@ namespace pm::designApp
 			pm::tools::consoleCoordinates(x, y + 6);
 			cout << "                           |_|          			   " << endl;
 		}
+
+		// Function for output user management title in current position
+		void userManagement(int x, int y)
+		{
+			pm::tools::consoleCoordinates(x, y);
+			cout << " _    _                  																" << endl;
+			pm::tools::consoleCoordinates(x, y + 1);
+			cout << "| |  | |                                                                          _    " << endl;
+			pm::tools::consoleCoordinates(x, y + 2);
+			cout << "| |  | | ___  ____  ____    ____   ____ ____   ____  ____  ____ ____   ____ ____ | |_  " << endl;
+			pm::tools::consoleCoordinates(x, y + 3);
+			cout << "| |  | |/___)/ _  )/ ___)  |    \\ / _  |  _ \\ / _  |/ _  |/ _  )    \\ / _  )  _ \\|  _) " << endl;
+			pm::tools::consoleCoordinates(x, y + 4);
+			cout << "| |__| |___ ( (/ /| |      | | | ( ( | | | | ( ( | ( ( | ( (/ /| | | ( (/ /| | | | |__ " << endl;
+			pm::tools::consoleCoordinates(x, y + 5);
+			cout << " \\_____(___/ \\____)_|      |_|_|_|\\_||_|_| |_|\\_||_|\\_|| |\\____)_|_|_|\\____)_| |_|\\___)" << endl;
+			pm::tools::consoleCoordinates(x, y + 6);
+			cout << "                                                   (_____| 							" << endl;
+		}
 	}
 
 	namespace buttons
@@ -69,7 +88,7 @@ namespace pm::designApp
 		namespace active
 		{
 			// Functions for output painted button in a current position with set color for login panel
-			void buttonLogin(int x, int y, string word, int nuance, int color)
+			void smallButton(int x, int y, string word, int nuance, int color)
 			{
 				pm::tools::consoleCoordinates(x, y);
 				cout << "\x1b[" << nuance << ";3" << color << "m" << " .-----------------. " << "\x1b[1;37m" << endl;
@@ -80,7 +99,7 @@ namespace pm::designApp
 			}
 
 			// Function for output painted button in a current position with set color for admin panel
-			void buttonAdminAndUserPanel(int x, int y, string word, int nuance, int color)
+			void bigButton(int x, int y, string word, int nuance, int color)
 			{
 				pm::tools::consoleCoordinates(x, y);
 				cout << "\x1b[" << nuance << ";3" << color << "m" << "  _________________________ " << "\x1b[1;37m" << endl;
@@ -96,7 +115,7 @@ namespace pm::designApp
 		namespace inactive
 		{
 			// Function for output button in a current position for login panel
-			void buttonLogin(int x, int y, string word)
+			void smallButton(int x, int y, string word)
 			{
 				pm::tools::consoleCoordinates(x, y);
 				cout << " .-----------------. " << endl;
@@ -107,7 +126,7 @@ namespace pm::designApp
 			}
 
 			// Function for output button in a current position for admin panel
-			void buttonAdminAndUserPanel(int x, int y, string word)
+			void bigButton(int x, int y, string word)
 			{
 				pm::tools::consoleCoordinates(x, y);
 				cout << "  _________________________ " << endl;
@@ -127,9 +146,9 @@ namespace pm::designApp
 			{
 				pm::tools::outputBorder(23, 3, 39);
 				titles::mainMenu(32, 7);
-				buttons::active::buttonLogin(63, 19, "    LOGIN    ", 0, 3);
-				buttons::inactive::buttonLogin(63, 25, " CHANGE PASS ");
-				buttons::inactive::buttonLogin(63, 31, "     EXIT    ");
+				buttons::active::smallButton(63, 19,   "    LOGIN    ", 0, 3);
+				buttons::inactive::smallButton(63, 25, " CHANGE PASS ");
+				buttons::inactive::smallButton(63, 31, "     EXIT    ");
 			}
 
 			// Function for output second activ main menu button
@@ -137,9 +156,9 @@ namespace pm::designApp
 			{
 				pm::tools::outputBorder(23, 3, 39);
 				titles::mainMenu(32, 7);
-				buttons::inactive::buttonLogin(63, 19, "    LOGIN    ");
-				buttons::active::buttonLogin(63, 25, " CHANGE PASS ", 0, 3);
-				buttons::inactive::buttonLogin(63, 31, "     EXIT    ");
+				buttons::inactive::smallButton(63, 19, "    LOGIN    ");
+				buttons::active::smallButton(63, 25,   " CHANGE PASS ", 0, 3);
+				buttons::inactive::smallButton(63, 31, "     EXIT    ");
 			}
 
 			// Function for output third activ main menu button
@@ -147,9 +166,9 @@ namespace pm::designApp
 			{
 				pm::tools::outputBorder(23, 3, 39);
 				titles::mainMenu(32, 7);
-				buttons::inactive::buttonLogin(63, 19, "    LOGIN    ");
-				buttons::inactive::buttonLogin(63, 25, " CHANGE PASS ");
-				buttons::active::buttonLogin(63, 31, "     EXIT    ", 0, 3);
+				buttons::inactive::smallButton(63, 19, "    LOGIN    ");
+				buttons::inactive::smallButton(63, 25, " CHANGE PASS ");
+				buttons::active::smallButton(63, 31,   "     EXIT    ", 0, 3);
 			}
 		}
 
@@ -160,9 +179,9 @@ namespace pm::designApp
 			{
 				pm::tools::outputBorder(23, 3, 39);
 				titles::adminPanel(45, 8);
-				buttons::active::buttonAdminAndUserPanel(60, 19, "      USER MANAGEMENT      ", 0, 6);
-				buttons::inactive::buttonAdminAndUserPanel(60, 26, "      TEAMS MANAGEMENT     ");
-				buttons::inactive::buttonAdminAndUserPanel(60, 33, "           EXIT            ");
+				buttons::active::bigButton(60, 19,   "      USER MANAGEMENT      ", 0, 6);
+				buttons::inactive::bigButton(60, 26, "      TEAMS MANAGEMENT     ");
+				buttons::inactive::bigButton(60, 33, "           EXIT            ");
 			}
 
 			// Function for output second activ admin panel button
@@ -170,9 +189,9 @@ namespace pm::designApp
 			{
 				pm::tools::outputBorder(23, 3, 39);
 				titles::adminPanel(45, 8);
-				buttons::inactive::buttonAdminAndUserPanel(60, 19, "      USER MANAGEMENT      ");
-				buttons::active::buttonAdminAndUserPanel(60, 26, "      TEAMS MANAGEMENT     ", 0, 6);
-				buttons::inactive::buttonAdminAndUserPanel(60, 33, "           EXIT            ");
+				buttons::inactive::bigButton(60, 19, "      USER MANAGEMENT      ");
+				buttons::active::bigButton(60, 26,   "      TEAMS MANAGEMENT     ", 0, 6);
+				buttons::inactive::bigButton(60, 33, "           EXIT            ");
 			}
 
 			// Function for output third activ admin panel button
@@ -180,9 +199,9 @@ namespace pm::designApp
 			{
 				pm::tools::outputBorder(23, 3, 39);
 				titles::adminPanel(45, 8);
-				buttons::inactive::buttonAdminAndUserPanel(60, 19, "      USER MANAGEMENT      ");
-				buttons::inactive::buttonAdminAndUserPanel(60, 26, "      TEAMS MANAGEMENT     ");
-				buttons::active::buttonAdminAndUserPanel(60, 33, "           EXIT            ", 0, 6);
+				buttons::inactive::bigButton(60, 19, "      USER MANAGEMENT      ");
+				buttons::inactive::bigButton(60, 26, "      TEAMS MANAGEMENT     ");
+				buttons::active::bigButton(60, 33,   "           EXIT            ", 0, 6);
 			}
 		}
 
@@ -193,10 +212,10 @@ namespace pm::designApp
 			{
 				pm::tools::outputBorder(23, 3, 39);
 				titles::userPanel(47, 8);
-				buttons::active::buttonAdminAndUserPanel(60, 19, "     PROJECT MANAGEMENT    ", 1, 2);
-				buttons::inactive::buttonAdminAndUserPanel(60, 25, "      TASK MANAGEMENT      ");
-				buttons::inactive::buttonAdminAndUserPanel(60, 31, "     WORK LOG MANAGEMENT   ");
-				buttons::inactive::buttonAdminAndUserPanel(60, 37, "           EXIT            ");
+				buttons::active::bigButton(60, 19,   "     PROJECT MANAGEMENT    ", 1, 2);
+				buttons::inactive::bigButton(60, 25, "      TASK MANAGEMENT      ");
+				buttons::inactive::bigButton(60, 31, "     WORK LOG MANAGEMENT   ");
+				buttons::inactive::bigButton(60, 37, "           EXIT            ");
 			}
 
 			// Function for output second activ admin panel button
@@ -204,10 +223,10 @@ namespace pm::designApp
 			{
 				pm::tools::outputBorder(23, 3, 39);
 				titles::userPanel(47, 8);
-				buttons::inactive::buttonAdminAndUserPanel(60, 19, "     PROJECT MANAGEMENT    ");
-				buttons::active::buttonAdminAndUserPanel(60, 25, "      TASK MANAGEMENT      ", 1, 2);
-				buttons::inactive::buttonAdminAndUserPanel(60, 31, "     WORK LOG MANAGEMENT   ");
-				buttons::inactive::buttonAdminAndUserPanel(60, 37, "           EXIT            ");
+				buttons::inactive::bigButton(60, 19, "     PROJECT MANAGEMENT    ");
+				buttons::active::bigButton(60, 25,   "      TASK MANAGEMENT      ", 1, 2);
+				buttons::inactive::bigButton(60, 31, "     WORK LOG MANAGEMENT   ");
+				buttons::inactive::bigButton(60, 37, "           EXIT            ");
 			}
 
 			// Function for output third activ admin panel button
@@ -215,10 +234,10 @@ namespace pm::designApp
 			{
 				pm::tools::outputBorder(23, 3, 39);
 				titles::userPanel(47, 8);
-				buttons::inactive::buttonAdminAndUserPanel(60, 19, "     PROJECT MANAGEMENT    ");
-				buttons::inactive::buttonAdminAndUserPanel(60, 25, "      TASK MANAGEMENT      ");
-				buttons::active::buttonAdminAndUserPanel(60, 31, "     WORK LOG MANAGEMENT   ", 1, 2);
-				buttons::inactive::buttonAdminAndUserPanel(60, 37, "           EXIT            ");
+				buttons::inactive::bigButton(60, 19, "     PROJECT MANAGEMENT    ");
+				buttons::inactive::bigButton(60, 25, "      TASK MANAGEMENT      ");
+				buttons::active::bigButton(60, 31,   "     WORK LOG MANAGEMENT   ", 1, 2);
+				buttons::inactive::bigButton(60, 37, "           EXIT            ");
 			}
 
 			// Function for output fourt activ admin panel button
@@ -226,10 +245,73 @@ namespace pm::designApp
 			{
 				pm::tools::outputBorder(23, 3, 39);
 				titles::userPanel(47, 8);
-				buttons::inactive::buttonAdminAndUserPanel(60, 19, "     PROJECT MANAGEMENT    ");
-				buttons::inactive::buttonAdminAndUserPanel(60, 25, "      TASK MANAGEMENT      ");
-				buttons::inactive::buttonAdminAndUserPanel(60, 31, "     WORK LOG MANAGEMENT   ");
-				buttons::active::buttonAdminAndUserPanel(60, 37, "           EXIT            ", 1, 2);
+				buttons::inactive::bigButton(60, 19, "     PROJECT MANAGEMENT    ");
+				buttons::inactive::bigButton(60, 25, "      TASK MANAGEMENT      ");
+				buttons::inactive::bigButton(60, 31, "     WORK LOG MANAGEMENT   ");
+				buttons::active::bigButton(60, 37,   "           EXIT            ", 1, 2);
+			}
+		}
+
+		namespace userManagement
+		{
+			// Function for output first activ user management button
+			void firstActive()
+			{
+				pm::tools::outputBorder(23, 3, 39);
+				titles::userManagement(30, 7);
+				buttons::active::smallButton(63, 17,   "  VIEW ALL   ", 1, 5);
+				buttons::inactive::smallButton(63, 22, "   ADD NEW   ");
+				buttons::inactive::smallButton(63, 27, "     EDIT    ");
+				buttons::inactive::smallButton(63, 32, "    DELETE   ");
+				buttons::inactive::smallButton(63, 37, "     EXIT    ");
+			}
+
+			// Function for output second activ user management button
+			void secondActive()
+			{
+				pm::tools::outputBorder(23, 3, 39);
+				titles::userManagement(30, 7);
+				buttons::inactive::smallButton(63, 17, "  VIEW ALL   ");
+				buttons::active::smallButton(63, 22, "   ADD NEW   ", 1, 5);
+				buttons::inactive::smallButton(63, 27, "     EDIT    ");
+				buttons::inactive::smallButton(63, 32, "    DELETE   ");
+				buttons::inactive::smallButton(63, 37, "     EXIT    ");
+			}
+
+			// Function for output third activ user management button
+			void thirdActive()
+			{
+				pm::tools::outputBorder(23, 3, 39);
+				titles::userManagement(30, 7);
+				buttons::inactive::smallButton(63, 17, "  VIEW ALL   ");
+				buttons::inactive::smallButton(63, 22, "   ADD NEW   ");
+				buttons::active::smallButton(63, 27, "     EDIT    ", 1, 5);
+				buttons::inactive::smallButton(63, 32, "    DELETE   ");
+				buttons::inactive::smallButton(63, 37, "     EXIT    ");
+			}
+
+			// Function for output fourth activ user management button
+			void fourthActive()
+			{
+				pm::tools::outputBorder(23, 3, 39);
+				titles::userManagement(30, 7);
+				buttons::inactive::smallButton(63, 17, "  VIEW ALL   ");
+				buttons::inactive::smallButton(63, 22, "   ADD NEW   ");
+				buttons::inactive::smallButton(63, 27, "     EDIT    ");
+				buttons::active::smallButton(63, 32, "    DELETE   ", 1, 5);
+				buttons::inactive::smallButton(63, 37, "     EXIT    ");
+			}
+
+			// Function for output fifth activ user management button
+			void fifthActive()
+			{
+				pm::tools::outputBorder(23, 3, 39);
+				titles::userManagement(30, 7);
+				buttons::inactive::smallButton(63, 17, "  VIEW ALL   ");
+				buttons::inactive::smallButton(63, 22, "   ADD NEW   ");
+				buttons::inactive::smallButton(63, 27, "     EDIT    ");
+				buttons::inactive::smallButton(63, 32, "    DELETE   ");
+				buttons::active::smallButton(63, 37, "     EXIT    ", 1, 5);
 			}
 		}
 	}
@@ -492,6 +574,151 @@ namespace pm::designApp
 
 	namespace menus
 	{
+		// Function for movement in user management
+		void userManagement()
+		{
+			int choice;
+			bool truth;
+			system("CLS");
+			buttons::userManagement::firstActive();
+			choice = 1;
+			while (true) 
+			{
+				truth = true;
+				switch (_getch()) 
+				{
+				case KEY_UP:
+					switch (choice)
+					{
+					case 1:
+					{
+						system("CLS");
+						buttons::userManagement::fifthActive();
+						choice = 5;
+						break;
+					}
+					case 2:
+					{
+						system("CLS");
+						buttons::userManagement::firstActive();
+						choice = 1;
+						break;
+					}
+					case 3:
+					{
+						system("CLS");
+						buttons::userManagement::secondActive();
+						choice = 2;
+						break;
+					}
+					case 4:
+					{
+						system("CLS");
+						buttons::userManagement::thirdActive();
+						choice = 3;
+						break;
+					}
+					case 5:
+					{
+						system("CLS");
+						buttons::userManagement::fourthActive();
+						choice = 4;
+						break;
+					}
+					}
+					break;
+				case KEY_DOWN:
+					switch (choice)
+					{
+					case 1:
+					{
+						system("CLS");
+						buttons::userManagement::secondActive();
+						choice = 2;
+						break;
+					}
+					case 2:
+					{
+						system("CLS");
+						buttons::userManagement::thirdActive();
+						choice = 3;
+						break;
+					}
+					case 3:
+					{
+						system("CLS");
+						buttons::userManagement::fourthActive();
+						choice = 4;
+						break;
+					}
+					case 4:
+					{
+						system("CLS");
+						buttons::userManagement::fifthActive();
+						choice = 5;
+						break;
+					}
+					case 5:
+					{
+						system("CLS");
+						buttons::userManagement::firstActive();
+						choice = 1;
+						break;
+					}
+					}
+					break;
+				case KEY_ENTER:
+					while (truth)
+					{
+						switch (choice)
+						{
+						case 1:
+						{
+							system("CLS");
+							choice = 6;
+							break;
+						}
+						case 2:
+						{
+							system("CLS");
+							choice = 6;
+							break;
+						}
+						case 3:
+						{
+							system("CLS");
+							choice = 6;
+							break;
+						}
+						case 4:
+						{
+							system("CLS");
+							choice = 6;
+							break;
+						}
+						case 5:
+						{
+							truth = false;
+							return;
+							break;
+						}
+						case 6:
+						{
+							system("CLS");
+							buttons::userManagement::firstActive();
+							truth = false;
+							choice = 1;
+							break;
+						}
+						}
+					}
+					break;
+				default:
+					break;
+				}
+			}
+		}
+
 		// Function for movement in admin panel
 		void adminPanel()
 		{
@@ -500,9 +727,11 @@ namespace pm::designApp
 			system("CLS");
 			buttons::adminPanel::firstActive();
 			choice = 1;
-			while (true) {
+			while (true) 
+			{
 				truth = true;
-				switch (_getch()) {
+				switch (_getch()) 
+				{
 				case KEY_UP:
 					switch (choice)
 					{
@@ -563,6 +792,7 @@ namespace pm::designApp
 						case 1:
 						{
 							system("CLS");
+							userManagement();
 							choice = 4;
 							break;
 						}
@@ -603,9 +833,11 @@ namespace pm::designApp
 			system("CLS");
 			buttons::userPanel::firstActive();
 			choice = 1;
-			while (true) {
+			while (true) 
+			{
 				truth = true;
-				switch (_getch()) {
+				switch (_getch()) 
+				{
 				case KEY_UP:
 					switch (choice)
 					{
@@ -726,9 +958,11 @@ namespace pm::designApp
 			system("CLS");
 			buttons::mainMenu::firstActive();
 			choice = 1;
-			while (true) {
+			while (true) 
+			{
 				truth = true;
-				switch (_getch()) {
+				switch (_getch()) 
+				{
 				case KEY_UP:
 					switch (choice)
 					{
