@@ -81,6 +81,25 @@ namespace pm::designApp
 			pm::tools::consoleCoordinates(x, y + 6);
 			cout << "                                                   (_____| 							" << endl;
 		}
+
+		// Function for output teams management title in current position
+		void teamsManagement(int x, int y)
+		{
+			pm::tools::consoleCoordinates(x, y);
+			cout << " _______                      																 " << endl;
+			pm::tools::consoleCoordinates(x, y + 1);
+			cout << "(_______)                                                                              _    " << endl;
+			pm::tools::consoleCoordinates(x, y + 2);
+			cout << "   | |  ____ ____ ____   ___     ____   ____ ____   ____  ____  ____ ____   ____ ____ | |_  " << endl;
+			pm::tools::consoleCoordinates(x, y + 3);
+			cout << "   | | / _  ) _  |    \\ /___)   |    \\ / _  |  _ \\ / _  |/ _  |/ _  )    \\ / _  )  _ \\|  _) " << endl;
+			pm::tools::consoleCoordinates(x, y + 4);
+			cout << "   | |( (/ ( ( | | | | |___ |   | | | ( ( | | | | ( ( | ( ( | ( (/ /| | | ( (/ /| | | | |__ " << endl;
+			pm::tools::consoleCoordinates(x, y + 5);
+			cout << "   |_| \\____)_||_|_|_|_(___/    |_|_|_|\\_||_|_| |_|\\_||_|\\_|| |\\____)_|_|_|\\____)_| |_|\\___)" << endl;
+			pm::tools::consoleCoordinates(x, y + 6);
+			cout << "                                                        (_____| 							 " << endl;
+		}
 	}
 
 	namespace buttons
@@ -258,9 +277,9 @@ namespace pm::designApp
 			void firstActive()
 			{
 				pm::tools::outputBorder(23, 3, 39);
-				titles::userManagement(30, 7);
+				titles::teamsManagement(30, 7);
 				buttons::active::smallButton(63, 17,   "     VIEW ALL      ", 1, 5);
-				buttons::inactive::smallButton(63, 22, "      ADD NEW      ");
+				buttons::inactive::smallButton(63, 22, "       CREATE      ");
 				buttons::inactive::smallButton(63, 27, "        EDIT       ");
 				buttons::inactive::smallButton(63, 32, "       DELETE      ");
 				buttons::inactive::smallButton(63, 37, "        EXIT       ");
@@ -270,9 +289,9 @@ namespace pm::designApp
 			void secondActive()
 			{
 				pm::tools::outputBorder(23, 3, 39);
-				titles::userManagement(30, 7);
+				titles::teamsManagement(30, 7);
 				buttons::inactive::smallButton(63, 17, "     VIEW ALL      ");
-				buttons::active::smallButton(63, 22,   "      ADD NEW      ", 1, 5);
+				buttons::active::smallButton(63, 22,   "       CREATE      ", 1, 5);
 				buttons::inactive::smallButton(63, 27, "        EDIT       ");
 				buttons::inactive::smallButton(63, 32, "       DELETE      ");
 				buttons::inactive::smallButton(63, 37, "        EXIT       ");
@@ -282,9 +301,9 @@ namespace pm::designApp
 			void thirdActive()
 			{
 				pm::tools::outputBorder(23, 3, 39);
-				titles::userManagement(30, 7);
+				titles::teamsManagement(30, 7);
 				buttons::inactive::smallButton(63, 17, "     VIEW ALL      ");
-				buttons::inactive::smallButton(63, 22, "      ADD NEW      ");
+				buttons::inactive::smallButton(63, 22, "       CREATE      ");
 				buttons::active::smallButton(63, 27,   "        EDIT       ", 1, 5);
 				buttons::inactive::smallButton(63, 32, "       DELETE      ");
 				buttons::inactive::smallButton(63, 37, "        EXIT       ");
@@ -294,9 +313,9 @@ namespace pm::designApp
 			void fourthActive()
 			{
 				pm::tools::outputBorder(23, 3, 39);
-				titles::userManagement(30, 7);
+				titles::teamsManagement(30, 7);
 				buttons::inactive::smallButton(63, 17, "     VIEW ALL      ");
-				buttons::inactive::smallButton(63, 22, "      ADD NEW      ");
+				buttons::inactive::smallButton(63, 22, "       CREATE      ");
 				buttons::inactive::smallButton(63, 27, "        EDIT       ");
 				buttons::active::smallButton(63, 32,   "       DELETE      ", 1, 5);
 				buttons::inactive::smallButton(63, 37, "        EXIT       ");
@@ -308,10 +327,73 @@ namespace pm::designApp
 				pm::tools::outputBorder(23, 3, 39);
 				titles::userManagement(30, 7);
 				buttons::inactive::smallButton(63, 17, "     VIEW ALL      ");
-				buttons::inactive::smallButton(63, 22, "      ADD NEW      ");
+				buttons::inactive::smallButton(63, 22, "       CREATE      ");
 				buttons::inactive::smallButton(63, 27, "        EDIT       ");
 				buttons::inactive::smallButton(63, 32, "       DELETE      ");
 				buttons::active::smallButton(63, 37,   "        EXIT       ", 1, 5);
+			}
+		}
+
+		namespace teamsManagement
+		{
+			// Function for output first activ teams management button
+			void firstActive()
+			{
+				pm::tools::outputBorder(23, 3, 39);
+				titles::teamsManagement(28, 7);
+				buttons::active::smallButton(63, 17,   "     VIEW ALL      ", 1, 1);
+				buttons::inactive::smallButton(63, 22, "       CREATE      ");
+				buttons::inactive::smallButton(63, 27, "        EDIT       ");
+				buttons::inactive::smallButton(63, 32, "       DELETE      ");
+				buttons::inactive::smallButton(63, 37, "        EXIT       ");
+			}
+
+			// Function for output second activ teams management button
+			void secondActive()
+			{
+				pm::tools::outputBorder(23, 3, 39);
+				titles::teamsManagement(28, 7);
+				buttons::inactive::smallButton(63, 17, "     VIEW ALL      ");
+				buttons::active::smallButton(63, 22,   "       CREATE      ", 1, 1);
+				buttons::inactive::smallButton(63, 27, "        EDIT       ");
+				buttons::inactive::smallButton(63, 32, "       DELETE      ");
+				buttons::inactive::smallButton(63, 37, "        EXIT       ");
+			}
+
+			// Function for output third activ teams management button
+			void thirdActive()
+			{
+				pm::tools::outputBorder(23, 3, 39);
+				titles::teamsManagement(28, 7);
+				buttons::inactive::smallButton(63, 17, "     VIEW ALL      ");
+				buttons::inactive::smallButton(63, 22, "       CREATE      ");
+				buttons::active::smallButton(63, 27,   "        EDIT       ", 1, 1);
+				buttons::inactive::smallButton(63, 32, "       DELETE      ");
+				buttons::inactive::smallButton(63, 37, "        EXIT       ");
+			}
+
+			// Function for output fourth activ teams management button
+			void fourthActive()
+			{
+				pm::tools::outputBorder(23, 3, 39);
+				titles::teamsManagement(28, 7);
+				buttons::inactive::smallButton(63, 17, "     VIEW ALL      ");
+				buttons::inactive::smallButton(63, 22, "       CREATE      ");
+				buttons::inactive::smallButton(63, 27, "        EDIT       ");
+				buttons::active::smallButton(63, 32,   "       DELETE      ", 1, 1);
+				buttons::inactive::smallButton(63, 37, "        EXIT       ");
+			}
+
+			// Function for output fifth activ teams management button
+			void fifthActive()
+			{
+				pm::tools::outputBorder(23, 3, 39);
+				titles::teamsManagement(28, 7);
+				buttons::inactive::smallButton(63, 17, "     VIEW ALL      ");
+				buttons::inactive::smallButton(63, 22, "       CREATE      ");
+				buttons::inactive::smallButton(63, 27, "        EDIT       ");
+				buttons::inactive::smallButton(63, 32, "       DELETE      ");
+				buttons::active::smallButton(63, 37,   "        EXIT       ", 1, 1);
 			}
 		}
 	}
@@ -574,6 +656,151 @@ namespace pm::designApp
 
 	namespace menus
 	{
+		// Function for movement in teams management
+		void teamsManagement()
+		{
+			int choice;
+			bool truth;
+			system("CLS");
+			buttons::teamsManagement::firstActive();
+			choice = 1;
+			while (true)
+			{
+				truth = true;
+				switch (_getch())
+				{
+				case KEY_UP:
+					switch (choice)
+					{
+					case 1:
+					{
+						system("CLS");
+						buttons::teamsManagement::fifthActive();
+						choice = 5;
+						break;
+					}
+					case 2:
+					{
+						system("CLS");
+						buttons::teamsManagement::firstActive();
+						choice = 1;
+						break;
+					}
+					case 3:
+					{
+						system("CLS");
+						buttons::teamsManagement::secondActive();
+						choice = 2;
+						break;
+					}
+					case 4:
+					{
+						system("CLS");
+						buttons::teamsManagement::thirdActive();
+						choice = 3;
+						break;
+					}
+					case 5:
+					{
+						system("CLS");
+						buttons::teamsManagement::fourthActive();
+						choice = 4;
+						break;
+					}
+					}
+					break;
+				case KEY_DOWN:
+					switch (choice)
+					{
+					case 1:
+					{
+						system("CLS");
+						buttons::teamsManagement::secondActive();
+						choice = 2;
+						break;
+					}
+					case 2:
+					{
+						system("CLS");
+						buttons::teamsManagement::thirdActive();
+						choice = 3;
+						break;
+					}
+					case 3:
+					{
+						system("CLS");
+						buttons::teamsManagement::fourthActive();
+						choice = 4;
+						break;
+					}
+					case 4:
+					{
+						system("CLS");
+						buttons::teamsManagement::fifthActive();
+						choice = 5;
+						break;
+					}
+					case 5:
+					{
+						system("CLS");
+						buttons::teamsManagement::firstActive();
+						choice = 1;
+						break;
+					}
+					}
+					break;
+				case KEY_ENTER:
+					while (truth)
+					{
+						switch (choice)
+						{
+						case 1:
+						{
+							system("CLS");
+							choice = 6;
+							break;
+						}
+						case 2:
+						{
+							system("CLS");
+							choice = 6;
+							break;
+						}
+						case 3:
+						{
+							system("CLS");
+							choice = 6;
+							break;
+						}
+						case 4:
+						{
+							system("CLS");
+							choice = 6;
+							break;
+						}
+						case 5:
+						{
+							truth = false;
+							return;
+							break;
+						}
+						case 6:
+						{
+							system("CLS");
+							buttons::teamsManagement::firstActive();
+							truth = false;
+							choice = 1;
+							break;
+						}
+						}
+					}
+					break;
+				default:
+					break;
+				}
+			}
+		}
+
 		// Function for movement in user management
 		void userManagement()
 		{
@@ -799,6 +1026,7 @@ namespace pm::designApp
 						case 2:
 						{
 							system("CLS");
+							teamsManagement();
 							choice = 4;
 							break;
 						}

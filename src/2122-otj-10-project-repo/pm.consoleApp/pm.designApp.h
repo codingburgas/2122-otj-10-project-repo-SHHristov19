@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 #include <conio.h>
-#include "..\pm.tools\pm.tools.h"
+#include "../pm.tools/pm.tools.h"
 
 #define KEY_UP 72
 #define KEY_DOWN 80
@@ -26,6 +26,9 @@ namespace pm::designApp
 
 		// Function for output user management title in current position
 		void userManagement(int x, int y);
+
+		// Function for output teams management title in current position
+		void teamsManagement(int x, int y);
 	}
 
 	namespace buttons
@@ -104,6 +107,24 @@ namespace pm::designApp
 			// Function for output fifth activ user management button
 			void fifthActive();
 		}
+
+		namespace teamsManagement
+		{
+			// Function for output first activ teams management button
+			void firstActive();
+
+			// Function for output second activ teams management button
+			void secondActive();
+
+			// Function for output third activ teams management button
+			void thirdActive();
+
+			// Function for output fourth activ teams management button
+			void fourthActive();
+
+			// Function for output fifth activ teams management button
+			void fifthActive();
+		}
 	}
 
 	namespace windows
@@ -135,6 +156,9 @@ namespace pm::designApp
 
 	namespace menus
 	{
+		// Function for movement in teams management
+		void teamsManagement();
+
 		// Function for movement in user management
 		void userManagement();
 
