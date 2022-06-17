@@ -16,7 +16,7 @@ namespace pm::designApp
 	namespace titles
 	{
 		// Function for output main menu title in a current position
-		void mainMenu(int, int);
+		void loginPanel(int, int);
 
 		// Function for output admin panel title in a current position
 		void adminPanel(int x, int y);
@@ -48,7 +48,7 @@ namespace pm::designApp
 			void bigButton(int x, int y, string word);
 		}
 
-		namespace mainMenu
+		namespace loginPanel
 		{
 			// Function for output first activ main menu button
 			void firstActive();
