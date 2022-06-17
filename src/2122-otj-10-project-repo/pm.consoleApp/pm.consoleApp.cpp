@@ -5,5 +5,4 @@ int main()
 {
     pm::tools::setConsoleSize();
     pm::designApp::menus::menu();
-    //pm::designApp::buttons::adminPanel::firstActive();
 }

@@ -26,7 +26,7 @@ namespace pm::dal
     bool loginAsFirst(string username, string password)
     {
         ifstream file("../pm.data/users.csv");
-        if (file.is_open() && getSizeOfFile("../pm.data/users.csv") == 62 && username == "admin" && password == "adminpass")
+        if (file.is_open() && getSizeOfFile("../pm.data/users.csv") == 77 && username == "admin" && password == "adminpass")
         {
             file.close();
             return true;
@@ -70,7 +70,7 @@ namespace pm::dal
         {
             if (checkForExistedUser(fileName, username))
             {
-                file << "\"" << id << "\",\"" << firstName << "\",\"" << lastName << "\",\"" << username << "\",\"" << pm::bll::hashPassword(password) << "\",\"" << age << "\",\"" << timeOfRegistration << "\"\n";
+                file << "\"" << id << "\",\"" << firstName << "\",\"" << lastName << "\",\"" << username << "\",\"" << pm::bll::hashPassword(password) << "\",\"" << age << "\",\"" << timeOfRegistration << "\",\"" << 0 << "\",\"" << "user" << "\"\n" ;
                 file.close();
                 return 1;
             }
@@ -99,10 +99,10 @@ namespace pm::dal
                 if (counter > -1)
                 {
                     counter = 0;
-                    string id, firstName, lastName, username, password, age, timeOfRegistration;
+                    string id, firstName, lastName, username, password, age, timeOfRegistration, lastLogin, role;
                     for (size_t i = 0; i < line.size(); i++)
                     {
-                        if (line[i] == ',' && counter < 6)
+                        if (line[i] == ',' && counter < 8)
                         {
                             counter++;
                             line.erase(i, 0);
@@ -139,6 +139,14 @@ namespace pm::dal
                         {
                             timeOfRegistration += line[i];
                         }
+                        else if (counter == 7)
+                        {
+                            lastLogin += line[i];
+                        }
+                        else if (counter == 8)
+                        {
+                            role += line[i];
+                        }
                     }
                      vector<string> temp;
                      temp.push_back(id);
@@ -148,6 +156,8 @@ namespace pm::dal
                      temp.push_back(password);
                      temp.push_back(age);
                      temp.push_back(timeOfRegistration);
+                     temp.push_back(lastLogin);
+                     temp.push_back(role);
                      data.push_back(temp);
                 }
                 counter++;
@@ -201,11 +211,26 @@ namespace pm::dal
         return userAndPass;
     }
 
+    // Function for replace time of last login
+    void replaceLoginTime(vector<vector<string>>* data, string username, string password, string time, string* role)
+    {
+        for (size_t i = 0; i < (*data).size(); i++)
+        {
+            if ((*data)[i][3] == username and (*data)[i][4] == pm::bll::hashPassword(password))
+            {
+                (*data)[i][7].replace(0, (*data)[i][7].size(), time);
+                *role = (*data)[i][8];
+                return;
+            }
+        }
+    }
+
     // Function for check if usename and password are in the file
-    bool login(string fileName, string username, string password)
+    bool login(string fileName, string username, string password, string* role)
     {
         ifstream file(fileName);
         vector<string> userAndPass = getUsernameAndPassword(fileName);
+        vector<vector<string>> data = readDataForUsersFromFile(fileName);
         for (auto check : userAndPass)
         {
             string checkUsername, checkPassword;
@@ -228,6 +253,9 @@ namespace pm::dal
 
             if (username == checkUsername && pm::bll::hashPassword(password) == checkPassword)
             {
+                replaceLoginTime(&data, username, password, pm::bll::currentDateTime(), role);
+                data = pm::dal::pushFrontTitleOfFile(data);
+                pm::dal::printDataInFile(fileName, data);
                 return true;
             }
         }
@@ -315,6 +343,8 @@ namespace pm::dal
         temp.push_back("password");
         temp.push_back("age");
         temp.push_back("timeOfRegistration");
+        temp.push_back("lastLogin");
+        temp.push_back("role");
         output.push_back(temp);
         for (size_t i = 0; i < data.size(); i++)
         {

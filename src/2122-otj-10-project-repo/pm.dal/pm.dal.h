@@ -22,8 +22,11 @@ namespace pm::dal
     // Function for get username and password from file
     std::vector<std::string> getUsernameAndPassword(std::string);
 
+    // Function for replace time of last login
+    void replaceLoginTime(std::vector<std::vector<std::string>>* data, std::string username, std::string password, std::string time, std::string* role);
+
     // Function for check if usename and password are in the file
-    bool login(std::string, std::string, std::string);
+    bool login(std::string, std::string, std::string, std::string* role);
 
     // Function for checking already existing username
     bool checkForExistedUser(std::string fileName, std::string username);

@@ -282,7 +282,7 @@ namespace pm::designApp
 		void login()
 		{
 			pm::tools::outputBorder(24, 17, 13);
-			string username, password;
+			string username, password, role;
 			pm::tools::consoleCoordinates(51, 22);
 			cout << "Enter your username : ";
 			pm::tools::consoleCoordinates(51, 25);
@@ -291,7 +291,7 @@ namespace pm::designApp
 			cin >> username;
 			pm::tools::consoleCoordinates(73, 25);
 			cin >> password;
-			if (pm::dal::login("../pm.data/users.csv", username, password))
+			if (pm::dal::login("../pm.data/users.csv", username, password, &role))
 			{
 				system("CLS");
 				pm::tools::outputBorder(24, 14, 17);
@@ -304,7 +304,7 @@ namespace pm::designApp
 				pm::tools::outputBorder(24, 14, 17);
 				warnings::successfullyLogin(46, 17);
 				Sleep(1500);
-				pm::designApp::menus::adminPanel();
+				role = "admin";
 			}
 			else
 			{
@@ -312,6 +312,14 @@ namespace pm::designApp
 				pm::tools::outputBorder(24, 14, 17);
 				warnings::tryAgain(56, 18);
 				Sleep(1500);
+			}
+			if (role == "user")
+			{
+
+			}
+			else if (role == "admin")
+			{
+				pm::designApp::menus::adminPanel();
 			}
 		}
 
@@ -372,7 +380,7 @@ namespace pm::designApp
 		void changePassword()
 		{	
 			pm::tools::outputBorder(24, 15, 16);
-			string username, password, newPassword;
+			string username, password, newPassword, role;
 			pm::tools::consoleCoordinates(51, 20);
 			cout << "Enter your username : ";
 			pm::tools::consoleCoordinates(51, 23);
@@ -386,7 +394,7 @@ namespace pm::designApp
 			cin >> username;
 			pm::tools::consoleCoordinates(73, 23);
 			cin >> password;
-			if (pm::dal::login("../pm.data/users.csv", username, password))
+			if (pm::dal::login("../pm.data/users.csv", username, password, &role))
 			{
 				pm::tools::consoleCoordinates(77, 26);
 				cin >> newPassword;
