@@ -4,11 +4,11 @@
 namespace pm::tools
 {
     // Function for displaying text in given console coordinates
-    void consoleCoordinates(int, int);
+    void consoleCoordinates(int x, int y);
 
     // Function for outputing the console in given size
     void setConsoleSize();
 
     // Function for output border with set length
-    void outputBorder(int, int, int);
+    void outputBorder(int x, int y, int height, int length);
 }

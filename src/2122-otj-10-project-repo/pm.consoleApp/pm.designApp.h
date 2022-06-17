@@ -29,6 +29,9 @@ namespace pm::designApp
 
 		// Function for output teams management title in current position
 		void teamsManagement(int x, int y);
+
+		// Function for output project management title in current position
+		void projectManagement(int x, int y);
 	}
 
 	namespace buttons
@@ -125,6 +128,27 @@ namespace pm::designApp
 			// Function for output fifth activ teams management button
 			void fifthActive();
 		}
+
+		namespace projectManagement
+		{
+			// Function for output first activ project management button
+			void firstActive();
+
+			// Function for output second activ project management button
+			void secondActive();
+
+			// Function for output third activ project management button
+			void thirdActive();
+
+			// Function for output fourth activ project management button
+			void fourthActive();
+
+			// Function for output fifth activ project management button
+			void fifthActive();
+
+			// Function for output sixth activ project management button
+			void sixthActive();
+		}
 	}
 
 	namespace windows
@@ -156,6 +180,9 @@ namespace pm::designApp
 
 	namespace menus
 	{
+		// Function for movement in project management
+		void projectManagement();
+
 		// Function for movement in teams management
 		void teamsManagement();
 

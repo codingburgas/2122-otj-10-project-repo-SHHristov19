@@ -21,18 +21,32 @@ namespace pm::tools
     }
 
     // Function for output border with set length
-    void outputBorder(int x, int y, int end)
+    void outputBorder(int x, int y, int height, int length)
     {
         consoleCoordinates(x, y);
-        cout << "_____________________________________________________________________________________________________" << endl;
-        for(int i = 0; i < end; i++)
+        for (int i = 0; i <= length; i++)
+        {
+            cout << "_";
+        }
+        cout << endl;
+        for(int i = 0; i < height; i++)
         {
             y++;
             consoleCoordinates(x, y);
-            cout << "|                                                                                                   |" << endl;
+            cout << "|";
+            for (int j = 0; j < length; j++)
+            {
+                cout << " ";
+            }
+            cout << "|" << endl;
         }
         y++;
         consoleCoordinates(x, y);
-        cout << "|___________________________________________________________________________________________________|" << endl;
+        cout << "|";
+        for (int i = 0; i < length; i++)
+        {
+            cout << "_";
+        }
+        cout << "|" << endl;
     }
 }
