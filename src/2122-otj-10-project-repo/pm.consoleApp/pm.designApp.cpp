@@ -832,6 +832,63 @@ namespace pm::designApp
 				showUserList(tempX, tempY);
 			}
 		}
+
+		// Function for output delete windows
+		void deleteUser(int x, int y)
+		{
+			system("CLS");
+			pm::tools::outputBorder(24, 13, stoi(pm::dal::generateId("../pm.data/users.csv")) * 4, 101);
+			pm::tools::consoleCoordinates(x, y);
+			cout << "Id\t\tUsername\t\tFirstName\t\tLastName";
+			pm::tools::consoleCoordinates(26, y + 1);
+			cout << "___________________________________________________________________________________________________";
+			vector<vector<string>> data = pm::dal::readDataForIdUsernameFirstAndLastName("../pm.data/users.csv");
+			int tempX = x, tempY = y;
+			y += 2;
+			for (auto row : data)
+			{
+				int counter = 1;
+				y += 3;
+				x = tempX;
+				for (auto col : row)
+				{
+					if (counter == 1)
+					{
+						pm::tools::consoleCoordinates(x, y);
+						x += 16;
+						cout << col;
+					}
+					else if (counter == 2)
+					{
+						pm::tools::consoleCoordinates(x, y);
+						x += 24;
+						cout << col;
+					}
+					else if (counter == 3)
+					{
+						pm::tools::consoleCoordinates(x, y);
+						x += 24;
+						cout << col;
+					}
+					else if (counter == 4)
+					{
+						pm::tools::consoleCoordinates(x, y);
+						cout << col;
+					}
+					counter++;
+				}
+			}
+			int choise = pm::tools::enterNumberWithoutPrintingOnConsole();
+			if (choise == 0 || choise + 1 > stoi(pm::dal::generateId("../pm.data/users.csv")))
+			{
+				return;
+			}
+			else
+			{
+				pm::dal::deleteUserById("../pm.data/users.csv", choise);
+				return;
+			}
+		}
 	}
 
 	namespace menus
@@ -1267,6 +1324,7 @@ namespace pm::designApp
 						case 4:
 						{
 							system("CLS");
+							windows::deleteUser(40, 15);
 							choice = 6;
 							break;
 						}

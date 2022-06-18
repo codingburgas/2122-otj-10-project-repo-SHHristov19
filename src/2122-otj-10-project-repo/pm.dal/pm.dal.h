@@ -51,4 +51,7 @@ namespace pm::dal
 
     // Function for replacing password in file 
     void cnagePassword(std::string fileName, std::string password, std::string username, std::string newPassword);
+
+    // Function for geleting user by id
+    void deleteUserById(std::string fileName, int id);
 }

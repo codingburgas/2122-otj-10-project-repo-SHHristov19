@@ -179,6 +179,9 @@ namespace pm::designApp
 
 		// Function for show users list
 		void showUserList(int x, int y);
+
+		// Function for output delete windows
+		void deleteUser(int x, int y);
 	}
 
 	namespace menus
