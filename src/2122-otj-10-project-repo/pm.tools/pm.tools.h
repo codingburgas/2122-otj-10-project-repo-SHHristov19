@@ -11,4 +11,7 @@ namespace pm::tools
 
     // Function for output border with set length
     void outputBorder(int x, int y, int height, int length);
+
+    // Enter number without printing
+    int enterNumberWithoutPrintingOnConsole();
 }

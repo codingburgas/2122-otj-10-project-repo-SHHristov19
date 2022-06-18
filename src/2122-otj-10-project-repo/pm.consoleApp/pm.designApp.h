@@ -176,6 +176,9 @@ namespace pm::designApp
 
 		// Function for changing password
 		void changePassword();
+
+		// Function for show users list
+		void showUserList(int x, int y);
 	}
 
 	namespace menus

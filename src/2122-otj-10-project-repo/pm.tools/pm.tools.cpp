@@ -51,4 +51,38 @@ namespace pm::tools
         }
         cout << "|" << '\n';
     }
+
+    // Enter number without printing
+    int enterNumberWithoutPrintingOnConsole()
+    {
+        int j = 0;
+        char arr[4];
+        arr[j] = _getch();
+        if (int(arr[j]) == 13)
+        {
+            return 0;
+        }
+        if (int(arr[j]) == 27)
+        {
+            return 0;
+        }
+        while (int(arr[j]) != 13)
+        {
+            j++;
+            arr[j] = _getch();
+        }
+        if (j == 3)
+        {
+            return (int(arr[0]) - 48) * 100 + (int(arr[1]) - 48) * 10 + (int(arr[2]) - 48);
+        }
+        else if (j == 2)
+        {
+
+            return (int(arr[0]) - 48) * 10 + (int(arr[1]) - 48);
+        }
+        else
+        {
+            return int(arr[0]) - 48;
+        }
+    }
 }

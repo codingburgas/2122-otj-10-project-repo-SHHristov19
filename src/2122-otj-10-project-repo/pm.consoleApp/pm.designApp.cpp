@@ -752,6 +752,86 @@ namespace pm::designApp
 				Sleep(1500);
 			}
 		}
+
+		// Function for show users list
+		void showUserList(int x, int y)
+		{
+			system("CLS");
+			pm::tools::outputBorder(24, 13, stoi(pm::dal::generateId("../pm.data/users.csv")) * 4, 101);
+			pm::tools::consoleCoordinates(x, y);
+			cout << "Id\t\tUsername\t\tFirstName\t\tLastName";
+			pm::tools::consoleCoordinates(26, y + 1);
+			cout << "___________________________________________________________________________________________________";
+			vector<vector<string>> data = pm::dal::readDataForIdUsernameFirstAndLastName("../pm.data/users.csv");
+			int tempX = x, tempY = y;
+			y += 2;
+			for (auto row : data)
+			{
+				int counter = 1;
+				y += 3;
+				x = tempX;
+				for (auto col : row)
+				{
+					if (counter == 1)
+					{
+						pm::tools::consoleCoordinates(x, y);
+						x += 16;
+						cout << col;
+					}
+					else if (counter == 2)
+					{
+						pm::tools::consoleCoordinates(x, y);
+						x += 24;
+						cout << col;
+					}
+					else if (counter == 3)
+					{
+						pm::tools::consoleCoordinates(x, y);
+						x += 24;
+						cout << col;
+					}
+					else if (counter == 4)
+					{
+						pm::tools::consoleCoordinates(x, y);
+						cout << col;
+					}
+					counter++;
+				}
+			}
+			int choise = pm::tools::enterNumberWithoutPrintingOnConsole();
+			if (choise == 0 || choise + 1 > stoi(pm::dal::generateId("../pm.data/users.csv")))
+			{
+				return;
+			}
+			else
+			{
+				system("CLS");
+				pm::tools::outputBorder(24, 13, 20, 101);
+				vector<string> user = pm::dal::getUserDataById("../pm.data/users.csv", choise);
+				x = tempX; y = tempY;
+				pm::tools::consoleCoordinates(x, y + 1);
+				cout << "Id of the user : " << user[0];
+				pm::tools::consoleCoordinates(x, y + 3);
+				cout << "First name of the user : " << user[1];
+				pm::tools::consoleCoordinates(x, y + 5);
+				cout << "Last name of the user : " << user[2];
+				pm::tools::consoleCoordinates(x, y + 7);
+				cout << "Username of the user : " << user[3];
+				pm::tools::consoleCoordinates(x, y + 9);
+				cout << "Hashing password of the user : " << user[4];
+				pm::tools::consoleCoordinates(x, y + 11);
+				cout << "Age of the user : " << user[5];
+				pm::tools::consoleCoordinates(x, y + 13);
+				cout << "Time of registration of the user : " << user[6];
+				pm::tools::consoleCoordinates(x, y + 15);
+				cout << "Last login data of the user : " << user[7];
+				pm::tools::consoleCoordinates(x, y + 17);
+				cout << "Role of the user : " << user[8];
+				pm::tools::consoleCoordinates(x + 20, y + 20);
+				system("pause");
+				showUserList(tempX, tempY);
+			}
+		}
 	}
 
 	namespace menus
@@ -1167,6 +1247,7 @@ namespace pm::designApp
 						case 1:
 						{
 							system("CLS");
+							windows::showUserList(40, 15);
 							choice = 6;
 							break;
 						}

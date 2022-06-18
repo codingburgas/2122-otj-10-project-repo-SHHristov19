@@ -39,7 +39,7 @@ namespace pm::dal
     } 
 
     // Function for generate id
-    string getId(string fileName)
+    string generateId(string fileName)
     {
         ifstream file(fileName);
         int counter = 0;
@@ -61,7 +61,7 @@ namespace pm::dal
     {
         ofstream file(fileName, ios_base::app);
         string id, timeOfRegistration;
-        id = getId(fileName);
+        id = generateId(fileName);
         timeOfRegistration = pm::bll::currentDateTime();
         if (pm::bll::checkPassword(password) &&
             pm::bll::checkStringForSpecialCharacters(firstName) &&
@@ -86,12 +86,12 @@ namespace pm::dal
     }
 
     // Function for read data from file and add it in vector<string>
-    vector<vector<string>> readDataForUsersFromFile(string fileName)
+    vector<vector<string>> readDataFromFile(string fileName)
     {
         vector<vector<string>> data;
         ifstream file(fileName);
         string line;
-        int counter = -1, sizeOfVector = 0;
+        int counter = -1;
         if (file.is_open())
         {
             while (getline(file, line))
@@ -184,7 +184,7 @@ namespace pm::dal
                     string username, password;
                     for (size_t i = 0; i < line.size(); i++)
                     {
-                        if (line[i] == ',' && counter < 6)
+                        if (line[i] == ',' && counter < 8)
                         {
                             counter++;
                             line.erase(i, 0);
@@ -211,6 +211,146 @@ namespace pm::dal
         return userAndPass;
     }
 
+    // Function for read data from file for id, username, firstName and LastName
+    vector<vector<string>> readDataForIdUsernameFirstAndLastName(string fileName)
+    {
+        vector<vector<string>> data;
+        ifstream file(fileName);
+        string line;
+        int counter = -1;
+        if (file.is_open())
+        {
+            while (getline(file, line))
+            {
+                if (counter > -1)
+                {
+                    counter = 0;
+                    string id, firstName, lastName, username;
+                    for (size_t i = 0; i < line.size(); i++)
+                    {
+                        if (line[i] == ',' && counter < 8)
+                        {
+                            counter++;
+                            line.erase(i, 0);
+                        }
+                        else if (line[i] == '"')
+                        {
+                            line.erase(i, 0);
+                        }
+                        else if (counter == 0)
+                        {
+                            id += line[i];
+                        }
+                        else if (counter == 1)
+                        {
+                            firstName += line[i];
+                        }
+                        else if (counter == 2)
+                        {
+                            lastName += line[i];
+                        }
+                        else if (counter == 3)
+                        {
+                            username += line[i];
+                        }
+                    }
+                    vector<string> temp;
+                    temp.push_back(id);
+                    temp.push_back(username);
+                    temp.push_back(firstName);
+                    temp.push_back(lastName);
+                    data.push_back(temp);
+                }
+                counter++;
+            }
+            file.close();
+        }
+        return data;
+    }
+
+    // Function for getting data by id of user
+    vector<string> getUserDataById(string fileName, int idUser)
+    {
+        vector<string> data;
+        ifstream file(fileName);
+        string line;
+        int counter = -1;
+        if (file.is_open())
+        {
+            while (getline(file, line))
+            {
+                if (counter > -1)
+                {
+                    counter = 0;
+                    string id, firstName, lastName, username, password, age, timeOfRegistration, lastLogin, role;
+                    for (size_t i = 0; i < line.size(); i++)
+                    {
+                        if (line[i] == ',' && counter < 8)
+                        {
+                            counter++;
+                            line.erase(i, 0);
+                        }
+                        else if (line[i] == '"')
+                        {
+                            line.erase(i, 0);
+                        }
+                        else if (counter == 0)
+                        {
+                            id += line[i];
+                        }
+                        else if (counter == 1)
+                        {
+                            firstName += line[i];
+                        }
+                        else if (counter == 2)
+                        {
+                            lastName += line[i];
+                        }
+                        else if (counter == 3)
+                        {
+                            username += line[i];
+                        }
+                        else if (counter == 4)
+                        {
+                            password += line[i];
+                        }
+                        else if (counter == 5)
+                        {
+                            age += line[i];
+                        }
+                        else if (counter == 6)
+                        {
+                            timeOfRegistration += line[i];
+                        }
+                        else if (counter == 7)
+                        {
+                            lastLogin += line[i];
+                        }
+                        else if (counter == 8)
+                        {
+                            role += line[i];
+                        }
+                    }
+                    if (idUser == stoi(id))
+                    {
+                        data.push_back(id);
+                        data.push_back(firstName);
+                        data.push_back(lastName);
+                        data.push_back(username);
+                        data.push_back(password);
+                        data.push_back(age);
+                        data.push_back(timeOfRegistration);
+                        data.push_back(lastLogin);
+                        data.push_back(role);
+                    }
+                }
+                counter++;
+            }
+            file.close();
+        }
+        return data;
+    }
+
     // Function for replace time of last login
     void replaceLoginTime(vector<vector<string>>* data, string username, string password, string time, string* role)
     {
@@ -230,7 +370,7 @@ namespace pm::dal
     {
         ifstream file(fileName);
         vector<string> userAndPass = getUsernameAndPassword(fileName);
-        vector<vector<string>> data = readDataForUsersFromFile(fileName);
+        vector<vector<string>> data = readDataFromFile(fileName);
         for (auto check : userAndPass)
         {
             string checkUsername, checkPassword;
@@ -256,9 +396,11 @@ namespace pm::dal
                 replaceLoginTime(&data, username, password, pm::bll::currentDateTime(), role);
                 data = pm::dal::pushFrontTitleOfFile(data);
                 pm::dal::printDataInFile(fileName, data);
+                file.close();
                 return true;
             }
         }
+        file.close();
         return false;
     }
 
@@ -394,7 +536,7 @@ namespace pm::dal
     // Function for replacing password in file 
     void cnagePassword(string fileName, string password, string username, string newPassword)
     {
-        vector<vector<string>> allDataInFile = readDataForUsersFromFile(fileName);
+        vector<vector<string>> allDataInFile = readDataFromFile(fileName);
         replaceData(&allDataInFile, password, username, newPassword);
         allDataInFile = pushFrontTitleOfFile(allDataInFile);
         printDataInFile(fileName, allDataInFile);
