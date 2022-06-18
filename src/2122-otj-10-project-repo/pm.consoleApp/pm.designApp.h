@@ -172,7 +172,7 @@ namespace pm::designApp
 		void login();
 
 		// Function for output login window as user
-		void registerUser();
+		void addNewUser();
 
 		// Function for changing password
 		void changePassword();

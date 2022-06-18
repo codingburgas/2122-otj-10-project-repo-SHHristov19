@@ -654,7 +654,7 @@ namespace pm::designApp
 		}
 
 		// Function for output register windows
-		void registerUser()
+		void addNewUser()
 		{
 			pm::tools::outputBorder(24, 13, 20, 101);
 			string username, firstName, lastName, password;
@@ -1173,6 +1173,7 @@ namespace pm::designApp
 						case 2:
 						{
 							system("CLS");
+							windows::addNewUser();
 							choice = 6;
 							break;
 						}
