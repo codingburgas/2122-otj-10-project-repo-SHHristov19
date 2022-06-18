@@ -871,31 +871,31 @@ namespace pm::designApp
 						case 1:
 						{
 							system("CLS");
-							choice = 6;
+							choice = 7;
 							break;
 						}
 						case 2:
 						{
 							system("CLS");
-							choice = 6;
+							choice = 7;
 							break;
 						}
 						case 3:
 						{
 							system("CLS");
-							choice = 6;
+							choice = 7;
 							break;
 						}
 						case 4:
 						{
 							system("CLS");
-							choice = 6;
+							choice = 7;
 							break;
 						}
 						case 5:
 						{
 							system("CLS");
-							choice = 6;
+							choice = 7;
 							break;
 						}
 						case 6:
@@ -1406,19 +1406,19 @@ namespace pm::designApp
 						{
 							system("CLS");
 							projectManagement();
-							choice = 4;
+							choice = 5;
 							break;
 						}
 						case 2:
 						{
 							system("CLS");
-							choice = 4;
+							choice = 5;
 							break;
 						}
 						case 3:
 						{
 							system("CLS");
-							choice = 4;
+							choice = 5;
 							break;
 						}
 						case 4:

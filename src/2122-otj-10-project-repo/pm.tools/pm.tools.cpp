@@ -23,22 +23,24 @@ namespace pm::tools
     // Function for output border with set length
     void outputBorder(int x, int y, int height, int length)
     {
+        string line;
+        line += "|";
+        for (int j = 0; j < length; j++)
+        {
+            line += " ";
+        }
+        line += "|";
         consoleCoordinates(x, y);
         for (int i = 0; i <= length; i++)
         {
             cout << "_";
         }
-        cout << endl;
+        cout << '\n';
         for(int i = 0; i < height; i++)
         {
             y++;
             consoleCoordinates(x, y);
-            cout << "|";
-            for (int j = 0; j < length; j++)
-            {
-                cout << " ";
-            }
-            cout << "|" << endl;
+            cout << line << '\n';
         }
         y++;
         consoleCoordinates(x, y);
@@ -47,6 +49,6 @@ namespace pm::tools
         {
             cout << "_";
         }
-        cout << "|" << endl;
+        cout << "|" << '\n';
     }
 }
