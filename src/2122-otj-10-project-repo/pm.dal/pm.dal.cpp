@@ -652,4 +652,210 @@ namespace pm::dal
             out.close();
         }
     }
+
+    // Function for edit user by id and data
+    void editUserById(string fileName, int idOfUser, int idOfEditData, string newData)
+    {
+        vector<vector<string>> data = pushFrontTitleOfFile(data);
+        ifstream file(fileName);
+        string line;
+        int counter = -1;
+        if (file.is_open())
+        {
+            while (getline(file, line))
+            {
+                if (counter > -1)
+                {
+                    counter = 0;
+                    string id, firstName, lastName, username, password, age, timeOfRegistration, lastLogin, role;
+                    for (size_t i = 0; i < line.size(); i++)
+                    {
+                        if (line[i] == ',' && counter < 8)
+                        {
+                            counter++;
+                            line.erase(i, 0);
+                        }
+                        else if (line[i] == '"')
+                        {
+                            line.erase(i, 0);
+                        }
+                        else if (counter == 0)
+                        {
+                            id += line[i];
+                        }
+                        else if (counter == 1)
+                        {
+                            firstName += line[i];
+                        }
+                        else if (counter == 2)
+                        {
+                            lastName += line[i];
+                        }
+                        else if (counter == 3)
+                        {
+                            username += line[i];
+                        }
+                        else if (counter == 4)
+                        {
+                            password += line[i];
+                        }
+                        else if (counter == 5)
+                        {
+                            age += line[i];
+                        }
+                        else if (counter == 6)
+                        {
+                            timeOfRegistration += line[i];
+                        }
+                        else if (counter == 7)
+                        {
+                            lastLogin += line[i];
+                        }
+                        else if (counter == 8)
+                        {
+                            role += line[i];
+                        }
+                    }
+                    vector<string> temp;
+                    if (idOfEditData > 0 && stoi(id) == idOfUser)
+                    {
+                        temp.push_back(id);
+                        switch (idOfEditData)
+                        {
+                        case 2:
+                        {
+                            temp.push_back(newData);
+                            temp.push_back(lastName);
+                            temp.push_back(username);
+                            temp.push_back(password);
+                            temp.push_back(age);
+                            temp.push_back(timeOfRegistration);
+                            temp.push_back(lastLogin);
+                            temp.push_back(role);
+                            break;
+                        }
+                        case 3:
+                        {
+                            temp.push_back(firstName);
+                            temp.push_back(newData);
+                            temp.push_back(username);
+                            temp.push_back(password);
+                            temp.push_back(age);
+                            temp.push_back(timeOfRegistration);
+                            temp.push_back(lastLogin);
+                            temp.push_back(role);
+                            break;
+                        }
+                        case 4:
+                        {
+                            temp.push_back(firstName);
+                            temp.push_back(lastName);
+                            temp.push_back(newData);
+                            temp.push_back(password);
+                            temp.push_back(age);
+                            temp.push_back(timeOfRegistration);
+                            temp.push_back(lastLogin);
+                            temp.push_back(role);
+                            break;
+                        }
+                        case 5:
+                        {
+                            temp.push_back(firstName);
+                            temp.push_back(lastName);
+                            temp.push_back(username);
+                            temp.push_back(pm::bll::hashPassword(newData));
+                            temp.push_back(age);
+                            temp.push_back(timeOfRegistration);
+                            temp.push_back(lastLogin);
+                            temp.push_back(role);
+                            break;
+                        }
+                        case 6:
+                        {
+                            temp.push_back(firstName);
+                            temp.push_back(lastName);
+                            temp.push_back(username);
+                            temp.push_back(password);
+                            temp.push_back(newData);
+                            temp.push_back(timeOfRegistration);
+                            temp.push_back(lastLogin);
+                            temp.push_back(role);
+                            break;
+                        }
+                        case 9:
+                        {
+                            if (role == "user")
+                            {
+                                temp.push_back(firstName);
+                                temp.push_back(lastName);
+                                temp.push_back(username);
+                                temp.push_back(password);
+                                temp.push_back(age);
+                                temp.push_back(timeOfRegistration);
+                                temp.push_back(lastLogin);
+                                temp.push_back("admin");
+                            }
+                            else
+                            {
+                                temp.push_back(firstName);
+                                temp.push_back(lastName);
+                                temp.push_back(username);
+                                temp.push_back(password);
+                                temp.push_back(age);
+                                temp.push_back(timeOfRegistration);
+                                temp.push_back(lastLogin);
+                                temp.push_back("user");
+                            }
+                            break;
+                        }
+                        }
+                        data.push_back(temp);
+                        idOfEditData = 0;
+                    }
+                    else
+                    {
+                        temp.push_back(id);
+                        temp.push_back(firstName);
+                        temp.push_back(lastName);
+                        temp.push_back(username);
+                        temp.push_back(password);
+                        temp.push_back(age);
+                        temp.push_back(timeOfRegistration);
+                        temp.push_back(lastLogin);
+                        temp.push_back(role);
+                        data.push_back(temp);
+                    }
+                }
+                counter++;
+            }
+            file.close();
+        }
+        ofstream out(fileName, ios_base::trunc);
+        if (out.is_open())
+        {
+            for (int i = 0; i < data.size(); i++)
+            {
+                for (int j = 0; j < data[i].size(); j++)
+                {
+                    if (j == 8 && i > 0)
+                    {
+                        out << "\"" << data[i][j] << "\"\n";
+                    }
+                    else if (j == 8 && i == 0)
+                    {
+                        out << data[i][j] << "\n";
+                    }
+                    else if (j != 8 && i == 0)
+                    {
+                        out << data[i][j] << ",";
+                    }
+                    else
+                    {
+                        out << "\"" << data[i][j] << "\",";
+                    }
+                }
+            }
+            out.close();
+        }
+    }
 }

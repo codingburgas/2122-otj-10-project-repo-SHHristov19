@@ -54,4 +54,7 @@ namespace pm::dal
 
     // Function for geleting user by id
     void deleteUserById(std::string fileName, int id);
+
+    // Function for edit user by id and data
+    void editUserById(std::string fileName, int idOfUser, int idOfEditData, std::string newData);
 }

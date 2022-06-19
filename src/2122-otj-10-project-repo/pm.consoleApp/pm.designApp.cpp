@@ -889,6 +889,133 @@ namespace pm::designApp
 				return;
 			}
 		}
+
+		// Function for edit data of user
+		void editUser(int x, int y)
+		{
+			system("CLS");
+			pm::tools::outputBorder(24, 13, stoi(pm::dal::generateId("../pm.data/users.csv")) * 4, 101);
+			pm::tools::consoleCoordinates(x, y);
+			cout << "Id\t\tUsername\t\tFirstName\t\tLastName";
+			pm::tools::consoleCoordinates(26, y + 1);
+			cout << "___________________________________________________________________________________________________";
+			vector<vector<string>> data = pm::dal::readDataForIdUsernameFirstAndLastName("../pm.data/users.csv");
+			int tempX = x, tempY = y;
+			y += 2;
+			for (auto row : data)
+			{
+				int counter = 1;
+				y += 3;
+				x = tempX;
+				for (auto col : row)
+				{
+					if (counter == 1)
+					{
+						pm::tools::consoleCoordinates(x, y);
+						x += 16;
+						cout << col;
+					}
+					else if (counter == 2)
+					{
+						pm::tools::consoleCoordinates(x, y);
+						x += 24;
+						cout << col;
+					}
+					else if (counter == 3)
+					{
+						pm::tools::consoleCoordinates(x, y);
+						x += 24;
+						cout << col;
+					}
+					else if (counter == 4)
+					{
+						pm::tools::consoleCoordinates(x, y);
+						cout << col;
+					}
+					counter++;
+				}
+			}
+			int id = pm::tools::enterNumberWithoutPrintingOnConsole();
+			if (id == 0 || id + 1 > stoi(pm::dal::generateId("../pm.data/users.csv")))
+			{
+				return;
+			}
+			else
+			{
+				system("CLS");
+				pm::tools::outputBorder(24, 10, 23, 101);
+				pm::tools::consoleCoordinates(55, 13);
+				cout << "1. Username";
+				pm::tools::consoleCoordinates(55, 16);
+				cout << "2. First name";
+				pm::tools::consoleCoordinates(55, 19);
+				cout << "3. Last name";
+				pm::tools::consoleCoordinates(55, 22);
+				cout << "4. Age";
+				pm::tools::consoleCoordinates(55, 25);
+				cout << "5. Password";
+				pm::tools::consoleCoordinates(55, 28);
+				cout << "6. Role";
+				int choise = pm::tools::enterNumberWithoutPrintingOnConsole();
+				if (choise == 0 || choise > 6)
+				{
+					return;
+				}
+				else
+				{
+					string newData;
+					switch (choise)
+					{
+					case 1:
+					{
+						pm::tools::consoleCoordinates(35, 31);
+						cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
+						getline(cin, newData);
+						pm::dal::editUserById("../pm.data/users.csv", id, 4, newData);
+						break;
+					}
+					case 2:
+					{
+						pm::tools::consoleCoordinates(35, 31);
+						cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
+						getline(cin, newData);
+						pm::dal::editUserById("../pm.data/users.csv", id, 2, newData);
+						break;
+					}
+					case 3:
+					{
+						pm::tools::consoleCoordinates(35, 31);
+						cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
+						getline(cin, newData);
+						pm::dal::editUserById("../pm.data/users.csv", id, 3, newData);
+						break;
+					}
+					case 4:
+					{
+						pm::tools::consoleCoordinates(35, 31);
+						cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
+						getline(cin, newData);
+						pm::dal::editUserById("../pm.data/users.csv", id, 6, newData);
+						break;
+					}
+					case 5:
+					{
+						pm::tools::consoleCoordinates(35, 31);
+						cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
+						getline(cin, newData);
+						pm::dal::editUserById("../pm.data/users.csv", id, 5, newData);
+						break;
+					}
+					case 6:
+					{
+						pm::dal::editUserById("../pm.data/users.csv", id, 9, newData);
+						break;
+					}
+					}
+					editUser(tempX, tempY);
+				}
+			}
+		}
 	}
 
 	namespace menus
@@ -1318,6 +1445,7 @@ namespace pm::designApp
 						case 3:
 						{
 							system("CLS");
+							windows::editUser(40, 15);
 							choice = 6;
 							break;
 						}
