@@ -39,19 +39,10 @@ namespace pm::dal
     } 
 
     // Function for generate id
-    string generateId(string fileName)
+    int generateId(string fileName)
     {
-        ifstream file(fileName);
-        int counter = 0;
-        string line;
-        if (file.is_open())
-        {
-            while (getline(file, line))
-            {
-                counter++;
-            }
-        }
-        return to_string(counter);
+        vector<vector<string>> data = readDataFromFile(fileName);
+        return stoi(data[data.size() - 1][0]) + 1;
     }
 
     bool checkForExistedUser(string fileName, string username);
@@ -61,7 +52,7 @@ namespace pm::dal
     {
         ofstream file(fileName, ios_base::app);
         string id, timeOfRegistration;
-        id = generateId(fileName);
+        id = to_string(generateId(fileName));
         timeOfRegistration = pm::bll::currentDateTime();
         if (pm::bll::checkPassword(password) &&
             pm::bll::checkStringForSpecialCharacters(firstName) &&
@@ -212,7 +203,7 @@ namespace pm::dal
     }
 
     // Function for read data from file for id, username, firstName and LastName
-    vector<vector<string>> readDataForIdUsernameFirstAndLastName(string fileName)
+    vector<vector<string>> readDataForIdUsernameFirstAndLastName(string fileName, vector<int> *identification)
     {
         vector<vector<string>> data;
         ifstream file(fileName);
@@ -240,6 +231,7 @@ namespace pm::dal
                         else if (counter == 0)
                         {
                             id += line[i];
+                            (*identification).push_back(stoi(id));
                         }
                         else if (counter == 1)
                         {

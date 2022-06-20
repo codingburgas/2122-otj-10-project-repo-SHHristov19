@@ -757,12 +757,13 @@ namespace pm::designApp
 		void showUserList(int x, int y)
 		{
 			system("CLS");
-			pm::tools::outputBorder(24, 13, stoi(pm::dal::generateId("../pm.data/users.csv")) * 4, 101);
+			pm::tools::outputBorder(24, 7, pm::dal::generateId("../pm.data/users.csv") * 3 + pm::dal::generateId("../pm.data/users.csv") / 2, 101);
 			pm::tools::consoleCoordinates(x, y);
 			cout << "Id\t\tUsername\t\tFirstName\t\tLastName";
 			pm::tools::consoleCoordinates(26, y + 1);
 			cout << "___________________________________________________________________________________________________";
-			vector<vector<string>> data = pm::dal::readDataForIdUsernameFirstAndLastName("../pm.data/users.csv");
+			vector<int> id;
+			vector<vector<string>> data = pm::dal::readDataForIdUsernameFirstAndLastName("../pm.data/users.csv", &id);
 			int tempX = x, tempY = y;
 			y += 2;
 			for (auto row : data)
@@ -799,7 +800,15 @@ namespace pm::designApp
 				}
 			}
 			int choise = pm::tools::enterNumberWithoutPrintingOnConsole();
-			if (choise == 0 || choise + 1 > stoi(pm::dal::generateId("../pm.data/users.csv")))
+			bool exist = false;
+			for (int i = 0; i < id.size(); i++)
+			{
+				if (choise == id[i])
+				{
+					exist = true;
+				}
+			}
+			if (choise == 0 || !exist)
 			{
 				return;
 			}
@@ -837,12 +846,13 @@ namespace pm::designApp
 		void deleteUser(int x, int y)
 		{
 			system("CLS");
-			pm::tools::outputBorder(24, 13, stoi(pm::dal::generateId("../pm.data/users.csv")) * 4, 101);
+			pm::tools::outputBorder(24, 7, pm::dal::generateId("../pm.data/users.csv") * 3 + pm::dal::generateId("../pm.data/users.csv") / 2, 101);
 			pm::tools::consoleCoordinates(x, y);
 			cout << "Id\t\tUsername\t\tFirstName\t\tLastName";
 			pm::tools::consoleCoordinates(26, y + 1);
 			cout << "___________________________________________________________________________________________________";
-			vector<vector<string>> data = pm::dal::readDataForIdUsernameFirstAndLastName("../pm.data/users.csv");
+			vector<int> id;
+			vector<vector<string>> data = pm::dal::readDataForIdUsernameFirstAndLastName("../pm.data/users.csv", &id);
 			int tempX = x, tempY = y;
 			y += 2;
 			for (auto row : data)
@@ -879,7 +889,15 @@ namespace pm::designApp
 				}
 			}
 			int choise = pm::tools::enterNumberWithoutPrintingOnConsole();
-			if (choise == 0 || choise + 1 > stoi(pm::dal::generateId("../pm.data/users.csv")))
+			bool exist = false;
+			for (int i = 0; i < id.size(); i++)
+			{
+				if (choise == id[i])
+				{
+					exist = true;
+				}
+			}
+			if (choise == 0 || !exist)
 			{
 				return;
 			}
@@ -894,12 +912,13 @@ namespace pm::designApp
 		void editUser(int x, int y)
 		{
 			system("CLS");
-			pm::tools::outputBorder(24, 13, stoi(pm::dal::generateId("../pm.data/users.csv")) * 4, 101);
+			pm::tools::outputBorder(24, 7, pm::dal::generateId("../pm.data/users.csv") * 3 + pm::dal::generateId("../pm.data/users.csv") / 2, 101);
 			pm::tools::consoleCoordinates(x, y);
 			cout << "Id\t\tUsername\t\tFirstName\t\tLastName";
 			pm::tools::consoleCoordinates(26, y + 1);
 			cout << "___________________________________________________________________________________________________";
-			vector<vector<string>> data = pm::dal::readDataForIdUsernameFirstAndLastName("../pm.data/users.csv");
+			vector<int> id;
+			vector<vector<string>> data = pm::dal::readDataForIdUsernameFirstAndLastName("../pm.data/users.csv", &id);
 			int tempX = x, tempY = y;
 			y += 2;
 			for (auto row : data)
@@ -935,8 +954,16 @@ namespace pm::designApp
 					counter++;
 				}
 			}
-			int id = pm::tools::enterNumberWithoutPrintingOnConsole();
-			if (id == 0 || id + 1 > stoi(pm::dal::generateId("../pm.data/users.csv")))
+			int chosenID = pm::tools::enterNumberWithoutPrintingOnConsole();
+			bool exist = false;
+			for (int i = 0; i < id.size(); i++)
+			{
+				if (chosenID == id[i])
+				{
+					exist = true;
+				}
+			}
+			if (chosenID == 0 || !exist)
 			{
 				return;
 			}
@@ -971,7 +998,7 @@ namespace pm::designApp
 						pm::tools::consoleCoordinates(35, 31);
 						cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
 						getline(cin, newData);
-						pm::dal::editUserById("../pm.data/users.csv", id, 4, newData);
+						pm::dal::editUserById("../pm.data/users.csv", chosenID, 4, newData);
 						break;
 					}
 					case 2:
@@ -979,7 +1006,7 @@ namespace pm::designApp
 						pm::tools::consoleCoordinates(35, 31);
 						cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
 						getline(cin, newData);
-						pm::dal::editUserById("../pm.data/users.csv", id, 2, newData);
+						pm::dal::editUserById("../pm.data/users.csv", chosenID, 2, newData);
 						break;
 					}
 					case 3:
@@ -987,7 +1014,7 @@ namespace pm::designApp
 						pm::tools::consoleCoordinates(35, 31);
 						cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
 						getline(cin, newData);
-						pm::dal::editUserById("../pm.data/users.csv", id, 3, newData);
+						pm::dal::editUserById("../pm.data/users.csv", chosenID, 3, newData);
 						break;
 					}
 					case 4:
@@ -995,7 +1022,7 @@ namespace pm::designApp
 						pm::tools::consoleCoordinates(35, 31);
 						cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
 						getline(cin, newData);
-						pm::dal::editUserById("../pm.data/users.csv", id, 6, newData);
+						pm::dal::editUserById("../pm.data/users.csv", chosenID, 6, newData);
 						break;
 					}
 					case 5:
@@ -1003,12 +1030,12 @@ namespace pm::designApp
 						pm::tools::consoleCoordinates(35, 31);
 						cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
 						getline(cin, newData);
-						pm::dal::editUserById("../pm.data/users.csv", id, 5, newData);
+						pm::dal::editUserById("../pm.data/users.csv", chosenID, 5, newData);
 						break;
 					}
 					case 6:
 					{
-						pm::dal::editUserById("../pm.data/users.csv", id, 9, newData);
+						pm::dal::editUserById("../pm.data/users.csv", chosenID, 9, newData);
 						break;
 					}
 					}
@@ -1431,7 +1458,7 @@ namespace pm::designApp
 						case 1:
 						{
 							system("CLS");
-							windows::showUserList(40, 15);
+							windows::showUserList(40, 9);
 							choice = 6;
 							break;
 						}
@@ -1445,14 +1472,14 @@ namespace pm::designApp
 						case 3:
 						{
 							system("CLS");
-							windows::editUser(40, 15);
+							windows::editUser(40, 9);
 							choice = 6;
 							break;
 						}
 						case 4:
 						{
 							system("CLS");
-							windows::deleteUser(40, 15);
+							windows::deleteUser(40, 9);
 							choice = 6;
 							break;
 						}

@@ -11,7 +11,7 @@ namespace pm::dal
     bool loginAsFirst(std::string, std::string);
 
     // Function for generate id
-    std::string generateId(std::string);
+    int generateId(std::string);
 
     // Function for add data in file
     int registerUser(std::string, std::string, std::string, std::string, std::string, std::string);
@@ -23,7 +23,7 @@ namespace pm::dal
     std::vector<std::string> getUsernameAndPassword(std::string fileName);
 
     // Function for read data from file for id, username, firstName and LastName
-    std::vector<std::vector<std::string>> readDataForIdUsernameFirstAndLastName(std::string fileName);
+    std::vector<std::vector<std::string>> readDataForIdUsernameFirstAndLastName(std::string fileName, std::vector<int>* identification);
 
     // Function for getting data by id of user
     std::vector<std::string> getUserDataById(std::string fileName, int idUser);
