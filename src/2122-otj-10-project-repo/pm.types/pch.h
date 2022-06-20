@@ -8,6 +8,5 @@
 #define PCH_H
 
 #include <string>
-#include <ctime>
 
 #endif //PCH_H

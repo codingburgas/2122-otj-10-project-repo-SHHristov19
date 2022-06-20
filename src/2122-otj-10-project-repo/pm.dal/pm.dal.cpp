@@ -2,6 +2,7 @@
 #include "pm.dal.h"
 #include "../pm.bll/pm.bll.h"
 #include "../pm.consoleApp/pm.designApp.h"
+#include "../pm.types/User.h"
 
 namespace pm::dal
 {
@@ -23,10 +24,10 @@ namespace pm::dal
     }
 
     // Function for login for the first time like admin
-    bool loginAsFirst(string username, string password)
+    bool loginAsFirst(pm::types::USER user)
     {
         ifstream file("../pm.data/users.csv");
-        if (file.is_open() && getSizeOfFile("../pm.data/users.csv") == 77 && username == "admin" && password == "adminpass")
+        if (file.is_open() && getSizeOfFile("../pm.data/users.csv") == 77 && user.username == "admin" && user.password == "adminpass")
         {
             file.close();
             return true;
@@ -48,20 +49,19 @@ namespace pm::dal
     bool checkForExistedUser(string fileName, string username);
 
     // Function for add data in file
-    int registerUser(string fileName, string firstName, string lastName, string username, string password, string age)
+    int registerUser(string fileName, pm::types::USER user)
     {
         ofstream file(fileName, ios_base::app);
-        string id, timeOfRegistration;
-        id = to_string(generateId(fileName));
-        timeOfRegistration = pm::bll::currentDateTime();
-        if (pm::bll::checkPassword(password) &&
-            pm::bll::checkStringForSpecialCharacters(firstName) &&
-            pm::bll::checkStringForSpecialCharacters(lastName) &&
-            pm::bll::checkStringForSpecialCharacters(username))
+        user.id = to_string(generateId(fileName));
+        user.timeOfRegistration = pm::bll::currentDateTime();
+        if (pm::bll::checkPassword(user.password) &&
+            pm::bll::checkStringForSpecialCharacters(user.firstName) &&
+            pm::bll::checkStringForSpecialCharacters(user.lastName) &&
+            pm::bll::checkStringForSpecialCharacters(user.username))
         {
-            if (checkForExistedUser(fileName, username))
+            if (checkForExistedUser(fileName, user.username))
             {
-                file << "\"" << id << "\",\"" << firstName << "\",\"" << lastName << "\",\"" << username << "\",\"" << pm::bll::hashPassword(password) << "\",\"" << age << "\",\"" << timeOfRegistration << "\",\"" << 0 << "\",\"" << "user" << "\"\n" ;
+                file << "\"" << user.id << "\",\"" << user.firstName << "\",\"" << user.lastName << "\",\"" << user.username << "\",\"" << pm::bll::hashPassword(user.password) << "\",\"" << user.age << "\",\"" << user.timeOfRegistration << "\",\"" << 0 << "\",\"" << "user" << "\"\n" ;
                 file.close();
                 return 1;
             }
@@ -79,7 +79,7 @@ namespace pm::dal
     // Function for read data from file and add it in vector<string>
     vector<vector<string>> readDataFromFile(string fileName)
     {
-        vector<vector<string>> data;
+        vector<vector<string>> allData;
         ifstream file(fileName);
         string line;
         int counter = -1;
@@ -90,7 +90,7 @@ namespace pm::dal
                 if (counter > -1)
                 {
                     counter = 0;
-                    string id, firstName, lastName, username, password, age, timeOfRegistration, lastLogin, role;
+                    pm::types::USER data;
                     for (size_t i = 0; i < line.size(); i++)
                     {
                         if (line[i] == ',' && counter < 8)
@@ -104,58 +104,58 @@ namespace pm::dal
                         }
                         else if (counter == 0)
                         {
-                            id += line[i];
+                            data.id += line[i];
                         }
                         else if (counter == 1)
                         {
-                            firstName += line[i];
+                            data.firstName += line[i];
                         }
                         else if (counter == 2)
                         {
-                            lastName += line[i];
+                            data.lastName += line[i];
                         }
                         else if (counter == 3)
                         {
-                            username += line[i];
+                            data.username += line[i];
                         }
                         else if (counter == 4)
                         {
-                            password += line[i];
+                            data.password += line[i];
                         }
                         else if (counter == 5)
                         {
-                            age += line[i];
+                            data.age += line[i];
                         }
                         else if (counter == 6)
                         {
-                            timeOfRegistration += line[i];
+                            data.timeOfRegistration += line[i];
                         }
                         else if (counter == 7)
                         {
-                            lastLogin += line[i];
+                            data.lastLogin += line[i];
                         }
                         else if (counter == 8)
                         {
-                            role += line[i];
+                            data.role += line[i];
                         }
                     }
                      vector<string> temp;
-                     temp.push_back(id);
-                     temp.push_back(firstName);
-                     temp.push_back(lastName);
-                     temp.push_back(username);
-                     temp.push_back(password);
-                     temp.push_back(age);
-                     temp.push_back(timeOfRegistration);
-                     temp.push_back(lastLogin);
-                     temp.push_back(role);
-                     data.push_back(temp);
+                     temp.push_back(data.id);
+                     temp.push_back(data.firstName);
+                     temp.push_back(data.lastName);
+                     temp.push_back(data.username);
+                     temp.push_back(data.password);
+                     temp.push_back(data.age);
+                     temp.push_back(data.timeOfRegistration);
+                     temp.push_back(data.lastLogin);
+                     temp.push_back(data.role);
+                     allData.push_back(temp);
                 }
                 counter++;
             }
             file.close();
         }
-        return data;
+        return allData;
     }
 
     // Function for get username and password from file
@@ -172,7 +172,7 @@ namespace pm::dal
                 if (counter > -1)
                 {
                     counter = 0;
-                    string username, password;
+                    pm::types::USER data;
                     for (size_t i = 0; i < line.size(); i++)
                     {
                         if (line[i] == ',' && counter < 8)
@@ -186,14 +186,14 @@ namespace pm::dal
                         }
                         else if (counter == 3)
                         {
-                            username += line[i];
+                            data.username += line[i];
                         }
                         else if (counter == 4)
                         {
-                            password += line[i];
+                            data.password += line[i];
                         }
                     }
-                    userAndPass.push_back(username + " " + password);
+                    userAndPass.push_back(data.username + " " + data.password);
                 }
                 counter++;
             }
@@ -205,7 +205,7 @@ namespace pm::dal
     // Function for read data from file for id, username, firstName and LastName
     vector<vector<string>> readDataForIdUsernameFirstAndLastName(string fileName, vector<int> *identification)
     {
-        vector<vector<string>> data;
+        vector<vector<string>> allData;
         ifstream file(fileName);
         string line;
         int counter = -1;
@@ -216,7 +216,7 @@ namespace pm::dal
                 if (counter > -1)
                 {
                     counter = 0;
-                    string id, firstName, lastName, username;
+                    pm::types::USER data;
                     for (size_t i = 0; i < line.size(); i++)
                     {
                         if (line[i] == ',' && counter < 8)
@@ -230,34 +230,34 @@ namespace pm::dal
                         }
                         else if (counter == 0)
                         {
-                            id += line[i];
-                            (*identification).push_back(stoi(id));
+                            data.id += line[i];
+                            (*identification).push_back(stoi(data.id));
                         }
                         else if (counter == 1)
                         {
-                            firstName += line[i];
+                            data.firstName += line[i];
                         }
                         else if (counter == 2)
                         {
-                            lastName += line[i];
+                            data.lastName += line[i];
                         }
                         else if (counter == 3)
                         {
-                            username += line[i];
+                            data.username += line[i];
                         }
                     }
                     vector<string> temp;
-                    temp.push_back(id);
-                    temp.push_back(username);
-                    temp.push_back(firstName);
-                    temp.push_back(lastName);
-                    data.push_back(temp);
+                    temp.push_back(data.id);
+                    temp.push_back(data.username);
+                    temp.push_back(data.firstName);
+                    temp.push_back(data.lastName);
+                    allData.push_back(temp);
                 }
                 counter++;
             }
             file.close();
         }
-        return data;
+        return allData;
     }
 
     // Function for getting data by id of user
@@ -274,7 +274,7 @@ namespace pm::dal
                 if (counter > -1)
                 {
                     counter = 0;
-                    string id, firstName, lastName, username, password, age, timeOfRegistration, lastLogin, role;
+                    pm::types::USER user;
                     for (size_t i = 0; i < line.size(); i++)
                     {
                         if (line[i] == ',' && counter < 8)
@@ -288,52 +288,52 @@ namespace pm::dal
                         }
                         else if (counter == 0)
                         {
-                            id += line[i];
+                            user.id += line[i];
                         }
                         else if (counter == 1)
                         {
-                            firstName += line[i];
+                            user.firstName += line[i];
                         }
                         else if (counter == 2)
                         {
-                            lastName += line[i];
+                            user.lastName += line[i];
                         }
                         else if (counter == 3)
                         {
-                            username += line[i];
+                            user.username += line[i];
                         }
                         else if (counter == 4)
                         {
-                            password += line[i];
+                            user.password += line[i];
                         }
                         else if (counter == 5)
                         {
-                            age += line[i];
+                            user.age += line[i];
                         }
                         else if (counter == 6)
                         {
-                            timeOfRegistration += line[i];
+                            user.timeOfRegistration += line[i];
                         }
                         else if (counter == 7)
                         {
-                            lastLogin += line[i];
+                            user.lastLogin += line[i];
                         }
                         else if (counter == 8)
                         {
-                            role += line[i];
+                            user.role += line[i];
                         }
                     }
-                    if (idUser == stoi(id))
+                    if (idUser == stoi(user.id))
                     {
-                        data.push_back(id);
-                        data.push_back(firstName);
-                        data.push_back(lastName);
-                        data.push_back(username);
-                        data.push_back(password);
-                        data.push_back(age);
-                        data.push_back(timeOfRegistration);
-                        data.push_back(lastLogin);
-                        data.push_back(role);
+                        data.push_back(user.id);
+                        data.push_back(user.firstName);
+                        data.push_back(user.lastName);
+                        data.push_back(user.username);
+                        data.push_back(user.password);
+                        data.push_back(user.age);
+                        data.push_back(user.timeOfRegistration);
+                        data.push_back(user.lastLogin);
+                        data.push_back(user.role);
                     }
                 }
                 counter++;
@@ -344,21 +344,21 @@ namespace pm::dal
     }
 
     // Function for replace time of last login
-    void replaceLoginTime(vector<vector<string>>* data, string username, string password, string time, string* role)
+    void replaceLastLoginTime(vector<vector<string>>* data, pm::types::USER* user)
     {
         for (size_t i = 0; i < (*data).size(); i++)
         {
-            if ((*data)[i][3] == username and (*data)[i][4] == pm::bll::hashPassword(password))
+            if ((*data)[i][3] == (*user).username and (*data)[i][4] == pm::bll::hashPassword((*user).password))
             {
-                (*data)[i][7].replace(0, (*data)[i][7].size(), time);
-                *role = (*data)[i][8];
+                (*data)[i][7].replace(0, (*data)[i][7].size(), (*user).lastLogin);
+                (*user).role = (*data)[i][8];
                 return;
             }
         }
     }
 
     // Function for check if usename and password are in the file
-    bool login(string fileName, string username, string password, string* role)
+    bool login(string fileName, pm::types::USER *user)
     {
         ifstream file(fileName);
         vector<string> userAndPass = getUsernameAndPassword(fileName);
@@ -383,11 +383,12 @@ namespace pm::dal
                 }
             }
 
-            if (username == checkUsername && pm::bll::hashPassword(password) == checkPassword)
+            if ((*user).username == checkUsername && pm::bll::hashPassword((*user).password) == checkPassword)
             {
-                replaceLoginTime(&data, username, password, pm::bll::currentDateTime(), role);
+                (*user).lastLogin = pm::bll::currentDateTime();
+                replaceLastLoginTime(&data, user);
                 data = pm::dal::pushFrontTitleOfFile(data);
-                pm::dal::printDataInFile(fileName, data);
+                pm::dal::addDataInFile(fileName, data);
                 file.close();
                 return true;
             }
@@ -453,11 +454,11 @@ namespace pm::dal
     }
 
     // Function for replace password in vector
-    void replaceData(vector<vector<string>>* data, string username, string password, string newPassword)
+    void replaceData(vector<vector<string>>* data, pm::types::USER user, string newPassword)
     {
         for (size_t i = 0; i < (*data).size(); i++)
         {
-            if ((*data)[i][3] == username and (*data)[i][4] == pm::bll::hashPassword(password))
+            if ((*data)[i][3] == user.username and (*data)[i][4] == pm::bll::hashPassword(user.password))
             {
                 (*data)[i][4].replace(0, (*data)[i][4].size(), pm::bll::hashPassword(newPassword));
                 return;
@@ -493,45 +494,44 @@ namespace pm::dal
     }
 
     // Function for add data in file
-    void printDataInFile(string fileName, vector<vector<string>> data)
+    void addDataInFile(string fileName, vector<vector<string>> data)
     {
-        ofstream file(fileName, ios::trunc);
-        if (file.is_open())
+        ofstream out(fileName, ios_base::trunc);
+        if (out.is_open())
         {
-            for (size_t i = 0; i < data.size(); i++)
+            for (int i = 0; i < data.size(); i++)
             {
-                for (size_t j = 0; j < data[i].size(); j++)
+                for (int j = 0; j < data[i].size(); j++)
                 {
-                    if (i == 0 && j < data[i].size() - 1)
+                    if (j == 8 && i > 0)
                     {
-                        file << data[i][j] << ",";
+                        out << "\"" << data[i][j] << "\"\n";
                     }
-                    else if (i == 0 && j == data[i].size() - 1)
+                    else if (j == 8 && i == 0)
                     {
-                        file << data[i][j];
+                        out << data[i][j] << "\n";
                     }
-                    else if (j == data[i].size() - 1)
+                    else if (j != 8 && i == 0)
                     {
-                        file << "\"" << data[i][j] << "\"";
+                        out << data[i][j] << ",";
                     }
                     else
                     {
-                        file << "\"" << data[i][j] << "\",";
+                        out << "\"" << data[i][j] << "\",";
                     }
                 }
-                file << "\n";
             }
+            out.close();
         }
-        file.close();
     }
 
     // Function for replacing password in file 
-    void cnagePassword(string fileName, string password, string username, string newPassword)
+    void cnagePassword(string fileName, pm::types::USER data, string newPassword)
     {
         vector<vector<string>> allDataInFile = readDataFromFile(fileName);
-        replaceData(&allDataInFile, password, username, newPassword);
+        replaceData(&allDataInFile, data, newPassword);
         allDataInFile = pushFrontTitleOfFile(allDataInFile);
-        printDataInFile(fileName, allDataInFile);
+        addDataInFile(fileName, allDataInFile);
     }
 
     // Function for geleting user by id
@@ -548,7 +548,7 @@ namespace pm::dal
                 if (counter > -1)
                 {
                     counter = 0;
-                    string id, firstName, lastName, username, password, age, timeOfRegistration, lastLogin, role;
+                    pm::types::USER user;
                     for (size_t i = 0; i < line.size(); i++)
                     {
                         if (line[i] == ',' && counter < 8)
@@ -562,53 +562,53 @@ namespace pm::dal
                         }
                         else if (counter == 0)
                         {
-                            id += line[i];
+                            user.id += line[i];
                         }
                         else if (counter == 1)
                         {
-                            firstName += line[i];
+                            user.firstName += line[i];
                         }
                         else if (counter == 2)
                         {
-                            lastName += line[i];
+                            user.lastName += line[i];
                         }
                         else if (counter == 3)
                         {
-                            username += line[i];
+                            user.username += line[i];
                         }
                         else if (counter == 4)
                         {
-                            password += line[i];
+                            user.password += line[i];
                         }
                         else if (counter == 5)
                         {
-                            age += line[i];
+                            user.age += line[i];
                         }
                         else if (counter == 6)
                         {
-                            timeOfRegistration += line[i];
+                            user.timeOfRegistration += line[i];
                         }
                         else if (counter == 7)
                         {
-                            lastLogin += line[i];
+                            user.lastLogin += line[i];
                         }
                         else if (counter == 8)
                         {
-                            role += line[i];
+                            user.role += line[i];
                         }
                     }
                     vector<string> temp;
-                    if (stoi(id) != idOfUser)
+                    if (stoi(user.id) != idOfUser)
                     {
-                        temp.push_back(id);
-                        temp.push_back(firstName);
-                        temp.push_back(lastName);
-                        temp.push_back(username);
-                        temp.push_back(password);
-                        temp.push_back(age);
-                        temp.push_back(timeOfRegistration);
-                        temp.push_back(lastLogin);
-                        temp.push_back(role);
+                        temp.push_back(user.id);
+                        temp.push_back(user.firstName);
+                        temp.push_back(user.lastName);
+                        temp.push_back(user.username);
+                        temp.push_back(user.password);
+                        temp.push_back(user.age);
+                        temp.push_back(user.timeOfRegistration);
+                        temp.push_back(user.lastLogin);
+                        temp.push_back(user.role);
                     }
                     data.push_back(temp);
                 }
@@ -616,33 +616,7 @@ namespace pm::dal
             }
             file.close();
         }
-        ofstream out(fileName, ios_base::trunc);
-        if (out.is_open())
-        {
-            for (int i = 0; i < data.size(); i++)
-            {
-                for (int j = 0; j < data[i].size(); j++)
-                {
-                    if (j == 8 && i > 0)
-                    {
-                        out << "\"" << data[i][j] << "\"\n";
-                    }
-                    else if (j == 8 && i == 0)
-                    {
-                        out << data[i][j] << "\n";
-                    }
-                    else if (j != 8 && i == 0)
-                    {
-                        out << data[i][j] << ",";
-                    }
-                    else
-                    {
-                        out << "\"" << data[i][j] << "\",";
-                    }
-                }
-            }
-            out.close();
-        }
+        addDataInFile(fileName, data);
     }
 
     // Function for edit user by id and data
@@ -659,7 +633,7 @@ namespace pm::dal
                 if (counter > -1)
                 {
                     counter = 0;
-                    string id, firstName, lastName, username, password, age, timeOfRegistration, lastLogin, role;
+                    pm::types::USER user;
                     for (size_t i = 0; i < line.size(); i++)
                     {
                         if (line[i] == ',' && counter < 8)
@@ -673,129 +647,129 @@ namespace pm::dal
                         }
                         else if (counter == 0)
                         {
-                            id += line[i];
+                            user.id += line[i];
                         }
                         else if (counter == 1)
                         {
-                            firstName += line[i];
+                            user.firstName += line[i];
                         }
                         else if (counter == 2)
                         {
-                            lastName += line[i];
+                            user.lastName += line[i];
                         }
                         else if (counter == 3)
                         {
-                            username += line[i];
+                            user.username += line[i];
                         }
                         else if (counter == 4)
                         {
-                            password += line[i];
+                            user.password += line[i];
                         }
                         else if (counter == 5)
                         {
-                            age += line[i];
+                            user.age += line[i];
                         }
                         else if (counter == 6)
                         {
-                            timeOfRegistration += line[i];
+                            user.timeOfRegistration += line[i];
                         }
                         else if (counter == 7)
                         {
-                            lastLogin += line[i];
+                            user.lastLogin += line[i];
                         }
                         else if (counter == 8)
                         {
-                            role += line[i];
+                            user.role += line[i];
                         }
                     }
                     vector<string> temp;
-                    if (idOfEditData > 0 && stoi(id) == idOfUser)
+                    if (idOfEditData > 0 && stoi(user.id) == idOfUser)
                     {
-                        temp.push_back(id);
+                        temp.push_back(user.id);
                         switch (idOfEditData)
                         {
                         case 2:
                         {
                             temp.push_back(newData);
-                            temp.push_back(lastName);
-                            temp.push_back(username);
-                            temp.push_back(password);
-                            temp.push_back(age);
-                            temp.push_back(timeOfRegistration);
-                            temp.push_back(lastLogin);
-                            temp.push_back(role);
+                            temp.push_back(user.lastName);
+                            temp.push_back(user.username);
+                            temp.push_back(user.password);
+                            temp.push_back(user.age);
+                            temp.push_back(user.timeOfRegistration);
+                            temp.push_back(user.lastLogin);
+                            temp.push_back(user.role);
                             break;
                         }
                         case 3:
                         {
-                            temp.push_back(firstName);
+                            temp.push_back(user.firstName);
                             temp.push_back(newData);
-                            temp.push_back(username);
-                            temp.push_back(password);
-                            temp.push_back(age);
-                            temp.push_back(timeOfRegistration);
-                            temp.push_back(lastLogin);
-                            temp.push_back(role);
+                            temp.push_back(user.username);
+                            temp.push_back(user.password);
+                            temp.push_back(user.age);
+                            temp.push_back(user.timeOfRegistration);
+                            temp.push_back(user.lastLogin);
+                            temp.push_back(user.role);
                             break;
                         }
                         case 4:
                         {
-                            temp.push_back(firstName);
-                            temp.push_back(lastName);
+                            temp.push_back(user.firstName);
+                            temp.push_back(user.lastName);
                             temp.push_back(newData);
-                            temp.push_back(password);
-                            temp.push_back(age);
-                            temp.push_back(timeOfRegistration);
-                            temp.push_back(lastLogin);
-                            temp.push_back(role);
+                            temp.push_back(user.password);
+                            temp.push_back(user.age);
+                            temp.push_back(user.timeOfRegistration);
+                            temp.push_back(user.lastLogin);
+                            temp.push_back(user.role);
                             break;
                         }
                         case 5:
                         {
-                            temp.push_back(firstName);
-                            temp.push_back(lastName);
-                            temp.push_back(username);
+                            temp.push_back(user.firstName);
+                            temp.push_back(user.lastName);
+                            temp.push_back(user.username);
                             temp.push_back(pm::bll::hashPassword(newData));
-                            temp.push_back(age);
-                            temp.push_back(timeOfRegistration);
-                            temp.push_back(lastLogin);
-                            temp.push_back(role);
+                            temp.push_back(user.age);
+                            temp.push_back(user.timeOfRegistration);
+                            temp.push_back(user.lastLogin);
+                            temp.push_back(user.role);
                             break;
                         }
                         case 6:
                         {
-                            temp.push_back(firstName);
-                            temp.push_back(lastName);
-                            temp.push_back(username);
-                            temp.push_back(password);
+                            temp.push_back(user.firstName);
+                            temp.push_back(user.lastName);
+                            temp.push_back(user.username);
+                            temp.push_back(user.password);
                             temp.push_back(newData);
-                            temp.push_back(timeOfRegistration);
-                            temp.push_back(lastLogin);
-                            temp.push_back(role);
+                            temp.push_back(user.timeOfRegistration);
+                            temp.push_back(user.lastLogin);
+                            temp.push_back(user.role);
                             break;
                         }
                         case 9:
                         {
-                            if (role == "user")
+                            if (user.role == "user")
                             {
-                                temp.push_back(firstName);
-                                temp.push_back(lastName);
-                                temp.push_back(username);
-                                temp.push_back(password);
-                                temp.push_back(age);
-                                temp.push_back(timeOfRegistration);
-                                temp.push_back(lastLogin);
+                                temp.push_back(user.firstName);
+                                temp.push_back(user.lastName);
+                                temp.push_back(user.username);
+                                temp.push_back(user.password);
+                                temp.push_back(user.age);
+                                temp.push_back(user.timeOfRegistration);
+                                temp.push_back(user.lastLogin);
                                 temp.push_back("admin");
                             }
                             else
                             {
-                                temp.push_back(firstName);
-                                temp.push_back(lastName);
-                                temp.push_back(username);
-                                temp.push_back(password);
-                                temp.push_back(age);
-                                temp.push_back(timeOfRegistration);
-                                temp.push_back(lastLogin);
+                                temp.push_back(user.firstName);
+                                temp.push_back(user.lastName);
+                                temp.push_back(user.username);
+                                temp.push_back(user.password);
+                                temp.push_back(user.age);
+                                temp.push_back(user.timeOfRegistration);
+                                temp.push_back(user.lastLogin);
                                 temp.push_back("user");
                             }
                             break;
@@ -806,15 +780,15 @@ namespace pm::dal
                     }
                     else
                     {
-                        temp.push_back(id);
-                        temp.push_back(firstName);
-                        temp.push_back(lastName);
-                        temp.push_back(username);
-                        temp.push_back(password);
-                        temp.push_back(age);
-                        temp.push_back(timeOfRegistration);
-                        temp.push_back(lastLogin);
-                        temp.push_back(role);
+                        temp.push_back(user.id);
+                        temp.push_back(user.firstName);
+                        temp.push_back(user.lastName);
+                        temp.push_back(user.username);
+                        temp.push_back(user.password);
+                        temp.push_back(user.age);
+                        temp.push_back(user.timeOfRegistration);
+                        temp.push_back(user.lastLogin);
+                        temp.push_back(user.role);
                         data.push_back(temp);
                     }
                 }
@@ -822,32 +796,6 @@ namespace pm::dal
             }
             file.close();
         }
-        ofstream out(fileName, ios_base::trunc);
-        if (out.is_open())
-        {
-            for (int i = 0; i < data.size(); i++)
-            {
-                for (int j = 0; j < data[i].size(); j++)
-                {
-                    if (j == 8 && i > 0)
-                    {
-                        out << "\"" << data[i][j] << "\"\n";
-                    }
-                    else if (j == 8 && i == 0)
-                    {
-                        out << data[i][j] << "\n";
-                    }
-                    else if (j != 8 && i == 0)
-                    {
-                        out << data[i][j] << ",";
-                    }
-                    else
-                    {
-                        out << "\"" << data[i][j] << "\",";
-                    }
-                }
-            }
-            out.close();
-        }
+        addDataInFile(fileName, data);
     }
 }

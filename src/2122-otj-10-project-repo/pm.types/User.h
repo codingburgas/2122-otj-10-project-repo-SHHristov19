@@ -5,11 +5,14 @@ namespace pm::types
 {
 	struct USER
 	{
-		size_t id;
-		std::string username;
+		std::string id;
 		std::string firstName;
 		std::string lastName;
-		uint8_t age;
-		std::string passwordHash;
+		std::string username;
+		std::string password;
+		std::string age;
+		std::string timeOfRegistration;
+		std::string lastLogin;
+		std::string role;
 	};
 }

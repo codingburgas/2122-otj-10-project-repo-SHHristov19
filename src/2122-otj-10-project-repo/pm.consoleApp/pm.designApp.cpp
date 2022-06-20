@@ -1,6 +1,7 @@
 #include "pm.designApp.h"
 #include "../pm.dal/pm.dal.h"
 #include "../pm.bll/pm.bll.h"
+#include "../pm.types/User.h"
 
 namespace pm::designApp
 {
@@ -612,29 +613,29 @@ namespace pm::designApp
 		void login()
 		{
 			pm::tools::outputBorder(24, 17, 13, 101);
-			string username, password, role;
+			pm::types::USER user;
 			pm::tools::consoleCoordinates(51, 22);
 			cout << "Enter your username : ";
 			pm::tools::consoleCoordinates(51, 25);
 			cout << "Enter your password : ";
 			pm::tools::consoleCoordinates(73, 22);
-			cin >> username;
+			cin >> user.username;
 			pm::tools::consoleCoordinates(73, 25);
-			cin >> password;
-			if (pm::dal::login("../pm.data/users.csv", username, password, &role))
+			cin >> user.password;
+			if (pm::dal::login("../pm.data/users.csv", &user))
 			{
 				system("CLS");
 				pm::tools::outputBorder(24, 14, 17, 101);
 				warnings::successfullyLogin(46, 17);
 				Sleep(1500);
 			}
-			else if (pm::dal::loginAsFirst(username, password))
+			else if (pm::dal::loginAsFirst(user))
 			{
 				system("CLS");
 				pm::tools::outputBorder(24, 14, 17, 101);
 				warnings::successfullyLogin(46, 17);
 				Sleep(1500);
-				role = "admin";
+				user.role = "admin";
 			}
 			else
 			{
@@ -643,11 +644,11 @@ namespace pm::designApp
 				warnings::tryAgain(56, 18);
 				Sleep(1500);
 			}
-			if (role == "user")
+			if (user.role == "user")
 			{
 				pm::designApp::menus::userPanel();
 			}
-			else if (role == "admin")
+			else if (user.role == "admin")
 			{
 				pm::designApp::menus::adminPanel();
 			}
@@ -657,8 +658,7 @@ namespace pm::designApp
 		void addNewUser()
 		{
 			pm::tools::outputBorder(24, 13, 20, 101);
-			string username, firstName, lastName, password;
-			int age;
+			pm::types::USER user;
 			pm::tools::consoleCoordinates(51, 18);
 			cout << "Username : ";
 			pm::tools::consoleCoordinates(51, 21);
@@ -673,16 +673,16 @@ namespace pm::designApp
 			cout << "\x1b[1;31m" << "The password must contain uppercase, lowercase letters and special characters." << endl
 				<< "\t\t\t\t\t     It must be not less than 8 and not more than 20 characters!" << "\x1b[1;37m";
 			pm::tools::consoleCoordinates(62, 18);
-			cin >> username;
+			cin >> user.username;
 			pm::tools::consoleCoordinates(64, 21);
-			cin >> firstName;
+			cin >> user.firstName;
 			pm::tools::consoleCoordinates(63, 24);
-			cin >> lastName;
+			cin >> user.lastName;
 			pm::tools::consoleCoordinates(57, 27);
-			cin >> age;
+			cin >> user.age;
 			pm::tools::consoleCoordinates(62, 30);
-			cin >> password;
-			int check = pm::dal::registerUser("../pm.data/users.csv", firstName, lastName, username, password, to_string(age));
+			cin >> user.password;
+			int check = pm::dal::registerUser("../pm.data/users.csv", user);
 			if (check == 1)
 			{
 				system("CLS");
@@ -710,7 +710,8 @@ namespace pm::designApp
 		void changePassword()
 		{	
 			pm::tools::outputBorder(24, 15, 16, 101);
-			string username, password, newPassword, role;
+			pm::types::USER user;
+			string newPassword;
 			pm::tools::consoleCoordinates(51, 20);
 			cout << "Enter your username : ";
 			pm::tools::consoleCoordinates(51, 23);
@@ -721,16 +722,16 @@ namespace pm::designApp
 			cout << "\x1b[1;31m" << "The password must contain uppercase, lowercase letters and special characters." << endl
 				<< "\t\t\t\t\t     It must be not less than 8 and not more than 20 characters!" << "\x1b[1;37m";
 			pm::tools::consoleCoordinates(73, 20);
-			cin >> username;
+			cin >> user.username;
 			pm::tools::consoleCoordinates(73, 23);
-			cin >> password;
-			if (pm::dal::login("../pm.data/users.csv", username, password, &role))
+			cin >> user.password;
+			if (pm::dal::login("../pm.data/users.csv", &user))
 			{
 				pm::tools::consoleCoordinates(77, 26);
 				cin >> newPassword;
 				if (pm::bll::checkPassword(newPassword))
 				{
-					pm::dal::cnagePassword("../pm.data/users.csv", username, password, newPassword);
+					pm::dal::cnagePassword("../pm.data/users.csv", user, newPassword);
 					system("CLS");
 					pm::tools::outputBorder(24, 14, 17, 101);
 					warnings::successfullyLogin(46, 17);
@@ -817,7 +818,7 @@ namespace pm::designApp
 				system("CLS");
 				pm::tools::outputBorder(24, 13, 20, 101);
 				vector<string> user = pm::dal::getUserDataById("../pm.data/users.csv", choise);
-				x = tempX; y = tempY;
+				x = 40; y = 15;
 				pm::tools::consoleCoordinates(x, y + 1);
 				cout << "Id of the user : " << user[0];
 				pm::tools::consoleCoordinates(x, y + 3);
