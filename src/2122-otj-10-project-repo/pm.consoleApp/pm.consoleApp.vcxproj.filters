@@ -15,15 +15,33 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pm.consoleApp.cpp">
+    <ClCompile Include="pm.main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="pm.designApp.cpp">
+    <ClCompile Include="pm.consoleApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pm.designApp.h">
+    <ClInclude Include="pm.userManagement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pm.teamsManagement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pm.menus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pm.warningWindows.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pm.titlesDesign.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pm.projectManagement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pm.buttonsDesign.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

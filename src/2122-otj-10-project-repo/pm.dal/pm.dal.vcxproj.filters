@@ -18,9 +18,6 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UserStore.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="pm.dal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -30,9 +27,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UserStore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

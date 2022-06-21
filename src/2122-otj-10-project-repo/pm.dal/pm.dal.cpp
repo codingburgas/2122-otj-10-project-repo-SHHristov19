@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "pm.dal.h"
 #include "../pm.bll/pm.bll.h"
-#include "../pm.consoleApp/pm.designApp.h"
 #include "../pm.types/User.h"
 
 namespace pm::dal

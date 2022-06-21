@@ -143,8 +143,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="pm.main.cpp" />
     <ClCompile Include="pm.consoleApp.cpp" />
-    <ClCompile Include="pm.designApp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\pm.bll\pm.bll.vcxproj">
@@ -161,7 +161,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pm.designApp.h" />
+    <ClInclude Include="pm.buttonsDesign.h" />
+    <ClInclude Include="pm.menus.h" />
+    <ClInclude Include="pm.projectManagement.h" />
+    <ClInclude Include="pm.teamsManagement.h" />
+    <ClInclude Include="pm.titlesDesign.h" />
+    <ClInclude Include="pm.userManagement.h" />
+    <ClInclude Include="pm.warningWindows.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
