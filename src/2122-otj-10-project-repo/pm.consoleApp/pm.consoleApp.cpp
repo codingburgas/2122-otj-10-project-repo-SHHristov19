@@ -922,7 +922,7 @@ namespace pm::consoleApp
 				}
 				else
 				{
-					pm::dal::deleteUserById("../pm.data/users.csv", choise);
+					pm::dal::deleteUserByIdInUsersFile("../pm.data/users.csv", choise);
 					return;
 				}
 			}
@@ -1150,6 +1150,86 @@ namespace pm::consoleApp
 					pm::dal::createTeam("../pm.data/teams.csv", team);
 				}
 				
+			}
+
+			// Function for output list of teams
+			void showAllTeams(int x, int y)
+			{
+				system("CLS");
+				pm::tools::outputBorder(24, 7, pm::dal::generateId("../pm.data/teams.csv") * 3 + pm::dal::generateId("../pm.data/teams.csv") / 2, 101);
+				pm::tools::consoleCoordinates(x, y);
+				cout << "Id\t\t\tName of team\t\t\tCreator";
+				pm::tools::consoleCoordinates(26, y + 1);
+				cout << "___________________________________________________________________________________________________";
+				vector<int> id;
+				vector<vector<string>> data = pm::dal::readDataFromTeamsFile("../pm.data/teams.csv", &id);
+				int tempX = x, tempY = y;
+				y += 2;
+				for (auto row : data)
+				{
+					int counter = 1;
+					y += 3;
+					x = tempX;
+					for (auto col : row)
+					{
+						if (counter == 1)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 24;
+							cout << col;
+						}
+						else if (counter == 2)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 32;
+							cout << col;
+						}
+						else if (counter == 3)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 40;
+							cout << col;
+						}
+						counter++;
+					}
+				}
+				int choise = pm::tools::enterNumberWithoutPrintingOnConsole();
+				bool exist = false;
+				for (int i = 0; i < id.size(); i++)
+				{
+					if (choise == id[i])
+					{
+						exist = true;
+					}
+				}
+				if (choise == 0 || !exist)
+				{
+					return;
+				}
+				else
+				{
+					system("CLS");
+					pm::tools::outputBorder(24, 13, 20, 101);
+					vector<string> user = pm::dal::getTeamDataById("../pm.data/teams.csv", choise);
+					x = 40; y = 17;
+					pm::tools::consoleCoordinates(x, y + 1);
+					cout << "Id of the team : " << user[0];
+					pm::tools::consoleCoordinates(x, y + 3);
+					cout << "Name of the team : " << user[1];
+					pm::tools::consoleCoordinates(x, y + 5);
+					cout << "Id of creator : " << user[2];
+					pm::tools::consoleCoordinates(x, y + 7);
+					cout << "Data of creation : " << user[3];
+					pm::tools::consoleCoordinates(x, y + 9);
+					cout << "Data of last changes : " << user[4];
+					pm::tools::consoleCoordinates(x, y + 11);
+					cout << "Id Of last changer : " << user[5];
+					pm::tools::consoleCoordinates(x, y + 13);
+					cout << "Id of contributors : " << user[6];
+					pm::tools::consoleCoordinates(x + 20, y + 20);
+					system("pause");
+					showAllTeams(tempX, tempY);
+				}
 			}
 		}
 	}

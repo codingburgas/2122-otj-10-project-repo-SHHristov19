@@ -24,5 +24,8 @@ namespace pm::consoleApp
 	{
 		// Function for add new team
 		void createNewTeam(std::string idOfUser, int x, int y);
+
+		// Function for output list of teams
+		void showAllTeams(int x, int y);
 	}
 }

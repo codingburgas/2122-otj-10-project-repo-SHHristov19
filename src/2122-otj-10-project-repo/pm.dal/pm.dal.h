@@ -18,7 +18,7 @@ namespace pm::dal
     int registerUser(string fileName, pm::types::USER user);
 
     // Function for read data from file and add it in vector<string>
-    std::vector<std::vector<std::string>>  readDataFromFile(std::string fileName);
+    std::vector<std::vector<std::string>>  readDataFromUsersFile(std::string fileName);
 
     // Function for get username and password from file
     std::vector<std::string> getUsernameAndPassword(std::string fileName);
@@ -45,23 +45,29 @@ namespace pm::dal
     bool checkForExistsPassword(std::string fileName, std::string password);
 
     // Function for replace password in vector
-    void replaceData(std::vector<std::vector<std::string>>* data, pm::types::USER user, std::string newPassword);
+    void replaceDataInUsersFile(std::vector<std::vector<std::string>>* data, pm::types::USER user, std::string newPassword);
 
     // Function for add data infront of the matrix vector
-    std::vector<std::vector<std::string>> pushFrontTitleOfFile(std::vector<std::vector<std::string>> data);
+    std::vector<std::vector<std::string>> pushFrontTitleOfUsersFile(std::vector<std::vector<std::string>> data);
 
     // Function for add data in file
-    void addDataInFile(std::string fileName, std::vector<std::vector<std::string>> data);
+    void addDataInUsersFile(std::string fileName, std::vector<std::vector<std::string>> data);
 
     // Function for replacing password in file 
     void cnagePassword(std::string fileName, pm::types::USER data, std::string newPassword);
 
     // Function for geleting user by id
-    void deleteUserById(std::string fileName, int id);
+    void deleteUserByIdInUsersFile(std::string fileName, int id);
 
     // Function for edit user by id and data
     void editUserById(std::string fileName, int idOfUser, int idOfEditData, std::string newData);
 
     // Function for add new team in teams.csv file
     void createTeam(std::string fileName, pm::types::TEAM team);
+
+    // Function for read data from teams file and add it in vector
+    vector<vector<string>> readDataFromTeamsFile(string fileName, vector<int>* identification);
+
+    // Function for getting data by id of team
+    vector<string> getTeamDataById(string fileName, int idUser);
 }

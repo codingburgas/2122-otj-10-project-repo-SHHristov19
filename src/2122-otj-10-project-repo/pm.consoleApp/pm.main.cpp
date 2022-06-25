@@ -7,5 +7,6 @@
 int main()
 {
     pm::tools::setConsoleSize();
-    pm::consoleApp::menus::menu();
+    //pm::consoleApp::menus::menu();
+    pm::consoleApp::windows::teamsManagement::showAllTeams(40,9);
 }

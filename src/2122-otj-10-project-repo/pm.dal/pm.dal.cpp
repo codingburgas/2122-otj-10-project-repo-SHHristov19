@@ -41,7 +41,7 @@ namespace pm::dal
     // Function for generate id
     int generateId(string fileName)
     {
-        vector<vector<string>> data = readDataFromFile(fileName);
+        vector<vector<string>> data = readDataFromUsersFile(fileName);
         return stoi(data[data.size() - 1][0]) + 1;
     }
 
@@ -76,7 +76,7 @@ namespace pm::dal
     }
 
     // Function for read data from file and add it in vector<string>
-    vector<vector<string>> readDataFromFile(string fileName)
+    vector<vector<string>> readDataFromUsersFile(string fileName)
     {
         vector<vector<string>> allData;
         ifstream file(fileName);
@@ -359,7 +359,7 @@ namespace pm::dal
     // Function for geting id of user by username
     string getIdOfUserByUsername(string fileName, pm::types::USER user)
     {
-        vector<vector<string>> data = readDataFromFile(fileName);
+        vector<vector<string>> data = readDataFromUsersFile(fileName);
         int i = 0;
         while(true)
         {
@@ -376,7 +376,7 @@ namespace pm::dal
     {
         ifstream file(fileName);
         vector<string> userAndPass = getUsernameAndPassword(fileName);
-        vector<vector<string>> data = readDataFromFile(fileName);
+        vector<vector<string>> data = readDataFromUsersFile(fileName);
         *idOfUser = getIdOfUserByUsername(fileName, *user);
         for (auto check : userAndPass)
         {
@@ -402,8 +402,8 @@ namespace pm::dal
             {
                 (*user).lastLogin = pm::bll::currentDateTime();
                 replaceLastLoginTime(&data, user);
-                data = pm::dal::pushFrontTitleOfFile(data);
-                pm::dal::addDataInFile(fileName, data);
+                data = pm::dal::pushFrontTitleOfUsersFile(data);
+                pm::dal::addDataInUsersFile(fileName, data);
                 file.close();
                 return true;
             }
@@ -469,7 +469,7 @@ namespace pm::dal
     }
 
     // Function for replace password in vector
-    void replaceData(vector<vector<string>>* data, pm::types::USER user, string newPassword)
+    void replaceDataInUsersFile(vector<vector<string>>* data, pm::types::USER user, string newPassword)
     {
         for (size_t i = 0; i < (*data).size(); i++)
         {
@@ -482,7 +482,7 @@ namespace pm::dal
     }
 
     // Function for add data infront of the matrix vector
-    vector<vector<string>> pushFrontTitleOfFile(vector<vector<string>> data)
+    vector<vector<string>> pushFrontTitleOfUsersFile(vector<vector<string>> data)
     {
         vector<vector<string>> output;
         vector<string> temp;
@@ -509,7 +509,7 @@ namespace pm::dal
     }
 
     // Function for add data in file
-    void addDataInFile(string fileName, vector<vector<string>> data)
+    void addDataInUsersFile(string fileName, vector<vector<string>> data)
     {
         ofstream out(fileName, ios_base::trunc);
         if (out.is_open())
@@ -543,16 +543,16 @@ namespace pm::dal
     // Function for replacing password in file 
     void cnagePassword(string fileName, pm::types::USER data, string newPassword)
     {
-        vector<vector<string>> allDataInFile = readDataFromFile(fileName);
-        replaceData(&allDataInFile, data, newPassword);
-        allDataInFile = pushFrontTitleOfFile(allDataInFile);
-        addDataInFile(fileName, allDataInFile);
+        vector<vector<string>> allDataInFile = readDataFromUsersFile(fileName);
+        replaceDataInUsersFile(&allDataInFile, data, newPassword);
+        allDataInFile = pushFrontTitleOfUsersFile(allDataInFile);
+        addDataInUsersFile(fileName, allDataInFile);
     }
 
     // Function for geleting user by id
-    void deleteUserById(string fileName, int idOfUser)
+    void deleteUserByIdInUsersFile(string fileName, int idOfUser)
     {
-        vector<vector<string>> data = pushFrontTitleOfFile(data);
+        vector<vector<string>> data = pushFrontTitleOfUsersFile(data);
         ifstream file(fileName);
         string line;
         int counter = -1;
@@ -631,13 +631,13 @@ namespace pm::dal
             }
             file.close();
         }
-        addDataInFile(fileName, data);
+        addDataInUsersFile(fileName, data);
     }
 
     // Function for edit user by id and data
     void editUserById(string fileName, int idOfUser, int idOfEditData, string newData)
     {
-        vector<vector<string>> data = pushFrontTitleOfFile(data);
+        vector<vector<string>> data = pushFrontTitleOfUsersFile(data);
         ifstream file(fileName);
         string line;
         int counter = -1;
@@ -811,7 +811,7 @@ namespace pm::dal
             }
             file.close();
         }
-        addDataInFile(fileName, data);
+        addDataInUsersFile(fileName, data);
     }
 
     // Function for add new team in teams.csv file
@@ -830,5 +830,151 @@ namespace pm::dal
         team.dataOfLastChanges = pm::bll::currentDateTime();
         file << "\"" << team.id << "\",\"" << team.name << "\",\"" << team.idOfCreator << "\",\"" << team.dataOfCreation << "\",\"" << team.dataOfLastChanges << "\",\"" << team.idOfLastChanger << "\",\"" << team.contributors << "\"\n";
         file.close();
+    }
+
+    // Function for read data from teams file and add it in vector
+    vector<vector<string>> readDataFromTeamsFile(string fileName, vector<int>* identification)
+    {
+        vector<vector<string>> allData;
+        ifstream file(fileName);
+        string line;
+        int counter = -1;
+        if (file.is_open())
+        {
+            while (getline(file, line))
+            {
+                if (counter > -1)
+                {
+                    counter = 0;
+                    pm::types::TEAM data;
+                    for (size_t i = 0; i < line.size(); i++)
+                    {
+                        if (line[i] == ',' && counter < 6)
+                        {
+                            counter++;
+                            line.erase(i, 0);
+                        }
+                        else if (line[i] == '"')
+                        {
+                            line.erase(i, 0);
+                        }
+                        else if (counter == 0)
+                        {
+                            data.id += line[i];
+                            (*identification).push_back(stoi(data.id));
+                        }
+                        else if (counter == 1)
+                        {
+                            data.name += line[i];
+                        }
+                        else if (counter == 2)
+                        {
+                            data.idOfCreator += line[i];
+                        }
+                        else if (counter == 3)
+                        {
+                            data.dataOfCreation += line[i];
+                        }
+                        else if (counter == 4)
+                        {
+                            data.dataOfLastChanges += line[i];
+                        }
+                        else if (counter == 5)
+                        {
+                            data.idOfLastChanger += line[i];
+                        }
+                        else if (counter == 6)
+                        {
+                            data.contributors += line[i];
+                        } 
+                    }
+                    vector<string> temp;
+                    temp.push_back(data.id);
+                    temp.push_back(data.name);
+                    temp.push_back(data.idOfCreator);
+                    temp.push_back(data.dataOfCreation);
+                    temp.push_back(data.dataOfLastChanges);
+                    temp.push_back(data.idOfLastChanger);
+                    temp.push_back(data.contributors);
+                    allData.push_back(temp);
+                }
+                counter++;
+            }
+            file.close();
+        }
+        return allData;
+    }
+
+    // Function for getting data by id of team
+    vector<string> getTeamDataById(string fileName, int idUser)
+    {
+        vector<string> data;
+        ifstream file(fileName);
+        string line;
+        int counter = -1;
+        if (file.is_open())
+        {
+            while (getline(file, line))
+            {
+                if (counter > -1)
+                {
+                    counter = 0;
+                    pm::types::TEAM choise;
+                    for (size_t i = 0; i < line.size(); i++)
+                    {
+                        if (line[i] == ',' && counter < 6)
+                        {
+                            counter++;
+                            line.erase(i, 0);
+                        }
+                        else if (line[i] == '"')
+                        {
+                            line.erase(i, 0);
+                        }
+                        else if (counter == 0)
+                        {
+                            choise.id += line[i];
+                        }
+                        else if (counter == 1)
+                        {
+                            choise.name += line[i];
+                        }
+                        else if (counter == 2)
+                        {
+                            choise.idOfCreator += line[i];
+                        }
+                        else if (counter == 3)
+                        {
+                            choise.dataOfCreation += line[i];
+                        }
+                        else if (counter == 4)
+                        {
+                            choise.dataOfLastChanges += line[i];
+                        }
+                        else if (counter == 5)
+                        {
+                            choise.idOfLastChanger += line[i];
+                        }
+                        else if (counter == 6)
+                        {
+                            choise.contributors += line[i];
+                        }
+                    }
+                    if (idUser == stoi(choise.id))
+                    {
+                        data.push_back(choise.id);
+                        data.push_back(choise.name);
+                        data.push_back(choise.idOfCreator);
+                        data.push_back(choise.dataOfCreation);
+                        data.push_back(choise.dataOfLastChanges);
+                        data.push_back(choise.idOfLastChanger);
+                        data.push_back(choise.contributors);
+                    }
+                }
+                counter++;
+            }
+            file.close();
+        }
+        return data;
     }
 }
