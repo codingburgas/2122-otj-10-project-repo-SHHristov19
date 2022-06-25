@@ -626,7 +626,7 @@ namespace pm::consoleApp
 		}
 
 		// Function for output login window as user
-		void login()
+		void login(string* idOfUser)
 		{
 			pm::tools::outputBorder(24, 17, 13, 101);
 			pm::types::USER user;
@@ -638,7 +638,7 @@ namespace pm::consoleApp
 			cin >> user.username;
 			pm::tools::consoleCoordinates(73, 25);
 			cin >> user.password;
-			if (pm::dal::login("../pm.data/users.csv", &user))
+			if (pm::dal::login("../pm.data/users.csv", &user, idOfUser))
 			{
 				system("CLS");
 				pm::tools::outputBorder(24, 14, 17, 101);
@@ -666,7 +666,7 @@ namespace pm::consoleApp
 			}
 			else if (user.role == "admin")
 			{
-				pm::consoleApp::menus::adminPanel();
+				pm::consoleApp::menus::adminPanel(idOfUser);
 			}
 		}
 
@@ -675,7 +675,7 @@ namespace pm::consoleApp
 		{
 			pm::tools::outputBorder(24, 15, 16, 101);
 			pm::types::USER user;
-			string newPassword;
+			string newPassword, idOfUser;
 			pm::tools::consoleCoordinates(51, 20);
 			cout << "Enter your username : ";
 			pm::tools::consoleCoordinates(51, 23);
@@ -689,7 +689,7 @@ namespace pm::consoleApp
 			cin >> user.username;
 			pm::tools::consoleCoordinates(73, 23);
 			cin >> user.password;
-			if (pm::dal::login("../pm.data/users.csv", &user))
+			if (pm::dal::login("../pm.data/users.csv", &user, &idOfUser))
 			{
 				pm::tools::consoleCoordinates(77, 26);
 				cin >> newPassword;
@@ -1063,6 +1063,95 @@ namespace pm::consoleApp
 				}
 			}
 		}
+
+		namespace teamsManagement
+		{
+			// Function for add new team
+			void createNewTeam(string idOfUser, int x, int y)
+			{
+				system("CLS");
+				pm::tools::outputBorder(24, 15, 16, 101);
+				pm::types::TEAM team;
+				pm::tools::consoleCoordinates(51, 22);
+				cout << "Name of team : ";
+				pm::tools::consoleCoordinates(66, 22);
+				cin >> team.name;
+				team.idOfCreator = team.idOfLastChanger = idOfUser;
+				pm::tools::consoleCoordinates(51, 28);
+				system("pause");
+				system("CLS");
+				pm::tools::outputBorder(24, 7, pm::dal::generateId("../pm.data/users.csv") * 3 + pm::dal::generateId("../pm.data/users.csv") / 2, 101);
+				pm::tools::consoleCoordinates(x, y);
+				cout << "Id\t\tUsername\t\tFirstName\t\tLastName";
+				pm::tools::consoleCoordinates(26, y + 1);
+				cout << "___________________________________________________________________________________________________";
+				vector<int> id;
+				vector<vector<string>> data = pm::dal::readDataForIdUsernameFirstAndLastName("../pm.data/users.csv", &id);
+				int tempX = x, tempY = y;
+				y += 2;
+				for (auto row : data)
+				{
+					int counter = 1;
+					y += 3;
+					x = tempX;
+					for (auto col : row)
+					{
+						if (counter == 1)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 16;
+							cout << col;
+						}
+						else if (counter == 2)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 24;
+							cout << col;
+						}
+						else if (counter == 3)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 24;
+							cout << col;
+						}
+						else if (counter == 4)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							cout << col;
+						}
+						counter++;
+					}
+				}
+				vector<string> vec = pm::tools::chooseUsersById();
+				int count = 0;
+				for (auto i : vec)
+				{
+					for (auto j : id)
+					{
+						if (i == to_string(j))
+						{
+							count++;
+						}
+					}
+				}
+				if (count == vec.size())
+				{
+					for (auto it : vec)
+					{
+						if (it == vec[vec.size() - 1])
+						{
+							team.contributors += it;
+						}
+						else
+						{
+							team.contributors += it + ",";
+						}
+					}
+					pm::dal::createTeam("../pm.data/teams.csv", team);
+				}
+				
+			}
+		}
 	}
 
 	namespace menus
@@ -1233,7 +1322,7 @@ namespace pm::consoleApp
 		}
 
 		// Function for movement in teams management
-		void teamsManagement()
+		void teamsManagement(string idOfUser)
 		{
 			int choice;
 			bool truth;
@@ -1338,6 +1427,7 @@ namespace pm::consoleApp
 						}
 						case 2:
 						{
+							windows::teamsManagement::createNewTeam(idOfUser, 40, 9);
 							system("CLS");
 							choice = 6;
 							break;
@@ -1527,7 +1617,7 @@ namespace pm::consoleApp
 		}
 
 		// Function for movement in admin panel
-		void adminPanel()
+		void adminPanel(string* idOfUser)
 		{
 			int choice;
 			bool truth;
@@ -1606,7 +1696,7 @@ namespace pm::consoleApp
 						case 2:
 						{
 							system("CLS");
-							teamsManagement();
+							teamsManagement(*idOfUser);
 							choice = 4;
 							break;
 						}
@@ -1764,6 +1854,7 @@ namespace pm::consoleApp
 		{
 			int choice;
 			bool truth;
+			string idOfUser;
 			system("CLS");
 			buttons::loginPanel::firstActive();
 			choice = 1;
@@ -1833,7 +1924,7 @@ namespace pm::consoleApp
 						{
 							system("CLS");
 							choice = 4;
-							windows::login();
+							windows::login(&idOfUser);
 							break;
 						}
 						case 2:

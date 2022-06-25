@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 namespace pm::consoleApp::menus
 {
@@ -6,13 +7,13 @@ namespace pm::consoleApp::menus
 	void projectManagement();
 
 	// Function for movement in teams management
-	void teamsManagement();
+	void teamsManagement(std::string idOfUser);
 
 	// Function for movement in user management
 	void userManagement();
 
 	// Function for movement in admin panel
-	void adminPanel();
+	void adminPanel(std::string* idOfUser);
 
 	// Function for movement in user panel
 	void userPanel();

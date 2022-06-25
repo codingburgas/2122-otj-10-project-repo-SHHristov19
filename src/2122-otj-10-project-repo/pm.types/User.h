@@ -15,4 +15,15 @@ namespace pm::types
 		std::string lastLogin;
 		std::string role;
 	};
+
+	struct TEAM
+	{
+		std::string id;
+		std::string name;
+		std::string idOfCreator;
+		std::string dataOfCreation;
+		std::string dataOfLastChanges;
+		std::string idOfLastChanger;
+		std::string contributors;
+	};
 }

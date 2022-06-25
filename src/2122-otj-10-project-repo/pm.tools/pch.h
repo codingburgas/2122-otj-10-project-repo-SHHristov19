@@ -10,6 +10,9 @@
 #include <iostream>
 #include <Windows.h>
 #include <conio.h>
+#include <vector>
+#include <string>
+#include <algorithm>
 using namespace std;
 
 #endif //PCH_H

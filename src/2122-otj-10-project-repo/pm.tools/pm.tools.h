@@ -1,6 +1,6 @@
 #pragma once
 #include "pch.h"
-
+#include "../pm.types/User.h"
 namespace pm::tools
 {
     // Function for displaying text in given console coordinates
@@ -14,4 +14,7 @@ namespace pm::tools
 
     // Enter number without printing
     int enterNumberWithoutPrintingOnConsole();
+
+    // Function for choose users in team by id
+    vector<string>  chooseUsersById();
 }

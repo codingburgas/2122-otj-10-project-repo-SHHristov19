@@ -166,6 +166,7 @@
     <ClCompile Include="pm.dal.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\pm.data\teams.csv" />
     <None Include="..\pm.data\users.csv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

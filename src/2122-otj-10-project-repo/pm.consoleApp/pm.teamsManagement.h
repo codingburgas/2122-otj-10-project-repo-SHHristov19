@@ -22,6 +22,7 @@ namespace pm::consoleApp
 
 	namespace windows::teamsManagement
 	{
-		
+		// Function for add new team
+		void createNewTeam(std::string idOfUser, int x, int y);
 	}
 }

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "pm.tools.h"
+#include "../pm.types/User.h"
 
 namespace pm::tools
 {
@@ -84,5 +85,57 @@ namespace pm::tools
         {
             return int(arr[0]) - 48;
         }
+    }
+
+    // Function for choose users in team by id
+    vector<string> chooseUsersById()
+    { 
+        char arr[50];
+        vector<int> id;
+        vector<string> temp;
+        string num;
+        int j = 0;
+        arr[j] = _getch();
+        if (int(arr[j]) == 13)
+        {
+            exit(0);
+        }
+        else if (int(arr[j]) == 27)
+        {
+            exit(0);
+        }
+        id.push_back(int(arr[j]) - 48);
+        while (int(arr[j]) != 13)
+        {
+            j++;
+            arr[j] = _getch();
+            if (int(arr[j]) == 32)
+            {
+                id.push_back(0);
+            }
+            else if (int(arr[j]) != 13)
+            {
+                id.push_back(int(arr[j]) - 48);
+            }
+        }
+        for (int i = 0; i < id.size(); i++)
+        {
+            if (id[i] != 0)
+            {
+                num += to_string(id[i]);
+            }
+            else
+            {
+                temp.push_back(num);
+                num = "";
+            }
+            if (i == id.size() - 1)
+            {
+                temp.push_back(num);
+            }
+        }
+        sort(temp.begin(), temp.end());
+        temp.erase(unique(temp.begin(), temp.end()), temp.end());
+        return temp;
     }
 }

@@ -32,8 +32,11 @@ namespace pm::dal
     // Function for replace time of last login
     void replaceLastLoginTime(std::vector<std::vector<std::string>> *data, pm::types::USER* user);
 
+    // Function for geting id of user by username
+    std::string getIdOfUserByUsername(std::string fileName, pm::types::USER user);
+
     // Function for check if usename and password are in the file
-    bool login(std::string fileName, pm::types::USER* user);
+    bool login(std::string fileName, pm::types::USER* user, std::string* idOfUser);
 
     // Function for checking already existing username
     bool checkForExistedUser(std::string fileName, std::string username);
@@ -58,4 +61,7 @@ namespace pm::dal
 
     // Function for edit user by id and data
     void editUserById(std::string fileName, int idOfUser, int idOfEditData, std::string newData);
+
+    // Function for add new team in teams.csv file
+    void createTeam(std::string fileName, pm::types::TEAM team);
 }

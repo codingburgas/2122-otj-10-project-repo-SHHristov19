@@ -26,7 +26,7 @@ namespace pm::dal
     bool loginAsFirst(pm::types::USER user)
     {
         ifstream file("../pm.data/users.csv");
-        if (file.is_open() && getSizeOfFile("../pm.data/users.csv") == 77 && user.username == "admin" && user.password == "adminpass")
+        if (file.is_open() && getSizeOfFile("../pm.data/users.csv") == 82 && user.username == "admin" && user.password == "adminpass")
         {
             file.close();
             return true;
@@ -45,9 +45,9 @@ namespace pm::dal
         return stoi(data[data.size() - 1][0]) + 1;
     }
 
-    bool checkForExistedUser(string fileName, string username);
+    bool checkForExistedUser(string, string); // Function Prototype
 
-    // Function for add data in file
+    // Function for add data in file user.csv
     int registerUser(string fileName, pm::types::USER user)
     {
         ofstream file(fileName, ios_base::app);
@@ -356,12 +356,28 @@ namespace pm::dal
         }
     }
 
+    // Function for geting id of user by username
+    string getIdOfUserByUsername(string fileName, pm::types::USER user)
+    {
+        vector<vector<string>> data = readDataFromFile(fileName);
+        int i = 0;
+        while(true)
+        {
+            if (data[i][3] == user.username)
+            {
+                return data[i][0];
+            }
+            i++;
+        }
+    }
+
     // Function for check if usename and password are in the file
-    bool login(string fileName, pm::types::USER *user)
+    bool login(string fileName, pm::types::USER *user, string* idOfUser)
     {
         ifstream file(fileName);
         vector<string> userAndPass = getUsernameAndPassword(fileName);
         vector<vector<string>> data = readDataFromFile(fileName);
+        *idOfUser = getIdOfUserByUsername(fileName, *user);
         for (auto check : userAndPass)
         {
             string checkUsername, checkPassword;
@@ -796,5 +812,23 @@ namespace pm::dal
             file.close();
         }
         addDataInFile(fileName, data);
+    }
+
+    // Function for add new team in teams.csv file
+    void createTeam(string fileName, pm::types::TEAM team)
+    {
+        ofstream file(fileName, ios_base::app);
+        if (getSizeOfFile(fileName) == 91)
+        {
+            team.id = "1";
+        }
+        else
+        {
+            team.id = to_string(generateId(fileName));
+        }
+        team.dataOfCreation = pm::bll::currentDateTime();
+        team.dataOfLastChanges = pm::bll::currentDateTime();
+        file << "\"" << team.id << "\",\"" << team.name << "\",\"" << team.idOfCreator << "\",\"" << team.dataOfCreation << "\",\"" << team.dataOfLastChanges << "\",\"" << team.idOfLastChanger << "\",\"" << team.contributors << "\"\n";
+        file.close();
     }
 }
