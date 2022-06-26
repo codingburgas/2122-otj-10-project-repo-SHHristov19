@@ -662,7 +662,7 @@ namespace pm::consoleApp
 			}
 			if (user.role == "user")
 			{
-				pm::consoleApp::menus::userPanel();
+				pm::consoleApp::menus::userPanel(idOfUser);
 			}
 			else if (user.role == "admin")
 			{
@@ -1016,6 +1016,7 @@ namespace pm::consoleApp
 						{
 							pm::tools::consoleCoordinates(35, 31);
 							cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
+							cin.ignore();
 							getline(cin, newData);
 							pm::dal::editUserById("../pm.data/users.csv", chosenID, 4, newData);
 							break;
@@ -1455,12 +1456,90 @@ namespace pm::consoleApp
 				}
 			}
 		}
+
+		namespace projectManagement
+		{
+			// Function for create project
+			void createProject(string idOfUser, int x, int y)
+			{
+				pm::tools::outputBorder(24, 13, 20, 101);
+				pm::types::PROJECT project;
+				pm::tools::consoleCoordinates(43, 18);
+				cout << "Title : ";
+				pm::tools::consoleCoordinates(43, 21);
+				cout << "Description : ";
+				pm::tools::consoleCoordinates(51, 18);
+				cin.ignore();
+				getline(cin, project.title);
+				pm::tools::consoleCoordinates(57, 21);
+				getline(cin, project.description);
+				project.idOfCreator = project.idOfLastChanger = idOfUser;
+				pm::tools::consoleCoordinates(43, 28);
+				system("pause");
+				system("CLS");
+				pm::tools::outputBorder(24, 7, pm::dal::generateId("../pm.data/teams.csv") * 3 + pm::dal::generateId("../pm.data/teams.csv") / 2, 101);
+				pm::tools::consoleCoordinates(x, y);
+				cout << "Id\t\t\tName of team\t\t\tCreator";
+				pm::tools::consoleCoordinates(26, y + 1);
+				cout << "____________________________________________________________________________________________________";
+				vector<int> id;
+				vector<vector<string>> data = pm::dal::readDataFromTeamsFile("../pm.data/teams.csv", &id);
+				int tempX = x, tempY = y;
+				y += 2;
+				for (auto row : data)
+				{
+					int counter = 1;
+					y += 3;
+					x = tempX;
+					for (auto col : row)
+					{
+						if (counter == 1)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 24;
+							cout << col;
+						}
+						else if (counter == 2)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 32;
+							cout << col;
+						}
+						else if (counter == 3)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 40;
+							cout << col;
+						}
+						counter++;
+					}
+				}
+				int choise = pm::tools::enterNumberWithoutPrintingOnConsole();
+				bool exist = false;
+				for (int i = 0; i < id.size(); i++)
+				{
+					if (choise == id[i])
+					{
+						exist = true;
+					}
+				}
+				if (choise <= 0 || !exist)
+				{
+					project.IdOfTeam = "0";
+				}
+				else
+				{
+					project.IdOfTeam = to_string(choise);
+				}
+				pm::dal::createProject("../pm.data/projects.csv", project);
+			}
+		}
 	}
 
 	namespace menus
 	{
 		// Function for movement in project management
-		void projectManagement()
+		void projectManagement(string idOfUser)
 		{
 			int choice;
 			bool truth;
@@ -1580,6 +1659,7 @@ namespace pm::consoleApp
 						case 2:
 						{
 							system("CLS");
+							windows::projectManagement::createProject(idOfUser, 40, 9);
 							choice = 7;
 							break;
 						}
@@ -2030,7 +2110,7 @@ namespace pm::consoleApp
 		}
 
 		// Function for movement in user panel
-		void userPanel()
+		void userPanel(string *idOfUser)
 		{
 			int choice;
 			bool truth;
@@ -2116,7 +2196,7 @@ namespace pm::consoleApp
 						case 1:
 						{
 							system("CLS");
-							projectManagement();
+							projectManagement(*idOfUser);
 							choice = 5;
 							break;
 						}

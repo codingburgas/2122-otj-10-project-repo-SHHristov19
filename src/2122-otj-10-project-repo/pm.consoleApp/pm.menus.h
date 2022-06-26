@@ -4,7 +4,7 @@
 namespace pm::consoleApp::menus
 {
 	// Function for movement in project management
-	void projectManagement();
+	void projectManagement(std::string idOfUser);
 
 	// Function for movement in teams management
 	void teamsManagement(std::string idOfUser);
@@ -16,7 +16,7 @@ namespace pm::consoleApp::menus
 	void adminPanel(std::string* idOfUser);
 
 	// Function for movement in user panel
-	void userPanel();
+	void userPanel(std::string* idOfUser);
 
 	// Function for movement in main Menu
 	void menu();

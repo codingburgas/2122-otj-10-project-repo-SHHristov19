@@ -82,4 +82,7 @@ namespace pm::dal
 
     // Function for edit data in teams file
     void editTeamById(string fileName, int idOfTeam, int idOfEditData, string newData, string idOfUser);
+
+    // Function for add new project in projects.csv file
+    void createProject(string fileName, pm::types::PROJECT team);
 }

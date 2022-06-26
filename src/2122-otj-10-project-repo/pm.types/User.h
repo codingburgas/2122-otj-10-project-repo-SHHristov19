@@ -26,4 +26,17 @@ namespace pm::types
 		std::string idOfLastChanger;
 		std::string contributors;
 	};
+
+	struct PROJECT
+	{
+		std::string id;
+		std::string title;
+		std::string description;
+		std::string dataOfCreation;
+		std::string idOfCreator;
+		std::string dataOfLastChanges;
+		std::string idOfLastChanger;
+		std::string IdOfTeam;
+		std::string IdOfTasks;
+	};
 }

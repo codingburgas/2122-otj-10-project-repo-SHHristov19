@@ -25,6 +25,7 @@ namespace pm::consoleApp
 
 	namespace windows::projectManagement
 	{
-		
+		// Function for create project
+		void createProject(std::string idOfUser, int x, int y);
 	}
 }

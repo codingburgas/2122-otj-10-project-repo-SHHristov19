@@ -1213,4 +1213,22 @@ namespace pm::dal
         }
         addDataInTeamsFile(fileName, data);
     }
+
+    // Function for add new project in projects.csv file
+    void createProject(string fileName, pm::types::PROJECT team)
+    {
+        ofstream file(fileName, ios_base::app);
+        if (getSizeOfFile(fileName) == 118)
+        {
+            team.id = "1";
+        }
+        else
+        {
+            team.id = to_string(generateId(fileName));
+        }
+        team.dataOfCreation = pm::bll::currentDateTime();
+        team.dataOfLastChanges = pm::bll::currentDateTime();
+        file << "\"" << team.id << "\",\"" << team.title << "\",\"" << team.description << "\",\"" << team.dataOfCreation << "\",\"" << team.idOfCreator << "\",\"" << team.dataOfLastChanges << "\",\"" << team.idOfLastChanger << "\",\"" << team.IdOfTeam << "\",\"" << 0 << "\"\n";
+        file.close();
+    }
 }
