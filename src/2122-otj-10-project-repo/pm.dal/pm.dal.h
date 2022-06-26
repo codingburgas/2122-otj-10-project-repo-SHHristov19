@@ -85,4 +85,19 @@ namespace pm::dal
 
     // Function for add new project in projects.csv file
     void createProject(string fileName, pm::types::PROJECT team);
+
+    // Function for read data from project file and add it in vector
+    vector<vector<string>> readDataFromProjectsFile(string fileName, vector<int>* identification);
+
+    // Function for getting data by id of team
+    vector<string> getProjetctDataById(string fileName, int idUser);
+
+    // Function for add data infront of the matrix vector
+    vector<vector<string>> pushFrontTitleOfProjectsFile(vector<vector<string>> data);
+
+    // Function for add data in project file
+    void addDataInProjectsFile(string fileName, vector<vector<string>> data);
+
+    // Function for deleting team by id
+    void deleteProjectByIdInProjectsFile(string fileName, int idOfUser);
 }

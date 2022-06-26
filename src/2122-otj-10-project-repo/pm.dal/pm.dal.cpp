@@ -1228,7 +1228,317 @@ namespace pm::dal
         }
         team.dataOfCreation = pm::bll::currentDateTime();
         team.dataOfLastChanges = pm::bll::currentDateTime();
-        file << "\"" << team.id << "\",\"" << team.title << "\",\"" << team.description << "\",\"" << team.dataOfCreation << "\",\"" << team.idOfCreator << "\",\"" << team.dataOfLastChanges << "\",\"" << team.idOfLastChanger << "\",\"" << team.IdOfTeam << "\",\"" << 0 << "\"\n";
+        file << "\"" << team.id << "\",\"" << team.title << "\",\"" << team.description << "\",\"" << team.dataOfCreation << "\",\"" << team.idOfCreator << "\",\"" << team.dataOfLastChanges << "\",\"" << team.idOfLastChanger << "\",\"" << team.idOfTeam << "\",\"" << 0 << "\"\n";
         file.close();
+    }
+
+    // Function for read data from project file and add it in vector
+    vector<vector<string>> readDataFromProjectsFile(string fileName, vector<int>* identification)
+    {
+        vector<vector<string>> allData;
+        ifstream file(fileName);
+        string line;
+        int counter = -1;
+        if (file.is_open())
+        {
+            while (getline(file, line))
+            {
+                if (counter > -1)
+                {
+                    counter = 0;
+                    pm::types::PROJECT data;
+                    for (size_t i = 0; i < line.size(); i++)
+                    {
+                        if (line[i] == ',' && counter < 8)
+                        {
+                            counter++;
+                            line.erase(i, 0);
+                        }
+                        else if (line[i] == '"')
+                        {
+                            line.erase(i, 0);
+                        }
+                        else if (counter == 0)
+                        {
+                            data.id += line[i];
+                            (*identification).push_back(stoi(data.id));
+                        }
+                        else if (counter == 1)
+                        {
+                            data.title += line[i];
+                        }
+                        else if (counter == 2)
+                        {
+                            data.description += line[i];
+                        }
+                        else if (counter == 3)
+                        {
+                            data.dataOfCreation += line[i];
+                        }
+                        else if (counter == 4)
+                        {
+                            data.idOfCreator += line[i];
+                        }
+                        else if (counter == 5)
+                        {
+                            data.dataOfLastChanges += line[i];
+                        }
+                        else if (counter == 6)
+                        {
+                            data.idOfLastChanger += line[i];
+                        }
+                        else if (counter == 7)
+                        {
+                            data.idOfTeam += line[i];
+                        }
+                        else if (counter == 8)
+                        {
+                            data.idOfTasks += line[i];
+                        }
+                    }
+                    vector<string> temp;
+                    temp.push_back(data.id);
+                    temp.push_back(data.title);
+                    temp.push_back(data.description);
+                    temp.push_back(data.dataOfCreation);
+                    temp.push_back(data.idOfCreator);
+                    temp.push_back(data.dataOfLastChanges);
+                    temp.push_back(data.idOfLastChanger);
+                    temp.push_back(data.idOfTeam);
+                    temp.push_back(data.idOfTasks);
+                    allData.push_back(temp);
+                }
+                counter++;
+            }
+            file.close();
+        }
+        return allData;
+    }
+
+    // Function for getting data by id of team
+    vector<string> getProjetctDataById(string fileName, int idUser)
+    {
+        vector<string> allData;
+        ifstream file(fileName);
+        string line;
+        int counter = -1;
+        if (file.is_open())
+        {
+            while (getline(file, line))
+            {
+                if (counter > -1)
+                {
+                    counter = 0;
+                    pm::types::PROJECT data;
+                    for (size_t i = 0; i < line.size(); i++)
+                    {
+                        if (line[i] == ',' && counter < 8)
+                        {
+                            counter++;
+                            line.erase(i, 0);
+                        }
+                        else if (line[i] == '"')
+                        {
+                            line.erase(i, 0);
+                        }
+                        else if (counter == 0)
+                        {
+                            data.id += line[i];
+                        }
+                        else if (counter == 1)
+                        {
+                            data.title += line[i];
+                        }
+                        else if (counter == 2)
+                        {
+                            data.description += line[i];
+                        }
+                        else if (counter == 3)
+                        {
+                            data.dataOfCreation += line[i];
+                        }
+                        else if (counter == 4)
+                        {
+                            data.idOfCreator += line[i];
+                        }
+                        else if (counter == 5)
+                        {
+                            data.dataOfLastChanges += line[i];
+                        }
+                        else if (counter == 6)
+                        {
+                            data.idOfLastChanger += line[i];
+                        }
+                        else if (counter == 7)
+                        {
+                            data.idOfTeam += line[i];
+                        }
+                        else if (counter == 8)
+                        {
+                            data.idOfTasks += line[i];
+                        }
+                    }
+                    if (stoi(data.id) == idUser)
+                    {
+                        allData.push_back(data.id);
+                        allData.push_back(data.title);
+                        allData.push_back(data.description);
+                        allData.push_back(data.dataOfCreation);
+                        allData.push_back(data.idOfCreator);
+                        allData.push_back(data.dataOfLastChanges);
+                        allData.push_back(data.idOfLastChanger);
+                        allData.push_back(data.idOfTeam);
+                        allData.push_back(data.idOfTasks);
+                    }
+                }
+                counter++;
+            }
+            file.close();
+        }
+        return allData;
+    }
+
+    // Function for add data infront of the matrix vector
+    vector<vector<string>> pushFrontTitleOfProjectsFile(vector<vector<string>> data)
+    {
+        vector<vector<string>> output;
+        vector<string> temp;
+        temp.push_back("Id");
+        temp.push_back("Title");
+        temp.push_back("Description");
+        temp.push_back("Date of creation");
+        temp.push_back("Id of the creator");
+        temp.push_back("Date of last changes");
+        temp.push_back("Id of last changer");
+        temp.push_back("Id of team");
+        temp.push_back("Id of tasks");
+        output.push_back(temp);
+        for (size_t i = 0; i < data.size(); i++)
+        {
+            vector<string> temp2;
+            for (size_t j = 0; j < data[i].size(); j++)
+            {
+                temp2.push_back(data[i][j]);
+            }
+            output.push_back(temp2);
+        }
+        return output;
+    }
+
+    // Function for add data in project file
+    void addDataInProjectsFile(string fileName, vector<vector<string>> data)
+    {
+        ofstream out(fileName, ios_base::trunc);
+        if (out.is_open())
+        {
+            for (int i = 0; i < data.size(); i++)
+            {
+                for (int j = 0; j < data[i].size(); j++)
+                {
+                    if (j == 8 && i > 0)
+                    {
+                        out << "\"" << data[i][j] << "\"\n";
+                    }
+                    else if (j == 8 && i == 0)
+                    {
+                        out << data[i][j] << "\n";
+                    }
+                    else if (j != 8 && i == 0)
+                    {
+                        out << data[i][j] << ",";
+                    }
+                    else
+                    {
+                        out << "\"" << data[i][j] << "\",";
+                    }
+                }
+            }
+            out.close();
+        }
+    }
+
+    // Function for deleting team by id
+    void deleteProjectByIdInProjectsFile(string fileName, int idOfUser)
+    {
+        vector<vector<string>> allData = pushFrontTitleOfProjectsFile(allData);
+        ifstream file(fileName);
+        string line;
+        int counter = -1;
+        if (file.is_open())
+        {
+            while (getline(file, line))
+            {
+                if (counter > -1)
+                {
+                    counter = 0;
+                    pm::types::PROJECT data;
+                    for (size_t i = 0; i < line.size(); i++)
+                    {
+                        if (line[i] == ',' && counter < 8)
+                        {
+                            counter++;
+                            line.erase(i, 0);
+                        }
+                        else if (line[i] == '"')
+                        {
+                            line.erase(i, 0);
+                        }
+                        else if (counter == 0)
+                        {
+                            data.id += line[i];
+                        }
+                        else if (counter == 1)
+                        {
+                            data.title += line[i];
+                        }
+                        else if (counter == 2)
+                        {
+                            data.description += line[i];
+                        }
+                        else if (counter == 3)
+                        {
+                            data.dataOfCreation += line[i];
+                        }
+                        else if (counter == 4)
+                        {
+                            data.idOfCreator += line[i];
+                        }
+                        else if (counter == 5)
+                        {
+                            data.dataOfLastChanges += line[i];
+                        }
+                        else if (counter == 6)
+                        {
+                            data.idOfLastChanger += line[i];
+                        }
+                        else if (counter == 7)
+                        {
+                            data.idOfTeam += line[i];
+                        }
+                        else if (counter == 8)
+                        {
+                            data.idOfTasks += line[i];
+                        }
+                    }
+                    vector<string> temp;
+                    if (stoi(data.id) != idOfUser)
+                    {
+                        temp.push_back(data.id);
+                        temp.push_back(data.title);
+                        temp.push_back(data.description);
+                        temp.push_back(data.dataOfCreation);
+                        temp.push_back(data.idOfCreator);
+                        temp.push_back(data.dataOfLastChanges);
+                        temp.push_back(data.idOfLastChanger);
+                        temp.push_back(data.idOfTeam);
+                        temp.push_back(data.idOfTasks);
+                    }
+                    allData.push_back(temp);
+                }
+                counter++;
+            }
+            file.close();
+        }
+        addDataInProjectsFile(fileName, allData);
     }
 }

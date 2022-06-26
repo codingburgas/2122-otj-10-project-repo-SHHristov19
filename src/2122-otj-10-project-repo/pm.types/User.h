@@ -36,7 +36,7 @@ namespace pm::types
 		std::string idOfCreator;
 		std::string dataOfLastChanges;
 		std::string idOfLastChanger;
-		std::string IdOfTeam;
-		std::string IdOfTasks;
+		std::string idOfTeam;
+		std::string idOfTasks;
 	};
 }

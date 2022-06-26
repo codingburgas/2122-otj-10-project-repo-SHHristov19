@@ -1211,22 +1211,22 @@ namespace pm::consoleApp
 				{
 					system("CLS");
 					pm::tools::outputBorder(24, 13, 20, 101);
-					vector<string> user = pm::dal::getTeamDataById("../pm.data/teams.csv", choise);
+					vector<string> team = pm::dal::getTeamDataById("../pm.data/teams.csv", choise);
 					x = 40; y = 17;
 					pm::tools::consoleCoordinates(x, y + 1);
-					cout << "Id of the team : " << user[0];
+					cout << "Id of the team : " << team[0];
 					pm::tools::consoleCoordinates(x, y + 3);
-					cout << "Name of the team : " << user[1];
+					cout << "Name of the team : " << team[1];
 					pm::tools::consoleCoordinates(x, y + 5);
-					cout << "Id of creator : " << user[2];
+					cout << "Id of creator : " << team[2];
 					pm::tools::consoleCoordinates(x, y + 7);
-					cout << "Data of creation : " << user[3];
+					cout << "Data of creation : " << team[3];
 					pm::tools::consoleCoordinates(x, y + 9);
-					cout << "Data of last changes : " << user[4];
+					cout << "Data of last changes : " << team[4];
 					pm::tools::consoleCoordinates(x, y + 11);
-					cout << "Id Of last changer : " << user[5];
+					cout << "Id Of last changer : " << team[5];
 					pm::tools::consoleCoordinates(x, y + 13);
-					cout << "Id of contributors : " << user[6];
+					cout << "Id of contributors : " << team[6];
 					pm::tools::consoleCoordinates(x + 20, y + 20);
 					system("pause");
 					showAllTeams(tempX, tempY);
@@ -1457,7 +1457,7 @@ namespace pm::consoleApp
 			}
 		}
 
-		namespace projectManagement
+		namespace projectsManagement
 		{
 			// Function for create project
 			void createProject(string idOfUser, int x, int y)
@@ -1481,9 +1481,9 @@ namespace pm::consoleApp
 				pm::tools::consoleCoordinates(x, y);
 				cout << "Id\t\t\tName of team\t\t\tCreator";
 				pm::tools::consoleCoordinates(26, y + 1);
-				cout << "____________________________________________________________________________________________________";
+				cout << "___________________________________________________________________________________________________";
 				vector<int> id;
-				vector<vector<string>> data = pm::dal::readDataFromTeamsFile("../pm.data/teams.csv", &id);
+				vector<vector<string>> data = pm::dal::readDataFromProjectsFile("../pm.data/projects.csv", &id);
 				int tempX = x, tempY = y;
 				y += 2;
 				for (auto row : data)
@@ -1502,13 +1502,12 @@ namespace pm::consoleApp
 						else if (counter == 2)
 						{
 							pm::tools::consoleCoordinates(x, y);
-							x += 32;
+							x += 45;
 							cout << col;
 						}
-						else if (counter == 3)
+						else if (counter == 5)
 						{
 							pm::tools::consoleCoordinates(x, y);
-							x += 40;
 							cout << col;
 						}
 						counter++;
@@ -1525,13 +1524,156 @@ namespace pm::consoleApp
 				}
 				if (choise <= 0 || !exist)
 				{
-					project.IdOfTeam = "0";
+					project.idOfTeam = "0";
 				}
 				else
 				{
-					project.IdOfTeam = to_string(choise);
+					project.idOfTeam = to_string(choise);
 				}
 				pm::dal::createProject("../pm.data/projects.csv", project);
+			}
+
+			// Function for output list of projects
+			void showAllProjects(int x, int y)
+			{
+				system("CLS");
+				pm::tools::outputBorder(24, 7, pm::dal::generateId("../pm.data/projects.csv") * 3 + pm::dal::generateId("../pm.data/projects.csv") / 2, 101);
+				pm::tools::consoleCoordinates(x, y);
+				cout << "Id\t\t\tTitle of project\t\t\tId of creator";
+				pm::tools::consoleCoordinates(26, y + 1);
+				cout << "___________________________________________________________________________________________________";
+				vector<int> id;
+				vector<vector<string>> data = pm::dal::readDataFromTeamsFile("../pm.data/projects.csv", &id);
+				int tempX = x, tempY = y;
+				y += 2;
+				for (auto row : data)
+				{
+					int counter = 1;
+					y += 3;
+					x = tempX;
+					for (auto col : row)
+					{
+						if (counter == 1)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 24;
+							cout << col;
+						}
+						else if (counter == 2)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 45;
+							cout << col;
+						}
+						else if (counter == 5)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							cout << col;
+						}
+						counter++;
+					}
+				}
+				int choise = pm::tools::enterNumberWithoutPrintingOnConsole();
+				bool exist = false;
+				for (int i = 0; i < id.size(); i++)
+				{
+					if (choise == id[i])
+					{
+						exist = true;
+					}
+				}
+				if (choise == 0 || !exist)
+				{
+					return;
+				}
+				else
+				{
+					system("CLS");
+					pm::tools::outputBorder(24, 13, 20, 101);
+					vector<string> project = pm::dal::getProjetctDataById("../pm.data/projects.csv", choise);
+					x = 40; y = 15;
+					pm::tools::consoleCoordinates(x, y + 1);
+					cout << "Id of the project : " << project[0];
+					pm::tools::consoleCoordinates(x, y + 3);
+					cout << "Title of the project : " << project[1];
+					pm::tools::consoleCoordinates(x, y + 5);
+					cout << "Description of the project : " << project[2];
+					pm::tools::consoleCoordinates(x, y + 7);
+					cout << "Data of creation : " << project[3];
+					pm::tools::consoleCoordinates(x, y + 9);
+					cout << "Id of the creator : " << project[4];
+					pm::tools::consoleCoordinates(x, y + 11);
+					cout << "Date of last changes : " << project[5];
+					pm::tools::consoleCoordinates(x, y + 13);
+					cout << "Id of last changer : " << project[6];
+					pm::tools::consoleCoordinates(x, y + 15);
+					cout << "Id of team : " << project[7];
+					pm::tools::consoleCoordinates(x, y + 17);
+					cout << "Id of tasks : " << project[8];
+					pm::tools::consoleCoordinates(x + 20, y + 20);
+					system("pause");
+					showAllProjects(tempX, tempY);
+				}
+			}
+
+			// Function for delete data from project file
+			void deleteProject(int x, int y)
+			{
+				system("CLS");
+				pm::tools::outputBorder(24, 7, pm::dal::generateId("../pm.data/projects.csv") * 3 + pm::dal::generateId("../pm.data/projects.csv") / 2, 101);
+				pm::tools::consoleCoordinates(x, y);
+				cout << "Id\t\t\tTitle of project\t\t\tId of creator";
+				pm::tools::consoleCoordinates(26, y + 1);
+				cout << "___________________________________________________________________________________________________";
+				vector<int> id;
+				vector<vector<string>> data = pm::dal::readDataFromTeamsFile("../pm.data/projects.csv", &id);
+				int tempX = x, tempY = y;
+				y += 2;
+				for (auto row : data)
+				{
+					int counter = 1;
+					y += 3;
+					x = tempX;
+					for (auto col : row)
+					{
+						if (counter == 1)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 24;
+							cout << col;
+						}
+						else if (counter == 2)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 45;
+							cout << col;
+						}
+						else if (counter == 5)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							cout << col;
+						}
+						counter++;
+					}
+				}
+				int choise = pm::tools::enterNumberWithoutPrintingOnConsole();
+				bool exist = false;
+				for (int i = 0; i < id.size(); i++)
+				{
+					if (choise == id[i])
+					{
+						exist = true;
+					}
+				}
+				if (choise == 0 || !exist)
+				{
+					return;
+				}
+				else
+				{
+					pm::dal::deleteProjectByIdInProjectsFile("../pm.data/projects.csv", choise);
+					return;
+				}
 			}
 		}
 	}
@@ -1653,13 +1795,14 @@ namespace pm::consoleApp
 						case 1:
 						{
 							system("CLS");
+							windows::projectsManagement::showAllProjects(40, 9);
 							choice = 7;
 							break;
 						}
 						case 2:
 						{
 							system("CLS");
-							windows::projectManagement::createProject(idOfUser, 40, 9);
+							windows::projectsManagement::createProject(idOfUser, 40, 9);
 							choice = 7;
 							break;
 						}
@@ -1672,6 +1815,7 @@ namespace pm::consoleApp
 						case 4:
 						{
 							system("CLS");
+							windows::projectsManagement::deleteProject(40, 9);
 							choice = 7;
 							break;
 						}

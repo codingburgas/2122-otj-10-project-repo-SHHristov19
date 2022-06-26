@@ -23,9 +23,15 @@ namespace pm::consoleApp
 		void sixthActive();
 	}
 
-	namespace windows::projectManagement
+	namespace windows::projectsManagement
 	{
 		// Function for create project
 		void createProject(std::string idOfUser, int x, int y);
+
+		// Function for output list of projects
+		void showAllProjects(int x, int y);
+
+		// Function for delete data from project file
+		void deleteProject(int x, int y);
 	}
 }
