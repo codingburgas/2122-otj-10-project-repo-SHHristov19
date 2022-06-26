@@ -1003,7 +1003,7 @@ namespace pm::consoleApp
 					pm::tools::consoleCoordinates(55, 28);
 					cout << "6. Role";
 					int choise = pm::tools::enterNumberWithoutPrintingOnConsole();
-					if (choise == 0 || choise > 6)
+					if (choise <= 0 || choise > 6)
 					{
 						return;
 					}
@@ -1292,6 +1292,168 @@ namespace pm::consoleApp
 					return;
 				}
 			}
+
+			// Function for edit data in teams.csv file
+			void editTeam(string idOfUser, int x, int y)
+			{
+				system("CLS");
+				pm::tools::outputBorder(24, 7, pm::dal::generateId("../pm.data/teams.csv") * 3 + pm::dal::generateId("../pm.data/teams.csv") / 2, 101);
+				pm::tools::consoleCoordinates(x, y);
+				cout << "Id\t\t\tName of team\t\t\tCreator";
+				pm::tools::consoleCoordinates(26, y + 1);
+				cout << "___________________________________________________________________________________________________";
+				vector<int> id;
+				vector<vector<string>> data = pm::dal::readDataFromTeamsFile("../pm.data/teams.csv", &id);
+				int tempX = x, tempY = y;
+				y += 2;
+				for (auto row : data)
+				{
+					int counter = 1;
+					y += 3;
+					x = tempX;
+					for (auto col : row)
+					{
+						if (counter == 1)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 24;
+							cout << col;
+						}
+						else if (counter == 2)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 32;
+							cout << col;
+						}
+						else if (counter == 3)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 40;
+							cout << col;
+						}
+						counter++;
+					}
+				}
+				int chosenID = pm::tools::enterNumberWithoutPrintingOnConsole();
+				bool exist = false;
+				for (int i = 0; i < id.size(); i++)
+				{
+					if (chosenID == id[i])
+					{
+						exist = true;
+					}
+				}
+				if (chosenID == 0 || !exist)
+				{
+					return;
+				}
+				else
+				{
+					system("CLS");
+					pm::tools::outputBorder(24, 13, 20, 101);
+					x = 40; y = 16;
+					pm::tools::consoleCoordinates(x, y + 3);
+					cout << "1. Name of the team";
+					pm::tools::consoleCoordinates(x, y + 8);
+					cout << "2. Id of contributors";
+					int choise = pm::tools::enterNumberWithoutPrintingOnConsole();
+					if (choise <= 0 || choise > 2)
+					{
+						return;
+					}
+					else
+					{
+						string newData;
+						switch (choise)
+						{
+						case 1:
+						{
+							pm::tools::consoleCoordinates(35, 31);
+							cout << "ENTER THE NEW NAME : ";
+							cin.ignore();
+							getline(cin, newData);
+							pm::dal::editTeamById("../pm.data/teams.csv", chosenID, 2, newData, idOfUser);
+							break;
+						}
+						case 2:
+						{
+							system("CLS");
+							pm::tools::outputBorder(24, 13, pm::dal::generateId("../pm.data/users.csv") * 3 + pm::dal::generateId("../pm.data/users.csv") / 2, 101);
+							pm::tools::consoleCoordinates(x, y);
+							cout << "Id\t\tUsername\t\tFirstName\t\tLastName";
+							pm::tools::consoleCoordinates(26, y + 1);
+							cout << "___________________________________________________________________________________________________";
+							vector<int> id;
+							vector<vector<string>> data = pm::dal::readDataForIdUsernameFirstAndLastName("../pm.data/users.csv", &id);
+							int tempX = x, tempY = y;
+							y += 2;
+							for (auto row : data)
+							{
+								int counter = 1;
+								y += 3;
+								x = tempX;
+								for (auto col : row)
+								{
+									if (counter == 1)
+									{
+										pm::tools::consoleCoordinates(x, y);
+										x += 16;
+										cout << col;
+									}
+									else if (counter == 2)
+									{
+										pm::tools::consoleCoordinates(x, y);
+										x += 24;
+										cout << col;
+									}
+									else if (counter == 3)
+									{
+										pm::tools::consoleCoordinates(x, y);
+										x += 24;
+										cout << col;
+									}
+									else if (counter == 4)
+									{
+										pm::tools::consoleCoordinates(x, y);
+										cout << col;
+									}
+									counter++;
+								}
+							}
+							vector<string> vec = pm::tools::chooseUsersById();
+							int count = 0;
+							for (auto i : vec)
+							{
+								for (auto j : id)
+								{
+									if (i == to_string(j))
+									{
+										count++;
+									}
+								}
+							}
+							if (count == vec.size())
+							{
+								for (auto i : vec)
+								{
+
+									if (i == vec[vec.size() - 1])
+									{
+										newData += i;
+									}
+									else
+									{
+										newData += i + ",";
+									}
+								}
+								pm::dal::editTeamById("../pm.data/teams.csv", chosenID, 7, newData, idOfUser);
+							}
+							break;
+						}
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -1577,6 +1739,7 @@ namespace pm::consoleApp
 						case 3:
 						{
 							system("CLS");
+							windows::teamsManagement::editTeam(idOfUser, 40, 9);
 							choice = 6;
 							break;
 						}

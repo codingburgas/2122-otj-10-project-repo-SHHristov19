@@ -79,4 +79,7 @@ namespace pm::dal
 
     // Function for deleting team by id
     void deleteTeamByIdInTeamsFile(string fileName, int idOfUser);
+
+    // Function for edit data in teams file
+    void editTeamById(string fileName, int idOfTeam, int idOfEditData, string newData, string idOfUser);
 }

@@ -30,5 +30,8 @@ namespace pm::consoleApp
 
 		// Function for deleting team
 		void deleteTeam(int x, int y);
+
+		// Function for edit data in teams.csv file
+		void editTeam(std::string idOfUser, int x, int y);
 	}
 }
