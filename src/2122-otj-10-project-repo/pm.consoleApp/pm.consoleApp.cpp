@@ -638,20 +638,20 @@ namespace pm::consoleApp
 			cin >> user.username;
 			pm::tools::consoleCoordinates(73, 25);
 			cin >> user.password;
-			if (pm::dal::login("../pm.data/users.csv", &user, idOfUser))
-			{
-				system("CLS");
-				pm::tools::outputBorder(24, 14, 17, 101);
-				warnings::successfullyLogin(46, 17);
-				Sleep(1500);
-			}
-			else if (pm::dal::loginAsFirst(user))
+			if (pm::dal::loginAsFirst(user))
 			{
 				system("CLS");
 				pm::tools::outputBorder(24, 14, 17, 101);
 				warnings::successfullyLogin(46, 17);
 				Sleep(1500);
 				user.role = "admin";
+			}
+			else if (pm::dal::login("../pm.data/users.csv", &user, idOfUser))
+			{
+				system("CLS");
+				pm::tools::outputBorder(24, 14, 17, 101);
+				warnings::successfullyLogin(46, 17);
+				Sleep(1500);
 			}
 			else
 			{
@@ -1231,6 +1231,67 @@ namespace pm::consoleApp
 					showAllTeams(tempX, tempY);
 				}
 			}
+
+			// Function for deleting team
+			void deleteTeam(int x, int y)
+			{
+				system("CLS");
+				pm::tools::outputBorder(24, 7, pm::dal::generateId("../pm.data/teams.csv") * 3 + pm::dal::generateId("../pm.data/teams.csv") / 2, 101);
+				pm::tools::consoleCoordinates(x, y);
+				cout << "Id\t\t\tName of team\t\t\tCreator";
+				pm::tools::consoleCoordinates(26, y + 1);
+				cout << "___________________________________________________________________________________________________";
+				vector<int> id;
+				vector<vector<string>> data = pm::dal::readDataFromTeamsFile("../pm.data/teams.csv", &id);
+				int tempX = x, tempY = y;
+				y += 2;
+				for (auto row : data)
+				{
+					int counter = 1;
+					y += 3;
+					x = tempX;
+					for (auto col : row)
+					{
+						if (counter == 1)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 24;
+							cout << col;
+						}
+						else if (counter == 2)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 32;
+							cout << col;
+						}
+						else if (counter == 3)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 40;
+							cout << col;
+						}
+						counter++;
+					}
+				}
+				int choise = pm::tools::enterNumberWithoutPrintingOnConsole();
+				bool exist = false;
+				for (int i = 0; i < id.size(); i++)
+				{
+					if (choise == id[i])
+					{
+						exist = true;
+					}
+				}
+				if (choise == 0 || !exist)
+				{
+					return;
+				}
+				else
+				{
+					pm::dal::deleteTeamByIdInTeamsFile("../pm.data/teams.csv", choise);
+					return;
+				}
+			}
 		}
 	}
 
@@ -1502,13 +1563,14 @@ namespace pm::consoleApp
 						case 1:
 						{
 							system("CLS");
+							windows::teamsManagement::showAllTeams(40, 9);
 							choice = 6;
 							break;
 						}
 						case 2:
 						{
-							windows::teamsManagement::createNewTeam(idOfUser, 40, 9);
 							system("CLS");
+							windows::teamsManagement::createNewTeam(idOfUser, 40, 9);
 							choice = 6;
 							break;
 						}
@@ -1521,6 +1583,7 @@ namespace pm::consoleApp
 						case 4:
 						{
 							system("CLS");
+							windows::teamsManagement::deleteTeam(40, 9);
 							choice = 6;
 							break;
 						}

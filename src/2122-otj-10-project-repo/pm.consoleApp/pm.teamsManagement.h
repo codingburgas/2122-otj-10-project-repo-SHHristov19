@@ -27,5 +27,8 @@ namespace pm::consoleApp
 
 		// Function for output list of teams
 		void showAllTeams(int x, int y);
+
+		// Function for deleting team
+		void deleteTeam(int x, int y);
 	}
 }

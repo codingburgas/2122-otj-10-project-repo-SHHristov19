@@ -70,4 +70,13 @@ namespace pm::dal
 
     // Function for getting data by id of team
     vector<string> getTeamDataById(string fileName, int idUser);
+
+    // Function for add data infront of the matrix vector
+    vector<vector<string>> pushFrontTitleOfTeamsFile(vector<vector<string>> data);
+
+    // Function for add data in file
+    void addDataInTeamsFile(string fileName, vector<vector<string>> data);
+
+    // Function for deleting team by id
+    void deleteTeamByIdInTeamsFile(string fileName, int idOfUser);
 }

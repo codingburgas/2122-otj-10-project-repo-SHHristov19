@@ -377,7 +377,6 @@ namespace pm::dal
         ifstream file(fileName);
         vector<string> userAndPass = getUsernameAndPassword(fileName);
         vector<vector<string>> data = readDataFromUsersFile(fileName);
-        *idOfUser = getIdOfUserByUsername(fileName, *user);
         for (auto check : userAndPass)
         {
             string checkUsername, checkPassword;
@@ -404,6 +403,7 @@ namespace pm::dal
                 replaceLastLoginTime(&data, user);
                 data = pm::dal::pushFrontTitleOfUsersFile(data);
                 pm::dal::addDataInUsersFile(fileName, data);
+                *idOfUser = getIdOfUserByUsername(fileName, *user);
                 file.close();
                 return true;
             }
@@ -486,15 +486,15 @@ namespace pm::dal
     {
         vector<vector<string>> output;
         vector<string> temp;
-        temp.push_back("id");
-        temp.push_back("firstName");
-        temp.push_back("lastName");
-        temp.push_back("username");
-        temp.push_back("password");
-        temp.push_back("age");
-        temp.push_back("timeOfRegistration");
-        temp.push_back("lastLogin");
-        temp.push_back("role");
+        temp.push_back("Id");
+        temp.push_back("First name");
+        temp.push_back("Last name");
+        temp.push_back("Username");
+        temp.push_back("Password");
+        temp.push_back("Age");
+        temp.push_back("Time of registration");
+        temp.push_back("Last Login");
+        temp.push_back("Role");
         output.push_back(temp);
         for (size_t i = 0; i < data.size(); i++)
         {
@@ -549,7 +549,7 @@ namespace pm::dal
         addDataInUsersFile(fileName, allDataInFile);
     }
 
-    // Function for geleting user by id
+    // Function for deleting user by id
     void deleteUserByIdInUsersFile(string fileName, int idOfUser)
     {
         vector<vector<string>> data = pushFrontTitleOfUsersFile(data);
@@ -976,5 +976,137 @@ namespace pm::dal
             file.close();
         }
         return data;
+    }
+
+    // Function for add data infront of the matrix vector
+    vector<vector<string>> pushFrontTitleOfTeamsFile(vector<vector<string>> data)
+    {
+        vector<vector<string>> output;
+        vector<string> temp;
+        temp.push_back("Id");
+        temp.push_back("Name");
+        temp.push_back("Id of creator");
+        temp.push_back("Data of creation");
+        temp.push_back("Data of last changes");
+        temp.push_back("Id Of last changer");
+        temp.push_back("Contributors");
+        output.push_back(temp);
+        for (size_t i = 0; i < data.size(); i++)
+        {
+            vector<string> temp2;
+            for (size_t j = 0; j < data[i].size(); j++)
+            {
+                temp2.push_back(data[i][j]);
+            }
+            output.push_back(temp2);
+        }
+        return output;
+    }
+
+    // Function for add data in file
+    void addDataInTeamsFile(string fileName, vector<vector<string>> data)
+    {
+        ofstream out(fileName, ios_base::trunc);
+        if (out.is_open())
+        {
+            for (int i = 0; i < data.size(); i++)
+            {
+                for (int j = 0; j < data[i].size(); j++)
+                {
+                    if (j == 6 && i > 0)
+                    {
+                        out << "\"" << data[i][j] << "\"\n";
+                    }
+                    else if (j == 6 && i == 0)
+                    {
+                        out << data[i][j] << "\n";
+                    }
+                    else if (j != 6 && i == 0)
+                    {
+                        out << data[i][j] << ",";
+                    }
+                    else
+                    {
+                        out << "\"" << data[i][j] << "\",";
+                    }
+                }
+            }
+            out.close();
+        }
+    }
+
+    // Function for deleting team by id
+    void deleteTeamByIdInTeamsFile(string fileName, int idOfUser)
+    {
+        vector<vector<string>> data = pushFrontTitleOfTeamsFile(data);
+        ifstream file(fileName);
+        string line;
+        int counter = -1;
+        if (file.is_open())
+        {
+            while (getline(file, line))
+            {
+                if (counter > -1)
+                {
+                    counter = 0;
+                    pm::types::TEAM choise;
+                    for (size_t i = 0; i < line.size(); i++)
+                    {
+                        if (line[i] == ',' && counter < 6)
+                        {
+                            counter++;
+                            line.erase(i, 0);
+                        }
+                        else if (line[i] == '"')
+                        {
+                            line.erase(i, 0);
+                        }
+                        else if (counter == 0)
+                        {
+                            choise.id += line[i];
+                        }
+                        else if (counter == 1)
+                        {
+                            choise.name += line[i];
+                        }
+                        else if (counter == 2)
+                        {
+                            choise.idOfCreator += line[i];
+                        }
+                        else if (counter == 3)
+                        {
+                            choise.dataOfCreation += line[i];
+                        }
+                        else if (counter == 4)
+                        {
+                            choise.dataOfLastChanges += line[i];
+                        }
+                        else if (counter == 5)
+                        {
+                            choise.idOfLastChanger += line[i];
+                        }
+                        else if (counter == 6)
+                        {
+                            choise.contributors += line[i];
+                        }
+                    }
+                    vector<string> temp;
+                    if (stoi(choise.id) != idOfUser)
+                    {
+                        temp.push_back(choise.id);
+                        temp.push_back(choise.name);
+                        temp.push_back(choise.idOfCreator);
+                        temp.push_back(choise.dataOfCreation);
+                        temp.push_back(choise.dataOfLastChanges);
+                        temp.push_back(choise.idOfLastChanger);
+                        temp.push_back(choise.contributors);
+                    }
+                    data.push_back(temp);
+                }
+                counter++;
+            }
+            file.close();
+        }
+        addDataInTeamsFile(fileName, data);
     }
 }
