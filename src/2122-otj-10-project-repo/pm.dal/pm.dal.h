@@ -72,7 +72,7 @@ namespace pm::dal
     std::vector<std::string> getTeamDataById(std::string fileName, int idUser);
 
     // Function for add data infront of the matrix vector
-    std::vector<std::vector<std::string>> pushFrontTitleOfTeamsFile(std::vector<std::vector<std::string>> data);
+    std::vector<std::vector<std::string>> pushFrontTitleOfTeamsFile();
 
     // Function for add data in file
     void addDataInTeamsFile(std::string fileName, std::vector<std::vector<std::string>> data);
@@ -91,6 +91,9 @@ namespace pm::dal
 
     // Function for getting data by id of team
     std::vector<std::string> getProjetctDataById(std::string fileName, int idUser);
+
+    // Function for add data infront of the matrix vector
+    std::vector<std::vector<std::string>> pushFrontTitleOfProjectsFile();
 
     // Function for add data in project file
     void addDataInProjectsFile(std::string fileName, std::vector<std::vector<std::string>> data);

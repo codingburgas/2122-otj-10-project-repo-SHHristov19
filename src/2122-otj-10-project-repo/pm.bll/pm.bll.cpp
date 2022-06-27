@@ -84,20 +84,19 @@ namespace pm::bll
         return md5(password);
     }
 
-    // Function for adding id of project that the user contain in team colaborators
-    void checkForContainUserInTeam(vector<vector<string>> data, string idOfUser, vector<int>* idOfProjectContainsUser)
+    // Function for adding id of team that the user contain in team colaborators
+    void checkForContainUserInTeam(vector<vector<string>> data, string idOfUser, vector<int>* idOfTeamContainsUser)
     {
         for (auto row : data)
         {
-            vector<string> team = pm::dal::getTeamDataById("../pm.data/teams.csv", stoi(row[7]));
-            string line = team[6], idOfContributor;
+            string line = row[6], idOfContributor;
             for (size_t i = 0; i < line.size(); i++)
             {
                 if (line[i] == ',')
                 {
                     if (idOfContributor == idOfUser)
                     {
-                        (*idOfProjectContainsUser).push_back(stoi(row[0]));
+                        (*idOfTeamContainsUser).push_back(stoi(row[0]));
                     }
                     idOfContributor = "";
                 }
@@ -109,7 +108,49 @@ namespace pm::bll
                 {
                     if (idOfContributor == idOfUser)
                     {
-                        (*idOfProjectContainsUser).push_back(stoi(row[0]));
+                        (*idOfTeamContainsUser).push_back(stoi(row[0]));
+                    }
+                }
+            }
+        }
+    }
+
+    // Function for adding id of project that the user contain in team colaborators
+    void checkProjectForContainUserInTeam(vector<vector<string>> data, string idOfUser, vector<int>* idOfProjectContainsUser)
+    {
+        for (auto row : data)
+        {
+            if (row[4] == idOfUser)
+            {
+                (*idOfProjectContainsUser).push_back(stoi(row[0]));
+            }
+            else
+            {
+                if (stoi(row[7]) > 0)
+                {
+                    vector<string> team = pm::dal::getTeamDataById("../pm.data/teams.csv", stoi(row[7]));
+                    string line = team[6], idOfContributor;
+                    for (size_t i = 0; i < line.size(); i++)
+                    {
+                        if (line[i] == ',')
+                        {
+                            if (idOfContributor == idOfUser)
+                            {
+                                (*idOfProjectContainsUser).push_back(stoi(row[0]));
+                            }
+                            idOfContributor = "";
+                        }
+                        else if (line[i] != ',')
+                        {
+                            idOfContributor += line[i];
+                        }
+                        if (i == line.size() - 1)
+                        {
+                            if (idOfContributor == idOfUser)
+                            {
+                                (*idOfProjectContainsUser).push_back(stoi(row[0]));
+                            }
+                        }
                     }
                 }
             }
@@ -117,13 +158,13 @@ namespace pm::bll
     }
 
     // Function for get data by id of projects
-    vector<vector<string>> getDataByIdOfProjects(vector<int> idOfProject, vector<vector<string>> data)
+    vector<vector<string>> getDataById(vector<int> id, vector<vector<string>> data)
     {
         vector<vector<string>> temp;
         int i = 0;
         for (auto row : data)
         {
-            if (i < idOfProject.size() && row[0] == to_string(idOfProject[i]))
+            if (i < id.size() && row[0] == to_string(id[i]))
             {
                 temp.push_back(row);
                 i++;
@@ -131,4 +172,6 @@ namespace pm::bll
         }
         return temp;
     }
+
+    
 }

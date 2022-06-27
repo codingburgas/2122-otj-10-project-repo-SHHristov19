@@ -496,6 +496,15 @@ namespace pm::dal
         temp.push_back("Last Login");
         temp.push_back("Role");
         output.push_back(temp);
+        for (size_t i = 0; i < data.size(); i++)
+        {
+            vector<string> temp2;
+            for (size_t j = 0; j < data[i].size(); j++)
+            {
+                temp2.push_back(data[i][j]);
+            }
+            output.push_back(temp2);
+        }
         return output;
     }
 
@@ -970,7 +979,7 @@ namespace pm::dal
     }
 
     // Function for add data infront of the matrix vector
-    vector<vector<string>> pushFrontTitleOfTeamsFile(vector<vector<string>> data)
+    vector<vector<string>> pushFrontTitleOfTeamsFile()
     {
         vector<vector<string>> output;
         vector<string> temp;
@@ -1020,7 +1029,7 @@ namespace pm::dal
     // Function for deleting team by id
     void deleteTeamByIdInTeamsFile(string fileName, int idOfTeam)
     {
-        vector<vector<string>> data = pushFrontTitleOfTeamsFile(data);
+        vector<vector<string>> data = pushFrontTitleOfTeamsFile();
         ifstream file(fileName);
         string line;
         int counter = -1;
@@ -1095,7 +1104,7 @@ namespace pm::dal
     // Function for edit data in teams file
     void editTeamById(string fileName, int idOfTeam, int idOfEditData, string newData, string idOfUser)
     {
-        vector<vector<string>> data = pushFrontTitleOfTeamsFile(data);
+        vector<vector<string>> data = pushFrontTitleOfTeamsFile();
         ifstream file(fileName);
         string line;
         int counter = -1;
@@ -1381,7 +1390,7 @@ namespace pm::dal
     }
 
     // Function for add data infront of the matrix vector
-    vector<vector<string>> pushFrontTitleOfProjectsFile(vector<vector<string>> data)
+    vector<vector<string>> pushFrontTitleOfProjectsFile()
     {
         vector<vector<string>> output;
         vector<string> temp;
@@ -1433,7 +1442,7 @@ namespace pm::dal
     // Function for deleting project by id
     void deleteProjectByIdInProjectsFile(string fileName, int idOfProject, string idOfUser)
     {
-        vector<vector<string>> allData = pushFrontTitleOfProjectsFile(allData);
+        vector<vector<string>> allData = pushFrontTitleOfProjectsFile();
         ifstream file(fileName);
         string line;
         int counter = -1;

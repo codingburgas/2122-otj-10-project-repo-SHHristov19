@@ -1483,7 +1483,10 @@ namespace pm::consoleApp
 				pm::tools::consoleCoordinates(26, y + 1);
 				cout << "___________________________________________________________________________________________________";
 				vector<int> id;
-				vector<vector<string>> data = pm::dal::readDataFromProjectsFile("../pm.data/projects.csv", &id);
+				vector<vector<string>> data = pm::dal::readDataFromTeamsFile("../pm.data/teams.csv", &id);
+				id = {};
+				pm::bll::checkForContainUserInTeam(data, idOfUser, &id);
+				data = pm::bll::getDataById(id, data);
 				int tempX = x, tempY = y;
 				y += 2;
 				for (auto row : data)
@@ -1502,10 +1505,10 @@ namespace pm::consoleApp
 						else if (counter == 2)
 						{
 							pm::tools::consoleCoordinates(x, y);
-							x += 45;
+							x += 32;
 							cout << col;
 						}
-						else if (counter == 5)
+						else if (counter == 3)
 						{
 							pm::tools::consoleCoordinates(x, y);
 							cout << col;
@@ -1545,8 +1548,8 @@ namespace pm::consoleApp
 				vector<int> idOfProject;
 				vector<vector<string>> projectData = pm::dal::readDataFromProjectsFile("../pm.data/projects.csv", &idOfProject);
 				idOfProject = {};
-				pm::bll::checkForContainUserInTeam(projectData, idOfUser, &idOfProject);
-				projectData = pm::bll::getDataByIdOfProjects(idOfProject, projectData);
+				pm::bll::checkProjectForContainUserInTeam(projectData, idOfUser, &idOfProject);
+				projectData = pm::bll::getDataById(idOfProject, projectData);
 				int tempX = x, tempY = y;
 				y += 2;
 				for (auto row : projectData)
@@ -1629,7 +1632,10 @@ namespace pm::consoleApp
 				pm::tools::consoleCoordinates(26, y + 1);
 				cout << "___________________________________________________________________________________________________";
 				vector<int> id;
-				vector<vector<string>> data = pm::dal::readDataFromTeamsFile("../pm.data/projects.csv", &id);
+				vector<vector<string>> data = pm::dal::readDataFromProjectsFile("../pm.data/projects.csv", &id);
+				id = {};
+				pm::bll::checkProjectForContainUserInTeam(data, idOfUser, &id);
+				data = pm::bll::getDataById(id, data);
 				int tempX = x, tempY = y;
 				y += 2;
 				for (auto row : data)
