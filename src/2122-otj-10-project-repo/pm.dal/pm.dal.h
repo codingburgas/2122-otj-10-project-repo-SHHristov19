@@ -15,7 +15,7 @@ namespace pm::dal
     int generateId(std::string fileName);
 
     // Function for add data in file
-    int registerUser(string fileName, pm::types::USER user);
+    int registerUser(std::string fileName, pm::types::USER user);
 
     // Function for read data from file and add it in vector<string>
     std::vector<std::vector<std::string>>  readDataFromUsersFile(std::string fileName);
@@ -66,38 +66,35 @@ namespace pm::dal
     void createTeam(std::string fileName, pm::types::TEAM team);
 
     // Function for read data from teams file and add it in vector
-    vector<vector<string>> readDataFromTeamsFile(string fileName, vector<int>* identification);
+    std::vector<std::vector<std::string>> readDataFromTeamsFile(std::string fileName, std::vector<int>* identification = {});
 
     // Function for getting data by id of team
-    vector<string> getTeamDataById(string fileName, int idUser);
+    std::vector<std::string> getTeamDataById(std::string fileName, int idUser);
 
     // Function for add data infront of the matrix vector
-    vector<vector<string>> pushFrontTitleOfTeamsFile(vector<vector<string>> data);
+    std::vector<std::vector<std::string>> pushFrontTitleOfTeamsFile(std::vector<std::vector<std::string>> data);
 
     // Function for add data in file
-    void addDataInTeamsFile(string fileName, vector<vector<string>> data);
+    void addDataInTeamsFile(std::string fileName, std::vector<std::vector<std::string>> data);
 
     // Function for deleting team by id
-    void deleteTeamByIdInTeamsFile(string fileName, int idOfUser);
+    void deleteTeamByIdInTeamsFile(std::string fileName, int idOfUser);
 
     // Function for edit data in teams file
-    void editTeamById(string fileName, int idOfTeam, int idOfEditData, string newData, string idOfUser);
+    void editTeamById(std::string fileName, int idOfTeam, int idOfEditData, std::string newData, std::string idOfUser);
 
     // Function for add new project in projects.csv file
-    void createProject(string fileName, pm::types::PROJECT team);
+    void createProject(std::string fileName, pm::types::PROJECT team);
 
     // Function for read data from project file and add it in vector
-    vector<vector<string>> readDataFromProjectsFile(string fileName, vector<int>* identification);
+    std::vector<std::vector<std::string>> readDataFromProjectsFile(std::string fileName, std::vector<int>* identification = {});
 
     // Function for getting data by id of team
-    vector<string> getProjetctDataById(string fileName, int idUser);
-
-    // Function for add data infront of the matrix vector
-    vector<vector<string>> pushFrontTitleOfProjectsFile(vector<vector<string>> data);
+    std::vector<std::string> getProjetctDataById(std::string fileName, int idUser);
 
     // Function for add data in project file
-    void addDataInProjectsFile(string fileName, vector<vector<string>> data);
+    void addDataInProjectsFile(std::string fileName, std::vector<std::vector<std::string>> data);
 
-    // Function for deleting team by id
-    void deleteProjectByIdInProjectsFile(string fileName, int idOfUser);
+    // Function for deleting project by id
+    void deleteProjectByIdInProjectsFile(std::string fileName, int idOfProject, std::string idOfUser);
 }

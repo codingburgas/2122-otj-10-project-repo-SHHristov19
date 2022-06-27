@@ -1534,7 +1534,7 @@ namespace pm::consoleApp
 			}
 
 			// Function for output list of projects
-			void showAllProjects(int x, int y)
+			void showAllProjects(string idOfUser, int x, int y)
 			{
 				system("CLS");
 				pm::tools::outputBorder(24, 7, pm::dal::generateId("../pm.data/projects.csv") * 3 + pm::dal::generateId("../pm.data/projects.csv") / 2, 101);
@@ -1542,11 +1542,14 @@ namespace pm::consoleApp
 				cout << "Id\t\t\tTitle of project\t\t\tId of creator";
 				pm::tools::consoleCoordinates(26, y + 1);
 				cout << "___________________________________________________________________________________________________";
-				vector<int> id;
-				vector<vector<string>> data = pm::dal::readDataFromTeamsFile("../pm.data/projects.csv", &id);
+				vector<int> idOfProject;
+				vector<vector<string>> projectData = pm::dal::readDataFromProjectsFile("../pm.data/projects.csv", &idOfProject);
+				idOfProject = {};
+				pm::bll::checkForContainUserInTeam(projectData, idOfUser, &idOfProject);
+				projectData = pm::bll::getDataByIdOfProjects(idOfProject, projectData);
 				int tempX = x, tempY = y;
 				y += 2;
-				for (auto row : data)
+				for (auto row : projectData)
 				{
 					int counter = 1;
 					y += 3;
@@ -1575,9 +1578,9 @@ namespace pm::consoleApp
 				}
 				int choise = pm::tools::enterNumberWithoutPrintingOnConsole();
 				bool exist = false;
-				for (int i = 0; i < id.size(); i++)
+				for (int i = 0; i < idOfProject.size(); i++)
 				{
-					if (choise == id[i])
+					if (choise == idOfProject[i])
 					{
 						exist = true;
 					}
@@ -1612,12 +1615,12 @@ namespace pm::consoleApp
 					cout << "Id of tasks : " << project[8];
 					pm::tools::consoleCoordinates(x + 20, y + 20);
 					system("pause");
-					showAllProjects(tempX, tempY);
+					showAllProjects(idOfUser, tempX, tempY);
 				}
 			}
 
 			// Function for delete data from project file
-			void deleteProject(int x, int y)
+			void deleteProject(string idOfUser, int x, int y)
 			{
 				system("CLS");
 				pm::tools::outputBorder(24, 7, pm::dal::generateId("../pm.data/projects.csv") * 3 + pm::dal::generateId("../pm.data/projects.csv") / 2, 101);
@@ -1671,7 +1674,7 @@ namespace pm::consoleApp
 				}
 				else
 				{
-					pm::dal::deleteProjectByIdInProjectsFile("../pm.data/projects.csv", choise);
+					pm::dal::deleteProjectByIdInProjectsFile("../pm.data/projects.csv", choise, idOfUser);
 					return;
 				}
 			}
@@ -1795,7 +1798,7 @@ namespace pm::consoleApp
 						case 1:
 						{
 							system("CLS");
-							windows::projectsManagement::showAllProjects(40, 9);
+							windows::projectsManagement::showAllProjects(idOfUser, 40, 9);
 							choice = 7;
 							break;
 						}
@@ -1815,7 +1818,7 @@ namespace pm::consoleApp
 						case 4:
 						{
 							system("CLS");
-							windows::projectsManagement::deleteProject(40, 9);
+							windows::projectsManagement::deleteProject(idOfUser, 40, 9);
 							choice = 7;
 							break;
 						}

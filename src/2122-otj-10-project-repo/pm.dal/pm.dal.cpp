@@ -496,15 +496,6 @@ namespace pm::dal
         temp.push_back("Last Login");
         temp.push_back("Role");
         output.push_back(temp);
-        for (size_t i = 0; i < data.size(); i++)
-        {
-            vector<string> temp2;
-            for (size_t j = 0; j < data[i].size(); j++)
-            {
-                temp2.push_back(data[i][j]);
-            }
-            output.push_back(temp2);
-        }
         return output;
     }
 
@@ -991,15 +982,6 @@ namespace pm::dal
         temp.push_back("Id Of last changer");
         temp.push_back("Contributors");
         output.push_back(temp);
-        for (size_t i = 0; i < data.size(); i++)
-        {
-            vector<string> temp2;
-            for (size_t j = 0; j < data[i].size(); j++)
-            {
-                temp2.push_back(data[i][j]);
-            }
-            output.push_back(temp2);
-        }
         return output;
     }
 
@@ -1036,7 +1018,7 @@ namespace pm::dal
     }
 
     // Function for deleting team by id
-    void deleteTeamByIdInTeamsFile(string fileName, int idOfUser)
+    void deleteTeamByIdInTeamsFile(string fileName, int idOfTeam)
     {
         vector<vector<string>> data = pushFrontTitleOfTeamsFile(data);
         ifstream file(fileName);
@@ -1091,7 +1073,7 @@ namespace pm::dal
                         }
                     }
                     vector<string> temp;
-                    if (stoi(choise.id) != idOfUser)
+                    if (stoi(choise.id) != idOfTeam)
                     {
                         temp.push_back(choise.id);
                         temp.push_back(choise.name);
@@ -1413,15 +1395,6 @@ namespace pm::dal
         temp.push_back("Id of team");
         temp.push_back("Id of tasks");
         output.push_back(temp);
-        for (size_t i = 0; i < data.size(); i++)
-        {
-            vector<string> temp2;
-            for (size_t j = 0; j < data[i].size(); j++)
-            {
-                temp2.push_back(data[i][j]);
-            }
-            output.push_back(temp2);
-        }
         return output;
     }
 
@@ -1457,8 +1430,8 @@ namespace pm::dal
         }
     }
 
-    // Function for deleting team by id
-    void deleteProjectByIdInProjectsFile(string fileName, int idOfUser)
+    // Function for deleting project by id
+    void deleteProjectByIdInProjectsFile(string fileName, int idOfProject, string idOfUser)
     {
         vector<vector<string>> allData = pushFrontTitleOfProjectsFile(allData);
         ifstream file(fileName);
@@ -1521,7 +1494,7 @@ namespace pm::dal
                         }
                     }
                     vector<string> temp;
-                    if (stoi(data.id) != idOfUser)
+                    if (stoi(data.id) != idOfProject || data.idOfCreator != idOfUser)
                     {
                         temp.push_back(data.id);
                         temp.push_back(data.title);

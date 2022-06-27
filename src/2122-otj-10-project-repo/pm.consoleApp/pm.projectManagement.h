@@ -29,9 +29,9 @@ namespace pm::consoleApp
 		void createProject(std::string idOfUser, int x, int y);
 
 		// Function for output list of projects
-		void showAllProjects(int x, int y);
+		void showAllProjects(std::string idOfUser, int x, int y);
 
 		// Function for delete data from project file
-		void deleteProject(int x, int y);
+		void deleteProject(std::string idOfUser, int x, int y);
 	}
 }

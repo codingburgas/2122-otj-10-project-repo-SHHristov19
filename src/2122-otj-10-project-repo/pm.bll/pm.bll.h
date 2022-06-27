@@ -18,4 +18,10 @@ namespace pm::bll
 
     // Function for hash password
     std::string hashPassword(std::string password);
+
+    // Function for adding id of project that the user contain in team colaborators
+    void checkForContainUserInTeam(std::vector<std::vector<std::string>> data, std::string idOfUser, std::vector<int>* idOfProjectContainsUser);
+
+    // Function for get data by id of projects
+    std::vector<std::vector<std::string>> getDataByIdOfProjects(std::vector<int> idOfProject, std::vector<std::vector<std::string>> data);
 }
