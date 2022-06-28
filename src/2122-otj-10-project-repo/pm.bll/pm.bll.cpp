@@ -261,4 +261,24 @@ namespace pm::bll
         }
         pm::dal::addDataInUsersFile(fileName, temp);
     }
+
+    // Function for project data
+    void editProjectById(string fileName, vector<vector<string>> data, int idOfProject, int idOfEditData, string newData, string idOfUser)
+    {
+        vector<vector<string>> temp = pm::dal::pushFrontTitleOfProjectsFile();
+        for (int i = 0; i < data.size(); i++)
+        {
+            if (data[i][0] == to_string(idOfProject))
+            {
+                data[i][idOfEditData] = newData;
+                data[i][5] = currentDateTime();
+                data[i][6] = idOfUser;
+            }
+        }
+        for (auto row : data)
+        {
+            temp.push_back(row);
+        }
+        pm::dal::addDataInUsersFile(fileName, temp);
+    }
 }

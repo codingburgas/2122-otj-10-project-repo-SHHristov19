@@ -39,4 +39,7 @@ namespace pm::bll
 
     // Function for edit user data
     void editUserById(std::string fileName, int idOfUser, int idOfEditData, std::string newData);
+
+    // Function for project data
+    void editProjectById(std::string fileName, std::vector<std::vector<std::string>> data, int idOfProject, int idOfEditData, std::string newData, std::string idOfUser);
 }
