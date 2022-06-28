@@ -662,11 +662,11 @@ namespace pm::consoleApp
 			}
 			if (user.role == "user")
 			{
-				pm::consoleApp::menus::userPanel(idOfUser);
+				pm::consoleApp::menus::userPanel(*idOfUser);
 			}
 			else if (user.role == "admin")
 			{
-				pm::consoleApp::menus::adminPanel(idOfUser);
+				pm::consoleApp::menus::adminPanel(*idOfUser);
 			}
 		}
 
@@ -862,7 +862,7 @@ namespace pm::consoleApp
 			}
 
 			// Function for output delete windows
-			void deleteUser(int x, int y)
+			void deleteUser(string idOfUser, int x, int y)
 			{
 				system("CLS");
 				pm::tools::outputBorder(24, 7, pm::dal::generateId("../pm.data/users.csv") * 3 + pm::dal::generateId("../pm.data/users.csv") / 2, 101);
@@ -871,7 +871,7 @@ namespace pm::consoleApp
 				pm::tools::consoleCoordinates(26, y + 1);
 				cout << "___________________________________________________________________________________________________";
 				vector<int> id;
-				vector<vector<string>> data = pm::dal::readDataForIdUsernameFirstAndLastName("../pm.data/users.csv", &id);
+				vector<vector<string>> data = pm::dal::readDataForIdUsernameFirstAndLastName("../pm.data/users.csv", &id, idOfUser);
 				int tempX = x, tempY = y;
 				y += 2;
 				for (auto row : data)
@@ -2253,7 +2253,7 @@ namespace pm::consoleApp
 						case 4:
 						{
 							system("CLS");
-							windows::userManagement::deleteUser(40, 9);
+							windows::userManagement::deleteUser(idOfUser, 40, 9);
 							choice = 6;
 							break;
 						}
@@ -2281,7 +2281,7 @@ namespace pm::consoleApp
 		}
 
 		// Function for movement in admin panel
-		void adminPanel(string* idOfUser)
+		void adminPanel(string idOfUser)
 		{
 			int choice;
 			bool truth;
@@ -2353,14 +2353,14 @@ namespace pm::consoleApp
 						case 1:
 						{
 							system("CLS");
-							userManagement(*idOfUser);
+							userManagement(idOfUser);
 							choice = 4;
 							break;
 						}
 						case 2:
 						{
 							system("CLS");
-							teamsManagement(*idOfUser);
+							teamsManagement(idOfUser);
 							choice = 4;
 							break;
 						}
@@ -2388,7 +2388,7 @@ namespace pm::consoleApp
 		}
 
 		// Function for movement in user panel
-		void userPanel(string *idOfUser)
+		void userPanel(string idOfUser)
 		{
 			int choice;
 			bool truth;
@@ -2474,7 +2474,7 @@ namespace pm::consoleApp
 						case 1:
 						{
 							system("CLS");
-							projectManagement(*idOfUser);
+							projectManagement(idOfUser);
 							choice = 5;
 							break;
 						}

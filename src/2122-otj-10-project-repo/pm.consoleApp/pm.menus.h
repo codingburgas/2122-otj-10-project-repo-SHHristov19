@@ -13,10 +13,10 @@ namespace pm::consoleApp::menus
 	void userManagement(std::string idOfUser);
 
 	// Function for movement in admin panel
-	void adminPanel(std::string* idOfUser);
+	void adminPanel(std::string idOfUser);
 
 	// Function for movement in user panel
-	void userPanel(std::string* idOfUser);
+	void userPanel(std::string idOfUser);
 
 	// Function for movement in main Menu
 	void menu();

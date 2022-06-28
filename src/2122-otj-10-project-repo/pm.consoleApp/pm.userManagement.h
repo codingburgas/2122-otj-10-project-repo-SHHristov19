@@ -29,7 +29,7 @@ namespace pm::consoleApp
 		void showUserList(int x, int y);
 
 		// Function for output delete windows
-		void deleteUser(int x, int y);
+		void deleteUser(std::string idOfUser, int x, int y);
 
 		// Function for edit data of user
 		void editUser(std::string idOfUser, int x, int y);
