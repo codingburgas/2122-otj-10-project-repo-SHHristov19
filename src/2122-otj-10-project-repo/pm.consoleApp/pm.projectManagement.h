@@ -33,5 +33,8 @@ namespace pm::consoleApp
 
 		// Function for delete data from project file
 		void deleteProject(std::string idOfUser, int x, int y);
+
+		// Function for add team in projetc
+		void addTeamInProject(std::string idOfUser, int x, int y);
 	}
 }

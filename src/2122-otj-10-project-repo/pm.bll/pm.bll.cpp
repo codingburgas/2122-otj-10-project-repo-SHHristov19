@@ -173,5 +173,36 @@ namespace pm::bll
         return temp;
     }
 
-    
+    // Function for searching project without team
+    void findProjectWithoutTeam(vector<vector<string>> data, string idOfUser, vector<int>* idOfProjectContainsUser)
+    {
+        for (auto row : data)
+        {
+            if (row[4] == idOfUser && stoi(row[7]) == 0)
+            {
+                (*idOfProjectContainsUser).push_back(stoi(row[0]));
+            }
+        }
+    }
+
+    // Function for add team in project
+    void editIdOfTeam(vector<vector<string>> data, vector<vector<string>> allData, int idOfProject, int idOfTeam, string fileName)
+    {
+        vector<vector<string>> temp = pm::dal::pushFrontTitleOfProjectsFile();
+        for (int i = 0; i < allData.size(); i++)
+        {
+            if (allData[i][0] == to_string(idOfProject))
+            {
+                allData[i][7] = to_string(idOfTeam);
+            }
+        }
+        for (auto row1 : temp)
+        {
+            for (auto row2 : allData)
+            {
+                temp.push_back(row2);
+            }
+        }
+        pm::dal::addDataInProjectsFile(fileName, temp);
+    }
 }

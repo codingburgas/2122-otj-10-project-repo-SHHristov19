@@ -27,4 +27,10 @@ namespace pm::bll
 
     // Function for get data by id of projects
     std::vector<std::vector<std::string>> getDataById(std::vector<int> idOfProject, std::vector<std::vector<std::string>> data);
+
+    // Function for searching project without team
+    void findProjectWithoutTeam(std::vector<std::vector<std::string>> data, std::string idOfUser, std::vector<int>* idOfProjectContainsUser);
+
+    // Function for add team in project
+    void editIdOfTeam(std::vector<std::vector<std::string>> data, std::vector<std::vector<std::string>> allData, int idOfProject, int idOfTeam, std::string fileName);
 }

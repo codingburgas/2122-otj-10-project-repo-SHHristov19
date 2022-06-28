@@ -1684,6 +1684,119 @@ namespace pm::consoleApp
 					return;
 				}
 			}
+
+			
+			void addTeamInProject(std::string idOfUser, int x, int y)
+			{
+				system("CLS");
+				pm::tools::outputBorder(24, 7, pm::dal::generateId("../pm.data/projects.csv") * 3 + pm::dal::generateId("../pm.data/projects.csv") / 2, 101);
+				pm::tools::consoleCoordinates(x, y);
+				cout << "Id\t\t\tTitle of project\t\t\tId of creator";
+				pm::tools::consoleCoordinates(26, y + 1);
+				cout << "___________________________________________________________________________________________________";
+				vector<int> idOfProject;
+				vector<vector<string>> projectData = pm::dal::readDataFromProjectsFile("../pm.data/projects.csv", &idOfProject);
+				vector<vector<string>> allProjectData = pm::dal::readDataFromProjectsFile("../pm.data/projects.csv", &idOfProject);
+				idOfProject = {};
+				pm::bll::findProjectWithoutTeam(projectData, idOfUser, &idOfProject);
+				projectData = pm::bll::getDataById(idOfProject, projectData);
+				int tempX = x, tempY = y;
+				y += 2;
+				for (auto row : projectData)
+				{
+					int counter = 1;
+					y += 3;
+					x = tempX;
+					for (auto col : row)
+					{
+						if (counter == 1)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 24;
+							cout << col;
+						}
+						else if (counter == 2)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 45;
+							cout << col;
+						}
+						else if (counter == 5)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							cout << col;
+						}
+						counter++;
+					}
+				}
+				int choiseOfProject = pm::tools::enterNumberWithoutPrintingOnConsole();
+				bool exist = false;
+				for (int i = 0; i < idOfProject.size(); i++)
+				{
+					if (choiseOfProject == idOfProject[i])
+					{
+						exist = true;
+					}
+				}
+				if (choiseOfProject == 0 || !exist)
+				{
+					return;
+				}
+				else
+				{
+					system("CLS");
+					x = tempX; y = tempY;
+					pm::tools::outputBorder(24, 7, pm::dal::generateId("../pm.data/teams.csv") * 3 + pm::dal::generateId("../pm.data/teams.csv") / 2, 101);
+					pm::tools::consoleCoordinates(x, y);
+					cout << "Id\t\t\tName of team\t\t\tCreator";
+					pm::tools::consoleCoordinates(26, y + 1);
+					cout << "___________________________________________________________________________________________________";
+					vector<int> idOfTeam;
+					vector<vector<string>> dataOfTeam = pm::dal::readDataFromTeamsFile("../pm.data/teams.csv", &idOfTeam);
+					idOfTeam = {};
+					pm::bll::checkForContainUserInTeam(dataOfTeam, idOfUser, &idOfTeam);
+					dataOfTeam = pm::bll::getDataById(idOfTeam, dataOfTeam);
+					int temp1 = tempX, temp2 = tempY;
+					y += 2;
+					for (auto row : dataOfTeam)
+					{
+						int counter = 1;
+						y += 3;
+						x = temp1;
+						for (auto col : row)
+						{
+							if (counter == 1)
+							{
+								pm::tools::consoleCoordinates(x, y);
+								x += 24;
+								cout << col;
+							}
+							else if (counter == 2)
+							{
+								pm::tools::consoleCoordinates(x, y);
+								x += 32;
+								cout << col;
+							}
+							else if (counter == 3)
+							{
+								pm::tools::consoleCoordinates(x, y);
+								cout << col;
+							}
+							counter++;
+						}
+					}
+					int choiseOfTeam = pm::tools::enterNumberWithoutPrintingOnConsole();
+					bool exist = false;
+					for (int i = 0; i < idOfTeam.size(); i++)
+					{
+						if (choiseOfTeam == idOfTeam[i])
+						{
+							exist = true;
+						}
+					}
+					pm::bll::editIdOfTeam(projectData, allProjectData, choiseOfProject, choiseOfTeam, "../pm.data/projects.csv");
+				}
+			}
 		}
 	}
 
@@ -1831,6 +1944,7 @@ namespace pm::consoleApp
 						case 5:
 						{
 							system("CLS");
+							windows::projectsManagement::addTeamInProject(idOfUser, 40, 9);
 							choice = 7;
 							break;
 						}
