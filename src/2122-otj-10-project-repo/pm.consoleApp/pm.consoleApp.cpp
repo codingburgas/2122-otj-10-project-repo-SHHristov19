@@ -928,7 +928,7 @@ namespace pm::consoleApp
 			}
 
 			// Function for edit data of user
-			void editUser(int x, int y)
+			void editUser(string idOfUser, int x, int y)
 			{
 				system("CLS");
 				pm::tools::outputBorder(24, 7, pm::dal::generateId("../pm.data/users.csv") * 3 + pm::dal::generateId("../pm.data/users.csv") / 2, 101);
@@ -937,8 +937,7 @@ namespace pm::consoleApp
 				pm::tools::consoleCoordinates(26, y + 1);
 				cout << "___________________________________________________________________________________________________";
 				vector<int> id;
-				vector<vector<string>> data = pm::dal::readDataForIdUsernameFirstAndLastName("../pm.data/users.csv", &id);
-				vector<vector<string>> allData = pm::dal::readDataFromUsersFile("../pm.data/users.csv");
+				vector<vector<string>> data = pm::dal::readDataForIdUsernameFirstAndLastName("../pm.data/users.csv", &id, idOfUser);
 				int tempX = x, tempY = y;
 				y += 2;
 				for (auto row : data)
@@ -1020,7 +1019,7 @@ namespace pm::consoleApp
 							cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
 							cin.ignore();
 							getline(cin, newData);
-							pm::bll::editUserById("../pm.data/users.csv", allData, chosenID, 3, newData);
+							pm::bll::editUserById("../pm.data/users.csv", chosenID, 3, newData);
 							break;
 						}
 						case 2:
@@ -1029,7 +1028,7 @@ namespace pm::consoleApp
 							cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
 							cin.ignore();
 							getline(cin, newData);
-							pm::bll::editUserById("../pm.data/users.csv", allData, chosenID, 1, newData);
+							pm::bll::editUserById("../pm.data/users.csv", chosenID, 1, newData);
 							break;
 						}
 						case 3:
@@ -1038,7 +1037,7 @@ namespace pm::consoleApp
 							cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
 							cin.ignore();
 							getline(cin, newData);
-							pm::bll::editUserById("../pm.data/users.csv", allData, chosenID, 2, newData);
+							pm::bll::editUserById("../pm.data/users.csv", chosenID, 2, newData);
 							break;
 						}
 						case 4:
@@ -1047,7 +1046,7 @@ namespace pm::consoleApp
 							cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
 							cin.ignore();
 							getline(cin, newData);
-							pm::bll::editUserById("../pm.data/users.csv", allData, chosenID, 5, newData);
+							pm::bll::editUserById("../pm.data/users.csv", chosenID, 5, newData);
 							break;
 						}
 						case 5:
@@ -1056,16 +1055,16 @@ namespace pm::consoleApp
 							cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
 							cin.ignore();
 							getline(cin, newData);
-							pm::bll::editUserById("../pm.data/users.csv", allData, chosenID, 6, newData);
+							pm::bll::editUserById("../pm.data/users.csv", chosenID, 6, newData);
 							break;
 						}
 						case 6:
 						{
-							pm::bll::editUserById("../pm.data/users.csv", allData, chosenID, 8, newData);
+							pm::bll::editUserById("../pm.data/users.csv", chosenID, 8, newData);
 							break;
 						}
 						}
-						editUser(tempX, tempY);
+						editUser(idOfUser, tempX, tempY);
 					}
 				}
 			}
@@ -2133,7 +2132,7 @@ namespace pm::consoleApp
 		}
 
 		// Function for movement in user management
-		void userManagement()
+		void userManagement(string idOfUser)
 		{
 			int choice;
 			bool truth;
@@ -2247,7 +2246,7 @@ namespace pm::consoleApp
 						case 3:
 						{
 							system("CLS");
-							windows::userManagement::editUser(40, 9);
+							windows::userManagement::editUser(idOfUser, 40, 9);
 							choice = 6;
 							break;
 						}
@@ -2354,7 +2353,7 @@ namespace pm::consoleApp
 						case 1:
 						{
 							system("CLS");
-							userManagement();
+							userManagement(*idOfUser);
 							choice = 4;
 							break;
 						}

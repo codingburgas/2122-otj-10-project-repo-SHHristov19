@@ -230,9 +230,10 @@ namespace pm::bll
     }
 
     // Function for edit user data
-    void editUserById(string fileName, vector<vector<string>> data, int idOfUser, int idOfEditData, string newData)
+    void editUserById(string fileName, int idOfUser, int idOfEditData, string newData)
     {
         vector<vector<string>> temp = pm::dal::pushFrontTitleOfUsersFile(temp);
+        vector<vector<string>> data = pm::dal::readDataFromUsersFile(fileName);
         for (int i = 0; i < data.size(); i++)
         {
             if (data[i][0] == to_string(idOfUser))

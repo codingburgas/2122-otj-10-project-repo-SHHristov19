@@ -24,7 +24,7 @@ namespace pm::dal
     std::vector<std::string> getUsernameAndPassword(std::string fileName);
 
     // Function for read data from file for id, username, firstName and LastName
-    std::vector<std::vector<std::string>> readDataForIdUsernameFirstAndLastName(std::string fileName, std::vector<int>* identification);
+    std::vector<std::vector<std::string>> readDataForIdUsernameFirstAndLastName(std::string fileName, std::vector<int>* identification, std::string idOfUser = "");
 
     // Function for getting data by id of user
     std::vector<std::string> getUserDataById(std::string fileName, int idUser);

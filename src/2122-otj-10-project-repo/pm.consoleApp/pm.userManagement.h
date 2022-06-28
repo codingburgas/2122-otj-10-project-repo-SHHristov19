@@ -32,6 +32,6 @@ namespace pm::consoleApp
 		void deleteUser(int x, int y);
 
 		// Function for edit data of user
-		void editUser(int x, int y);
+		void editUser(std::string idOfUser, int x, int y);
 	}
 }

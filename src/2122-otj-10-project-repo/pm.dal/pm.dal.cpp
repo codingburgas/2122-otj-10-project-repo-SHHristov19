@@ -202,7 +202,7 @@ namespace pm::dal
     }
 
     // Function for read data from file for id, username, firstName and LastName
-    vector<vector<string>> readDataForIdUsernameFirstAndLastName(string fileName, vector<int> *identification)
+    vector<vector<string>> readDataForIdUsernameFirstAndLastName(string fileName, vector<int> *identification, string idOfUser)
     {
         vector<vector<string>> allData;
         ifstream file(fileName);
@@ -245,12 +245,15 @@ namespace pm::dal
                             data.username += line[i];
                         }
                     }
-                    vector<string> temp;
-                    temp.push_back(data.id);
-                    temp.push_back(data.username);
-                    temp.push_back(data.firstName);
-                    temp.push_back(data.lastName);
-                    allData.push_back(temp);
+                    if (data.id != idOfUser)
+                    {
+                        vector<string> temp;
+                        temp.push_back(data.id);
+                        temp.push_back(data.username);
+                        temp.push_back(data.firstName);
+                        temp.push_back(data.lastName);
+                        allData.push_back(temp);
+                    }
                 }
                 counter++;
             }
