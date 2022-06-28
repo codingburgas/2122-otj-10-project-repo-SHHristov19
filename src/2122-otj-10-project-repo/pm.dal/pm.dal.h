@@ -80,9 +80,6 @@ namespace pm::dal
     // Function for deleting team by id
     void deleteTeamByIdInTeamsFile(std::string fileName, int idOfUser);
 
-    // Function for edit data in teams file
-    void editTeamById(std::string fileName, int idOfTeam, int idOfEditData, std::string newData, std::string idOfUser);
-
     // Function for add new project in projects.csv file
     void createProject(std::string fileName, pm::types::PROJECT team);
 

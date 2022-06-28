@@ -1304,10 +1304,10 @@ namespace pm::consoleApp
 				pm::tools::consoleCoordinates(26, y + 1);
 				cout << "___________________________________________________________________________________________________";
 				vector<int> id;
-				vector<vector<string>> data = pm::dal::readDataFromTeamsFile("../pm.data/teams.csv", &id);
+				vector<vector<string>> allData = pm::dal::readDataFromTeamsFile("../pm.data/teams.csv", &id);
 				int tempX = x, tempY = y;
 				y += 2;
-				for (auto row : data)
+				for (auto row : allData)
 				{
 					int counter = 1;
 					y += 3;
@@ -1373,7 +1373,7 @@ namespace pm::consoleApp
 							cout << "ENTER THE NEW NAME : ";
 							cin.ignore();
 							getline(cin, newData);
-							pm::dal::editTeamById("../pm.data/teams.csv", chosenID, 2, newData, idOfUser);
+							pm::bll::editTeamById("../pm.data/teams.csv", allData, chosenID, 1, newData, idOfUser);
 							break;
 						}
 						case 2:
@@ -1447,7 +1447,7 @@ namespace pm::consoleApp
 										newData += i + ",";
 									}
 								}
-								pm::dal::editTeamById("../pm.data/teams.csv", chosenID, 7, newData, idOfUser);
+								pm::bll::editTeamById("../pm.data/teams.csv", allData, chosenID, 6, newData, idOfUser);
 							}
 							break;
 						}

@@ -206,14 +206,17 @@ namespace pm::bll
         pm::dal::addDataInProjectsFile(fileName, temp);
     }
 
+    // Function for edit team name or colaborators
     void editTeamById(string fileName, vector<vector<string>> data, int idOfTeam, int idOfEditData, string newData, string idOfUser)
     {
-        vector<vector<string>> temp = pm::dal::pushFrontTitleOfProjectsFile();
+        vector<vector<string>> temp = pm::dal::pushFrontTitleOfTeamsFile();
         for (int i = 0; i < data.size(); i++)
         {
             if (data[i][0] == to_string(idOfTeam))
             {
                 data[i][idOfEditData] = newData;
+                data[i][4] = currentDateTime();
+                data[i][5] = idOfUser;
             }
         }
         for (auto row : temp)

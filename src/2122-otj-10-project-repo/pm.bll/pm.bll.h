@@ -34,5 +34,6 @@ namespace pm::bll
     // Function for add team in project
     void editIdOfTeam(std::vector<std::vector<std::string>> data, std::vector<std::vector<std::string>> allData, int idOfProject, int idOfTeam, std::string fileName);
 
+    // Function for edit team name or colaborators
     void editTeamById(std::string fileName, std::vector<std::vector<std::string>> data, int idOfTeam, int idOfEditData, std::string newData, std::string idOfUser);
 }
