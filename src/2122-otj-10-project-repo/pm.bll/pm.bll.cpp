@@ -228,4 +228,36 @@ namespace pm::bll
         }
         pm::dal::addDataInTeamsFile(fileName, temp);
     }
+
+    // Function for edit user data
+    void editUserById(string fileName, vector<vector<string>> data, int idOfUser, int idOfEditData, string newData)
+    {
+        vector<vector<string>> temp = pm::dal::pushFrontTitleOfUsersFile(temp);
+        for (int i = 0; i < data.size(); i++)
+        {
+            if (data[i][0] == to_string(idOfUser))
+            {
+                if (idOfEditData == 8)
+                {
+                    if (data[i][idOfEditData] == "user")
+                    {
+                        data[i][idOfEditData] = "admin";
+                    }
+                    else if (data[i][idOfEditData] == "admin")
+                    {
+                        data[i][idOfEditData] = "user";
+                    }
+                }
+                else
+                {
+                    data[i][idOfEditData] = newData;
+                }
+            }
+        }
+        for (auto row : data)
+        {
+            temp.push_back(row);
+        }
+        pm::dal::addDataInUsersFile(fileName, temp);
+    }
 }

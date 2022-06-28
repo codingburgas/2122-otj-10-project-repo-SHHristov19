@@ -59,9 +59,6 @@ namespace pm::dal
     // Function for geleting user by id
     void deleteUserByIdInUsersFile(std::string fileName, int id);
 
-    // Function for edit user by id and data
-    void editUserById(std::string fileName, int idOfUser, int idOfEditData, std::string newData);
-
     // Function for add new team in teams.csv file
     void createTeam(std::string fileName, pm::types::TEAM team);
 

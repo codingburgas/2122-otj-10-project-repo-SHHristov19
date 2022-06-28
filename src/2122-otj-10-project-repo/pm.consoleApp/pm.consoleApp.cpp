@@ -938,6 +938,7 @@ namespace pm::consoleApp
 				cout << "___________________________________________________________________________________________________";
 				vector<int> id;
 				vector<vector<string>> data = pm::dal::readDataForIdUsernameFirstAndLastName("../pm.data/users.csv", &id);
+				vector<vector<string>> allData = pm::dal::readDataFromUsersFile("../pm.data/users.csv");
 				int tempX = x, tempY = y;
 				y += 2;
 				for (auto row : data)
@@ -1010,6 +1011,7 @@ namespace pm::consoleApp
 					else
 					{
 						string newData;
+						
 						switch (choise)
 						{
 						case 1:
@@ -1018,44 +1020,48 @@ namespace pm::consoleApp
 							cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
 							cin.ignore();
 							getline(cin, newData);
-							pm::dal::editUserById("../pm.data/users.csv", chosenID, 4, newData);
+							pm::bll::editUserById("../pm.data/users.csv", allData, chosenID, 3, newData);
 							break;
 						}
 						case 2:
 						{
 							pm::tools::consoleCoordinates(35, 31);
 							cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
+							cin.ignore();
 							getline(cin, newData);
-							pm::dal::editUserById("../pm.data/users.csv", chosenID, 2, newData);
+							pm::bll::editUserById("../pm.data/users.csv", allData, chosenID, 1, newData);
 							break;
 						}
 						case 3:
 						{
 							pm::tools::consoleCoordinates(35, 31);
 							cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
+							cin.ignore();
 							getline(cin, newData);
-							pm::dal::editUserById("../pm.data/users.csv", chosenID, 3, newData);
+							pm::bll::editUserById("../pm.data/users.csv", allData, chosenID, 2, newData);
 							break;
 						}
 						case 4:
 						{
 							pm::tools::consoleCoordinates(35, 31);
 							cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
+							cin.ignore();
 							getline(cin, newData);
-							pm::dal::editUserById("../pm.data/users.csv", chosenID, 6, newData);
+							pm::bll::editUserById("../pm.data/users.csv", allData, chosenID, 5, newData);
 							break;
 						}
 						case 5:
 						{
 							pm::tools::consoleCoordinates(35, 31);
 							cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
+							cin.ignore();
 							getline(cin, newData);
-							pm::dal::editUserById("../pm.data/users.csv", chosenID, 5, newData);
+							pm::bll::editUserById("../pm.data/users.csv", allData, chosenID, 6, newData);
 							break;
 						}
 						case 6:
 						{
-							pm::dal::editUserById("../pm.data/users.csv", chosenID, 9, newData);
+							pm::bll::editUserById("../pm.data/users.csv", allData, chosenID, 8, newData);
 							break;
 						}
 						}

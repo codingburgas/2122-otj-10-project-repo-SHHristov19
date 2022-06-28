@@ -36,4 +36,7 @@ namespace pm::bll
 
     // Function for edit team name or colaborators
     void editTeamById(std::string fileName, std::vector<std::vector<std::string>> data, int idOfTeam, int idOfEditData, std::string newData, std::string idOfUser);
+
+    // Function for edit user data
+    void editUserById(std::string fileName, std::vector<std::vector<std::string>> data, int idOfUser, int idOfEditData, std::string newData);
 }
