@@ -205,4 +205,24 @@ namespace pm::bll
         }
         pm::dal::addDataInProjectsFile(fileName, temp);
     }
+
+    void editTeamById(string fileName, vector<vector<string>> data, int idOfTeam, int idOfEditData, string newData, string idOfUser)
+    {
+        vector<vector<string>> temp = pm::dal::pushFrontTitleOfProjectsFile();
+        for (int i = 0; i < data.size(); i++)
+        {
+            if (data[i][0] == to_string(idOfTeam))
+            {
+                data[i][idOfEditData] = newData;
+            }
+        }
+        for (auto row : temp)
+        {
+            for (auto row2 : data)
+            {
+                temp.push_back(row2);
+            }
+        }
+        pm::dal::addDataInTeamsFile(fileName, temp);
+    }
 }

@@ -1685,7 +1685,7 @@ namespace pm::consoleApp
 				}
 			}
 
-			
+			// Function to add team in a project
 			void addTeamInProject(std::string idOfUser, int x, int y)
 			{
 				system("CLS");
@@ -1796,6 +1796,12 @@ namespace pm::consoleApp
 					}
 					pm::bll::editIdOfTeam(projectData, allProjectData, choiseOfProject, choiseOfTeam, "../pm.data/projects.csv");
 				}
+			}
+
+			// Function for edit informtion in the project
+			void editProject(std::string idOfUser, int x, int y)
+			{
+
 			}
 		}
 	}

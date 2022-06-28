@@ -36,5 +36,8 @@ namespace pm::consoleApp
 
 		// Function for add team in projetc
 		void addTeamInProject(std::string idOfUser, int x, int y);
+
+		// Function for edit informtion in the project
+		void editProject(std::string idOfUser, int x, int y);
 	}
 }
