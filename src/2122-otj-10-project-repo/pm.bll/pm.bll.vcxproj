@@ -154,7 +154,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="pm.bll.h" />
+    <ClInclude Include="pm.bll.projectManagement.h" />
+    <ClInclude Include="pm.bll.taskManagement.h" />
+    <ClInclude Include="pm.bll.teamManagement.h" />
+    <ClInclude Include="pm.bll.workLogManagement.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -164,6 +167,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="pm.bll.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="pm.bll.userManagement.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

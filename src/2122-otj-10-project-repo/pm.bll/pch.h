@@ -12,4 +12,8 @@
 #include <string>
 #include <vector>
 
+#include "../pm.tools/pm.tools.h"
+#include "../pm.dal/pm.dal.h"
+using namespace std;
+
 #endif //PCH_H

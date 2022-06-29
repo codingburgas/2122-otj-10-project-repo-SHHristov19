@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <Windows.h>
 #include <conio.h>
 
 #include "../pm.consoleApp/pm.menus.h"
@@ -10,9 +11,14 @@
 #include "../pm.consoleApp/pm.userManagement.h"
 #include "../pm.consoleApp/pm.buttonsDesign.h"
 
+#include "../pm.bll/pm.bll.userManagement.h"
+#include "../pm.bll/pm.bll.teamManagement.h"
+#include "../pm.bll/pm.bll.projectManagement.h"
+#include "../pm.bll/pm.bll.taskManagement.h"
+#include "../pm.bll/pm.bll.workLogManagement.h"
+
 #include "../pm.tools/pm.tools.h"
 #include "../pm.dal/pm.dal.h"
-#include "../pm.bll/pm.bll.h"
 #include "../pm.types/User.h"
 
 #define KEY_UP 72
@@ -693,7 +699,7 @@ namespace pm::consoleApp
 			{
 				pm::tools::consoleCoordinates(77, 26);
 				cin >> newPassword;
-				if (pm::bll::checkPassword(newPassword))
+				if (pm::tools::checkPassword(newPassword))
 				{
 					pm::dal::cnagePassword("../pm.data/users.csv", user, newPassword);
 					system("CLS");
@@ -1019,7 +1025,7 @@ namespace pm::consoleApp
 							cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
 							cin.ignore();
 							getline(cin, newData);
-							pm::bll::editUserById("../pm.data/users.csv", chosenID, 3, newData);
+							pm::bll::userManagement::editUserById("../pm.data/users.csv", chosenID, 3, newData);
 							break;
 						}
 						case 2:
@@ -1028,7 +1034,7 @@ namespace pm::consoleApp
 							cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
 							cin.ignore();
 							getline(cin, newData);
-							pm::bll::editUserById("../pm.data/users.csv", chosenID, 1, newData);
+							pm::bll::userManagement::editUserById("../pm.data/users.csv", chosenID, 1, newData);
 							break;
 						}
 						case 3:
@@ -1037,7 +1043,7 @@ namespace pm::consoleApp
 							cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
 							cin.ignore();
 							getline(cin, newData);
-							pm::bll::editUserById("../pm.data/users.csv", chosenID, 2, newData);
+							pm::bll::userManagement::editUserById("../pm.data/users.csv", chosenID, 2, newData);
 							break;
 						}
 						case 4:
@@ -1046,7 +1052,7 @@ namespace pm::consoleApp
 							cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
 							cin.ignore();
 							getline(cin, newData);
-							pm::bll::editUserById("../pm.data/users.csv", chosenID, 5, newData);
+							pm::bll::userManagement::editUserById("../pm.data/users.csv", chosenID, 5, newData);
 							break;
 						}
 						case 5:
@@ -1055,12 +1061,12 @@ namespace pm::consoleApp
 							cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
 							cin.ignore();
 							getline(cin, newData);
-							pm::bll::editUserById("../pm.data/users.csv", chosenID, 6, newData);
+							pm::bll::userManagement::editUserById("../pm.data/users.csv", chosenID, 6, newData);
 							break;
 						}
 						case 6:
 						{
-							pm::bll::editUserById("../pm.data/users.csv", chosenID, 8, newData);
+							pm::bll::userManagement::editUserById("../pm.data/users.csv", chosenID, 8, newData);
 							break;
 						}
 						}
@@ -1378,7 +1384,7 @@ namespace pm::consoleApp
 							cout << "ENTER THE NEW NAME : ";
 							cin.ignore();
 							getline(cin, newData);
-							pm::bll::editTeamById("../pm.data/teams.csv", allData, chosenID, 1, newData, idOfUser);
+							pm::bll::teamsManagement::editTeamById("../pm.data/teams.csv", allData, chosenID, 1, newData, idOfUser);
 							break;
 						}
 						case 2:
@@ -1452,7 +1458,7 @@ namespace pm::consoleApp
 										newData += i + ",";
 									}
 								}
-								pm::bll::editTeamById("../pm.data/teams.csv", allData, chosenID, 6, newData, idOfUser);
+								pm::bll::teamsManagement::editTeamById("../pm.data/teams.csv", allData, chosenID, 6, newData, idOfUser);
 							}
 							break;
 						}
@@ -1490,8 +1496,8 @@ namespace pm::consoleApp
 				vector<int> id;
 				vector<vector<string>> data = pm::dal::readDataFromTeamsFile("../pm.data/teams.csv", &id);
 				id = {};
-				pm::bll::checkForContainUserInTeam(data, idOfUser, &id);
-				data = pm::bll::getDataById(id, data);
+				pm::bll::teamsManagement::checkForContainUserInTeam(data, idOfUser, &id);
+				data = pm::bll::projectManagement::getDataById(id, data);
 				int tempX = x, tempY = y;
 				y += 2;
 				for (auto row : data)
@@ -1553,8 +1559,8 @@ namespace pm::consoleApp
 				vector<int> idOfProject;
 				vector<vector<string>> projectData = pm::dal::readDataFromProjectsFile("../pm.data/projects.csv", &idOfProject);
 				idOfProject = {};
-				pm::bll::checkProjectForContainUserInTeam(projectData, idOfUser, &idOfProject);
-				projectData = pm::bll::getDataById(idOfProject, projectData);
+				pm::bll::projectManagement::checkProjectForContainUserInTeam(projectData, idOfUser, &idOfProject);
+				projectData = pm::bll::projectManagement::getDataById(idOfProject, projectData);
 				int tempX = x, tempY = y;
 				y += 2;
 				for (auto row : projectData)
@@ -1639,8 +1645,8 @@ namespace pm::consoleApp
 				vector<int> id;
 				vector<vector<string>> data = pm::dal::readDataFromProjectsFile("../pm.data/projects.csv", &id);
 				id = {};
-				pm::bll::checkProjectForContainUserInTeam(data, idOfUser, &id);
-				data = pm::bll::getDataById(id, data);
+				pm::bll::projectManagement::checkProjectForContainUserInTeam(data, idOfUser, &id);
+				data = pm::bll::projectManagement::getDataById(id, data);
 				int tempX = x, tempY = y;
 				y += 2;
 				for (auto row : data)
@@ -1703,8 +1709,8 @@ namespace pm::consoleApp
 				vector<vector<string>> projectData = pm::dal::readDataFromProjectsFile("../pm.data/projects.csv", &idOfProject);
 				vector<vector<string>> allProjectData = pm::dal::readDataFromProjectsFile("../pm.data/projects.csv", &idOfProject);
 				idOfProject = {};
-				pm::bll::findProjectWithoutTeam(projectData, idOfUser, &idOfProject);
-				projectData = pm::bll::getDataById(idOfProject, projectData);
+				pm::bll::projectManagement::findProjectWithoutTeam(projectData, idOfUser, &idOfProject);
+				projectData = pm::bll::projectManagement::getDataById(idOfProject, projectData);
 				int tempX = x, tempY = y;
 				y += 2;
 				for (auto row : projectData)
@@ -1759,8 +1765,8 @@ namespace pm::consoleApp
 					vector<int> idOfTeam;
 					vector<vector<string>> dataOfTeam = pm::dal::readDataFromTeamsFile("../pm.data/teams.csv", &idOfTeam);
 					idOfTeam = {};
-					pm::bll::checkForContainUserInTeam(dataOfTeam, idOfUser, &idOfTeam);
-					dataOfTeam = pm::bll::getDataById(idOfTeam, dataOfTeam);
+					pm::bll::teamsManagement::checkForContainUserInTeam(dataOfTeam, idOfUser, &idOfTeam);
+					dataOfTeam = pm::bll::projectManagement::getDataById(idOfTeam, dataOfTeam);
 					int temp1 = tempX, temp2 = tempY;
 					y += 2;
 					for (auto row : dataOfTeam)
@@ -1799,7 +1805,7 @@ namespace pm::consoleApp
 							exist = true;
 						}
 					}
-					pm::bll::editIdOfTeam(projectData, allProjectData, choiseOfProject, choiseOfTeam, "../pm.data/projects.csv");
+					pm::bll::projectManagement::editIdOfTeam(projectData, allProjectData, choiseOfProject, choiseOfTeam, "../pm.data/projects.csv");
 				}
 			}
 
@@ -1816,8 +1822,8 @@ namespace pm::consoleApp
 				vector<vector<string>> projectData = pm::dal::readDataFromProjectsFile("../pm.data/projects.csv", &idOfProject);
 				vector<vector<string>> allProjectData = pm::dal::readDataFromProjectsFile("../pm.data/projects.csv", &idOfProject);
 				idOfProject = {};
-				pm::bll::checkProjectForContainUserInTeam(projectData, idOfUser, &idOfProject);
-				projectData = pm::bll::getDataById(idOfProject, projectData);
+				pm::bll::projectManagement::checkProjectForContainUserInTeam(projectData, idOfUser, &idOfProject);
+				projectData = pm::bll::projectManagement::getDataById(idOfProject, projectData);
 				int tempX = x, tempY = y;
 				y += 2;
 				for (auto row : projectData)
@@ -1890,7 +1896,7 @@ namespace pm::consoleApp
 							cout << "ENTER THE NEW TITLE OF PROJECT : ";
 							cin.ignore();
 							getline(cin, newData);
-							pm::bll::editProjectById("../pm.data/projects.csv", allProjectData, choiseOfProject, 1, newData, idOfUser);
+							pm::bll::projectManagement::editProjectById("../pm.data/projects.csv", allProjectData, choiseOfProject, 1, newData, idOfUser);
 							break;
 						}
 						case 2:
@@ -1899,7 +1905,7 @@ namespace pm::consoleApp
 							cout << "ENTER THE NEW DESCRIPTION : ";
 							cin.ignore();
 							getline(cin, newData);
-							pm::bll::editProjectById("../pm.data/projects.csv", allProjectData, choiseOfProject, 2, newData, idOfUser);
+							pm::bll::projectManagement::editProjectById("../pm.data/projects.csv", allProjectData, choiseOfProject, 2, newData, idOfUser);
 							break;
 						}
 						case 3:
@@ -1914,8 +1920,8 @@ namespace pm::consoleApp
 							vector<int> idOfTeam;
 							vector<vector<string>> dataOfTeam = pm::dal::readDataFromTeamsFile("../pm.data/teams.csv", &idOfTeam);
 							idOfTeam = {};
-							pm::bll::checkForContainUserInTeam(dataOfTeam, idOfUser, &idOfTeam);
-							dataOfTeam = pm::bll::getDataById(idOfTeam, dataOfTeam);
+							pm::bll::teamsManagement::checkForContainUserInTeam(dataOfTeam, idOfUser, &idOfTeam);
+							dataOfTeam = pm::bll::projectManagement::getDataById(idOfTeam, dataOfTeam);
 							int temp1 = tempX, temp2 = tempY;
 							y += 2;
 							for (auto row : dataOfTeam)
@@ -1954,7 +1960,7 @@ namespace pm::consoleApp
 									exist = true;
 								}
 							}
-							pm::bll::editIdOfTeam(projectData, allProjectData, choiseOfProject, choiseOfTeam, "../pm.data/projects.csv");
+							pm::bll::projectManagement::editIdOfTeam(projectData, allProjectData, choiseOfProject, choiseOfTeam, "../pm.data/projects.csv");
 							break;
 						}
 						}

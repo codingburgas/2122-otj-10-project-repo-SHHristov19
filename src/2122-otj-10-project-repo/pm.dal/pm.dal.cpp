@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "pm.dal.h"
-#include "../pm.bll/pm.bll.h"
+#include "../pm.tools/pm.tools.h"
 #include "../pm.types/User.h"
 
 namespace pm::dal
@@ -52,15 +52,15 @@ namespace pm::dal
     {
         ofstream file(fileName, ios_base::app);
         user.id = to_string(generateId(fileName));
-        user.timeOfRegistration = pm::bll::currentDateTime();
-        if (pm::bll::checkPassword(user.password) &&
-            pm::bll::checkStringForSpecialCharacters(user.firstName) &&
-            pm::bll::checkStringForSpecialCharacters(user.lastName) &&
-            pm::bll::checkStringForSpecialCharacters(user.username))
+        user.timeOfRegistration = pm::tools::currentDateTime();
+        if (pm::tools::checkPassword(user.password) &&
+            pm::tools::checkStringForSpecialCharacters(user.firstName) &&
+            pm::tools::checkStringForSpecialCharacters(user.lastName) &&
+            pm::tools::checkStringForSpecialCharacters(user.username))
         {
             if (checkForExistedUser(fileName, user.username))
             {
-                file << "\"" << user.id << "\",\"" << user.firstName << "\",\"" << user.lastName << "\",\"" << user.username << "\",\"" << pm::bll::hashPassword(user.password) << "\",\"" << user.age << "\",\"" << user.timeOfRegistration << "\",\"" << 0 << "\",\"" << "user" << "\"\n" ;
+                file << "\"" << user.id << "\",\"" << user.firstName << "\",\"" << user.lastName << "\",\"" << user.username << "\",\"" << pm::tools::hashPassword(user.password) << "\",\"" << user.age << "\",\"" << user.timeOfRegistration << "\",\"" << 0 << "\",\"" << "user" << "\"\n" ;
                 file.close();
                 return 1;
             }
@@ -350,7 +350,7 @@ namespace pm::dal
     {
         for (size_t i = 0; i < (*data).size(); i++)
         {
-            if ((*data)[i][3] == (*user).username and (*data)[i][4] == pm::bll::hashPassword((*user).password))
+            if ((*data)[i][3] == (*user).username and (*data)[i][4] == pm::tools::hashPassword((*user).password))
             {
                 (*data)[i][7].replace(0, (*data)[i][7].size(), (*user).lastLogin);
                 (*user).role = (*data)[i][8];
@@ -400,9 +400,9 @@ namespace pm::dal
                 }
             }
 
-            if ((*user).username == checkUsername && pm::bll::hashPassword((*user).password) == checkPassword)
+            if ((*user).username == checkUsername && pm::tools::hashPassword((*user).password) == checkPassword)
             {
-                (*user).lastLogin = pm::bll::currentDateTime();
+                (*user).lastLogin = pm::tools::currentDateTime();
                 replaceLastLoginTime(&data, user);
                 data = pm::dal::pushFrontTitleOfUsersFile(data);
                 pm::dal::addDataInUsersFile(fileName, data);
@@ -463,7 +463,7 @@ namespace pm::dal
                 }
             }
 
-            if (pm::bll::hashPassword(password) == checkPassword)
+            if (pm::tools::hashPassword(password) == checkPassword)
             {
                 return true;
             }
@@ -476,9 +476,9 @@ namespace pm::dal
     {
         for (size_t i = 0; i < (*data).size(); i++)
         {
-            if ((*data)[i][3] == user.username and (*data)[i][4] == pm::bll::hashPassword(user.password))
+            if ((*data)[i][3] == user.username and (*data)[i][4] == pm::tools::hashPassword(user.password))
             {
-                (*data)[i][4].replace(0, (*data)[i][4].size(), pm::bll::hashPassword(newPassword));
+                (*data)[i][4].replace(0, (*data)[i][4].size(), pm::tools::hashPassword(newPassword));
                 return;
             }
         }
@@ -649,8 +649,8 @@ namespace pm::dal
         {
             team.id = to_string(generateId(fileName));
         }
-        team.dataOfCreation = pm::bll::currentDateTime();
-        team.dataOfLastChanges = pm::bll::currentDateTime();
+        team.dataOfCreation = pm::tools::currentDateTime();
+        team.dataOfLastChanges = pm::tools::currentDateTime();
         file << "\"" << team.id << "\",\"" << team.name << "\",\"" << team.idOfCreator << "\",\"" << team.dataOfCreation << "\",\"" << team.dataOfLastChanges << "\",\"" << team.idOfLastChanger << "\",\"" << team.contributors << "\"\n";
         file.close();
     }
@@ -936,8 +936,8 @@ namespace pm::dal
         {
             team.id = to_string(generateId(fileName));
         }
-        team.dataOfCreation = pm::bll::currentDateTime();
-        team.dataOfLastChanges = pm::bll::currentDateTime();
+        team.dataOfCreation = pm::tools::currentDateTime();
+        team.dataOfLastChanges = pm::tools::currentDateTime();
         file << "\"" << team.id << "\",\"" << team.title << "\",\"" << team.description << "\",\"" << team.dataOfCreation << "\",\"" << team.idOfCreator << "\",\"" << team.dataOfLastChanges << "\",\"" << team.idOfLastChanger << "\",\"" << team.idOfTeam << "\",\"" << 0 << "\"\n";
         file.close();
     }
