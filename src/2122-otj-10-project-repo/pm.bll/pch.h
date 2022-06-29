@@ -27,7 +27,7 @@
 #include "../pm.dal/pm.dal.workLogManagement.h"
 
 #include "../pm.tools/pm.tools.h"
-#include "../pm.types/User.h"
+#include "../pm.types/structures.h"
 using namespace std;
 
 #endif //PCH_H

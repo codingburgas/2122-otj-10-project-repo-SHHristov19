@@ -9,7 +9,7 @@
 #include "pm.dal.workLogManagement.h"
 
 #include "../pm.tools/pm.tools.h"
-#include "../pm.types/User.h"
+#include "../pm.types/structures.h"
 
 namespace pm::dal
 {
@@ -32,11 +32,51 @@ namespace pm::dal
             return counter;
         }
 
+        // Function for read id from file and add it in vector<string>
+        vector<string> readIdOfFile(string fileName)
+        {
+            vector<string> temp;
+            ifstream file(fileName);
+            string line;
+            int counter = -1;
+            if (file.is_open())
+            {
+                while (getline(file, line))
+                {
+                    if (counter > -1)
+                    {
+                        counter = 0;
+                        pm::types::USER data;
+                        for (size_t i = 0; i < line.size(); i++)
+                        {
+                            if (line[i] == ',' && counter < 8)
+                            {
+                                counter++;
+                                line.erase(i, 0);
+                            }
+                            else if (line[i] == '"')
+                            {
+                                line.erase(i, 0);
+                            }
+                            else if (counter == 0)
+                            {
+                                data.id += line[i];
+                            }
+                        }
+                        temp.push_back(data.id);
+                    }
+                    counter++;
+                }
+                file.close();
+            }
+            return temp;
+        }
+
         // Function for generate id
         int generateId(string fileName)
         {
-            vector<vector<string>> data = pm::dal::userManagement::readDataFromUsersFile(fileName);
-            return stoi(data[data.size() - 1][0]) + 1;
+            vector<string> data = readIdOfFile(fileName);
+            return stoi(data[data.size() - 1]) + 1;
         }
     }
 
@@ -1268,7 +1308,23 @@ namespace pm::dal
 
     namespace taskManagement
     {
-
+        // Function for add new task
+        void createProject(string fileName, pm::types::TASK team)
+        {
+            ofstream file(fileName, ios_base::app);
+            if (pm::dal::tools::getSizeOfFile(fileName) == 142)
+            {
+                team.id = "1";
+            }
+            else
+            {
+                team.id = to_string(pm::dal::tools::generateId(fileName));
+            }
+            team.dataOfCreation = pm::tools::currentDateTime();
+            team.dataOfLastChanges = pm::tools::currentDateTime();
+            file << "\"" << team.id << "\",\"" << team.idOfProject << "\",\"" << team.idOfAssignee << "\",\"" << team.title << "\",\"" << team.description << "\",\"" << team.status << "\",\"" << team.dataOfCreation << "\",\"" << team.idOfCreator << "\",\"" << team.dataOfLastChanges << "\",\"" << team.idOfLastChanger << "\"\n";
+            file.close();
+        }
     }
 
     namespace workLogManagement

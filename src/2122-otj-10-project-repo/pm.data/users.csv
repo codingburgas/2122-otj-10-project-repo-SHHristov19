@@ -1,6 +1,6 @@
 Id,First name,Last name,Username,Password,Age,Time of registration,Last Login,Role
-"1","Stefan","Hristov","user1","75942adce5a7392ea261320b8c79b745","20","2022-06-14  19:53:47","2022-06-29  15:47:25","admin"
+"1","Stefan","Hristov","user1","75942adce5a7392ea261320b8c79b745","20","2022-06-14  19:53:47","2022-06-29  18:05:40","admin"
 "2","Petar","Petrov","user2","4561d3b7d3d42a3b9fbb8c2a7ea8d5b4","23","2022-06-14  19:54:33","2022-06-28  18:51:38","admin"
-"3","Ivan","Dragan","user3","8b1c714151ece494520679104898e8e0","34","2022-06-14  19:56:19","2022-06-29  11:39:18","user"
+"3","Ivan","Dragan","user3","8b1c714151ece494520679104898e8e0","34","2022-06-14  19:56:19","2022-06-29  19:23:22","user"
 "4","Dragan","Draganov","user4","f9c4ab4b64eba5b40f1b47c7fe0e24cb","45","2022-06-14  19:59:14","2022-06-27  22:58:36","user"
-"5","Martin","Ivanov","user5","dd11e3e08dcac09806f1a32f9ad23487","67","2022-06-18  12:12:21","2022-06-28  14:00:20","user"
+"5","Martin","Ivanov","user5","dd11e3e08dcac09806f1a32f9ad23487","67","2022-06-18  12:12:21","2022-06-29  15:54:16","user"

@@ -39,4 +39,18 @@ namespace pm::types
 		std::string idOfTeam;
 		std::string idOfTasks;
 	};
+
+	struct TASK
+	{
+		std::string id;
+		std::string idOfProject;
+		std::string idOfAssignee;
+		std::string title;
+		std::string description;
+		std::string status;
+		std::string dataOfCreation;
+		std::string	idOfCreator;
+		std::string	dataOfLastChanges;
+		std::string	idOfLastChanger;
+	};
 }

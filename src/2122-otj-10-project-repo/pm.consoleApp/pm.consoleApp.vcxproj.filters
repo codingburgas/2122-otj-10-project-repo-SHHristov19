@@ -44,5 +44,8 @@
     <ClInclude Include="pm.buttonsDesign.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="pm.taskManagement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 #pragma once
 #pragma warning(disable : 4996) //_CRT_SECURE_NO_WARNINGS
 #include "pch.h"
-#include "../pm.types/User.h"
+#include "../pm.types/structures.h"
 
 namespace pm::tools
 {

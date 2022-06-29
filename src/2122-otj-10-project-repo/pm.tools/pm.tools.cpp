@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "pm.tools.h"
 #include "md5.h"
-#include "../pm.types/User.h"
+#include "../pm.types/structures.h"
 
 namespace pm::tools
 {

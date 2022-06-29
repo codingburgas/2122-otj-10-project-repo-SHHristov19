@@ -3,6 +3,7 @@
 #include <Windows.h>
 #include <conio.h>
 
+// Include header files from pm.consoleApp
 #include "../pm.consoleApp/pm.menus.h"
 #include "../pm.consoleApp/pm.userManagement.h"
 #include "../pm.consoleApp/pm.teamsManagement.h"
@@ -11,12 +12,14 @@
 #include "../pm.consoleApp/pm.userManagement.h"
 #include "../pm.consoleApp/pm.buttonsDesign.h"
 
+// Include header files from pm.bll
 #include "../pm.bll/pm.bll.userManagement.h"
 #include "../pm.bll/pm.bll.teamManagement.h"
 #include "../pm.bll/pm.bll.projectManagement.h"
 #include "../pm.bll/pm.bll.taskManagement.h"
 #include "../pm.bll/pm.bll.workLogManagement.h"
 
+// Include header files from pm.dal
 #include "../pm.dal/pm.dal.tools.h"
 #include "../pm.dal/pm.dal.login.h"
 #include "../pm.dal/pm.dal.userManagement.h"
@@ -26,7 +29,7 @@
 #include "../pm.dal/pm.dal.workLogManagement.h"
 
 #include "../pm.tools/pm.tools.h"
-#include "../pm.types/User.h"
+#include "../pm.types/structures.h"
 
 #define KEY_UP 72
 #define KEY_DOWN 80
@@ -148,6 +151,25 @@ namespace pm::consoleApp
 			cout << "|_|   |_|   \\___/| |\\____)____)\\___)      |_|_|_|\\_||_|_| |_|\\_||_|\\_|| |\\____)_|_|_|\\____)_| |_|\\___)" << endl;
 			pm::tools::consoleCoordinates(x, y + 6);
 			cout << "               (__/                                               (_____| 							   " << endl;
+		}
+
+		// Finction for output task management title in current position
+		void taskManagement(int x, int y)
+		{
+			pm::tools::consoleCoordinates(x, y);
+			cout << " _______          _     																	  " << endl;
+			pm::tools::consoleCoordinates(x, y + 1);
+			cout << "(_______)        | |                                                                    _    " << endl;
+			pm::tools::consoleCoordinates(x, y + 2);
+			cout << "   | |  ____  ___| |  _           ____   ____ ____   ____  ____  ____ ____   ____ ____ | |_  " << endl;
+			pm::tools::consoleCoordinates(x, y + 3);
+			cout << "   | | / _  |/___) | / )         |    \\ / _  |  _ \\ / _  |/ _  |/ _  )    \\ / _  )  _ \\|  _) " << endl;
+			pm::tools::consoleCoordinates(x, y + 4);
+			cout << "   | |( ( | |___ | |< (          | | | ( ( | | | | ( ( | ( ( | ( (/ /| | | ( (/ /| | | | |__ " << endl;
+			pm::tools::consoleCoordinates(x, y + 5);
+			cout << "   |_| \\_||_(___/|_| \\_)         |_|_|_|\\_||_|_| |_|\\_||_|\\_|| |\\____)_|_|_|\\____)_| |_|\\___)" << endl;
+			pm::tools::consoleCoordinates(x, y + 6);
+			cout << "                                                         (_____| 							  " << endl;
 		}
 	}
 
@@ -524,6 +546,69 @@ namespace pm::consoleApp
 				buttons::inactive::smallButton(64, 29, "       DELETE      ");
 				buttons::inactive::smallButton(64, 34, "      ADD TEAM     ");
 				buttons::active::smallButton(64, 39,   "        EXIT       ", 0, 4);
+			}
+		}
+
+		namespace taskManagement
+		{
+			// Function for output first activ task management button
+			void firstActive()
+			{
+				pm::tools::outputBorder(23, 3, 39, 101);
+				titles::taskManagement(30, 7);
+				buttons::active::smallButton(63, 17, "     VIEW ALL      ", 1, 0);
+				buttons::inactive::smallButton(63, 22, "       CREATE      ");
+				buttons::inactive::smallButton(63, 27, "        EDIT       ");
+				buttons::inactive::smallButton(63, 32, "       DELETE      ");
+				buttons::inactive::smallButton(63, 37, "        EXIT       ");
+			}
+
+			// Function for output second activ task management button
+			void secondActive()
+			{
+				pm::tools::outputBorder(23, 3, 39, 101);
+				titles::taskManagement(30, 7);
+				buttons::inactive::smallButton(63, 17, "     VIEW ALL      ");
+				buttons::active::smallButton(63, 22, "       CREATE      ", 1, 0);
+				buttons::inactive::smallButton(63, 27, "        EDIT       ");
+				buttons::inactive::smallButton(63, 32, "       DELETE      ");
+				buttons::inactive::smallButton(63, 37, "        EXIT       ");
+			}
+
+			// Function for output third activ task management button
+			void thirdActive()
+			{
+				pm::tools::outputBorder(23, 3, 39, 101);
+				titles::taskManagement(30, 7);
+				buttons::inactive::smallButton(63, 17, "     VIEW ALL      ");
+				buttons::inactive::smallButton(63, 22, "       CREATE      ");
+				buttons::active::smallButton(63, 27, "        EDIT       ", 1, 0);
+				buttons::inactive::smallButton(63, 32, "       DELETE      ");
+				buttons::inactive::smallButton(63, 37, "        EXIT       ");
+			}
+
+			// Function for output fourth activ task management button
+			void fourthActive()
+			{
+				pm::tools::outputBorder(23, 3, 39, 101);
+				titles::taskManagement(30, 7);
+				buttons::inactive::smallButton(63, 17, "     VIEW ALL      ");
+				buttons::inactive::smallButton(63, 22, "       CREATE      ");
+				buttons::inactive::smallButton(63, 27, "        EDIT       ");
+				buttons::active::smallButton(63, 32, "       DELETE      ", 1, 0);
+				buttons::inactive::smallButton(63, 37, "        EXIT       ");
+			}
+
+			// Function for output fifth activ task management button
+			void fifthActive()
+			{
+				pm::tools::outputBorder(23, 3, 39, 101);
+				titles::taskManagement(30, 7);
+				buttons::inactive::smallButton(63, 17, "     VIEW ALL      ");
+				buttons::inactive::smallButton(63, 22, "       CREATE      ");
+				buttons::inactive::smallButton(63, 27, "        EDIT       ");
+				buttons::inactive::smallButton(63, 32, "       DELETE      ");
+				buttons::active::smallButton(63, 37, "        EXIT       ", 1, 0);
 			}
 		}
 	}
@@ -1884,7 +1969,7 @@ namespace pm::consoleApp
 					cout << "2. Description of the project";
 					pm::tools::consoleCoordinates(x, y + 8);
 					cout << "3. Id of team";
-					pm::tools::consoleCoordinates(x, y + 8);
+					pm::tools::consoleCoordinates(x, y + 11);
 					cout << "4. Id of tasks";
 					int choiseEditInfo = pm::tools::enterNumberWithoutPrintingOnConsole();
 					if (choiseEditInfo <= 0 || choiseEditInfo > 4)
@@ -1975,10 +2060,220 @@ namespace pm::consoleApp
 				}
 			}
 		}
+
+		namespace taskManagement
+		{
+			// Function for add task in a project
+			void createTask(string idOfUser, int x, int y)
+			{
+				system("CLS");
+				pm::tools::outputBorder(24, 7, pm::dal::tools::generateId("../pm.data/projects.csv") * 3 + pm::dal::tools::generateId("../pm.data/projects.csv") / 2, 101);
+				pm::tools::consoleCoordinates(x, y);
+				cout << "Id\t\t\tTitle of project\t\t\tId of creator";
+				pm::tools::consoleCoordinates(26, y + 1);
+				cout << "___________________________________________________________________________________________________";
+				vector<int> idOfProject;
+				vector<vector<string>> projectData = pm::dal::projectManagement::readDataFromProjectsFile("../pm.data/projects.csv", &idOfProject);
+				idOfProject = {};
+				pm::bll::projectManagement::checkProjectForContainUserInTeam(projectData, idOfUser, &idOfProject);
+				projectData = pm::bll::projectManagement::getDataById(idOfProject, projectData);
+				int tempX = x, tempY = y;
+				y += 2;
+				for (auto row : projectData)
+				{
+					int counter = 1;
+					y += 3;
+					x = tempX;
+					for (auto col : row)
+					{
+						if (counter == 1)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 24;
+							cout << col;
+						}
+						else if (counter == 2)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 45;
+							cout << col;
+						}
+						else if (counter == 5)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							cout << col;
+						}
+						counter++;
+					}
+				}
+				int choise = pm::tools::enterNumberWithoutPrintingOnConsole();
+				bool exist = false;
+				for (int i = 0; i < idOfProject.size(); i++)
+				{
+					if (choise == idOfProject[i])
+					{
+						exist = true;
+					}
+				}
+				if (choise == 0 || !exist)
+				{
+					return;
+				}
+				else
+				{
+
+				}
+			}
+		}
 	}
 
 	namespace menus
 	{
+		// Function for movement in task management
+		void taskManagement(string idOfUser)
+		{
+			int choice;
+			bool truth;
+			system("CLS");
+			buttons::taskManagement::firstActive();
+			choice = 1;
+			while (true)
+			{
+				truth = true;
+				switch (_getch())
+				{
+				case KEY_UP:
+					switch (choice)
+					{
+					case 1:
+					{
+						system("CLS");
+						buttons::taskManagement::fifthActive();
+						choice = 5;
+						break;
+					}
+					case 2:
+					{
+						system("CLS");
+						buttons::taskManagement::firstActive();
+						choice = 1;
+						break;
+					}
+					case 3:
+					{
+						system("CLS");
+						buttons::taskManagement::secondActive();
+						choice = 2;
+						break;
+					}
+					case 4:
+					{
+						system("CLS");
+						buttons::taskManagement::thirdActive();
+						choice = 3;
+						break;
+					}
+					case 5:
+					{
+						system("CLS");
+						buttons::taskManagement::fourthActive();
+						choice = 4;
+						break;
+					}
+					}
+					break;
+				case KEY_DOWN:
+					switch (choice)
+					{
+					case 1:
+					{
+						system("CLS");
+						buttons::taskManagement::secondActive();
+						choice = 2;
+						break;
+					}
+					case 2:
+					{
+						system("CLS");
+						buttons::taskManagement::thirdActive();
+						choice = 3;
+						break;
+					}
+					case 3:
+					{
+						system("CLS");
+						buttons::taskManagement::fourthActive();
+						choice = 4;
+						break;
+					}
+					case 4:
+					{
+						system("CLS");
+						buttons::taskManagement::fifthActive();
+						choice = 5;
+						break;
+					}
+					case 5:
+					{
+						system("CLS");
+						buttons::taskManagement::firstActive();
+						choice = 1;
+						break;
+					}
+					}
+					break;
+				case KEY_ENTER:
+					while (truth)
+					{
+						switch (choice)
+						{
+						case 1:
+						{
+							system("CLS");
+							choice = 6;
+							break;
+						}
+						case 2:
+						{
+							system("CLS");
+							choice = 6;
+							break;
+						}
+						case 3:
+						{
+							system("CLS");
+							choice = 6;
+							break;
+						}
+						case 4:
+						{
+							system("CLS");
+							choice = 6;
+							break;
+						}
+						case 5:
+						{
+							truth = false;
+							return;
+							break;
+						}
+						case 6:
+						{
+							system("CLS");
+							buttons::taskManagement::firstActive();
+							truth = false;
+							choice = 1;
+							break;
+						}
+						}
+					}
+					break;
+				default:
+					break;
+				}
+			}
+		}
+
 		// Function for movement in project management
 		void projectManagement(string idOfUser)
 		{
@@ -2648,6 +2943,7 @@ namespace pm::consoleApp
 						case 2:
 						{
 							system("CLS");
+							taskManagement(idOfUser);
 							choice = 5;
 							break;
 						}

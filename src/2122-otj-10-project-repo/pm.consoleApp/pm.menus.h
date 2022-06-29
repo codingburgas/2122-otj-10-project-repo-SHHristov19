@@ -3,6 +3,9 @@
 
 namespace pm::consoleApp::menus
 {
+	// Function for movement in task management
+	void taskManagement(std::string idOfUser);
+
 	// Function for movement in project management
 	void projectManagement(std::string idOfUser);
 

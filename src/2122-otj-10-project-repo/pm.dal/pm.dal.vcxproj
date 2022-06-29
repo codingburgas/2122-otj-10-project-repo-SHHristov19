@@ -175,6 +175,7 @@
     <None Include="..\pm.data\projects.csv" />
     <None Include="..\pm.data\teams.csv" />
     <None Include="..\pm.data\users.csv" />
+    <None Include="tasks.csv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

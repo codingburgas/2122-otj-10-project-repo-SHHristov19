@@ -1,6 +1,6 @@
 #pragma once
 #include "pch.h"
-#include "../pm.types/User.h"
+#include "../pm.types/structures.h"
 
 namespace pm::dal::login
 {

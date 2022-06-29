@@ -164,6 +164,7 @@
     <ClInclude Include="pm.buttonsDesign.h" />
     <ClInclude Include="pm.menus.h" />
     <ClInclude Include="pm.projectManagement.h" />
+    <ClInclude Include="pm.taskManagement.h" />
     <ClInclude Include="pm.teamsManagement.h" />
     <ClInclude Include="pm.titlesDesign.h" />
     <ClInclude Include="pm.userManagement.h" />
