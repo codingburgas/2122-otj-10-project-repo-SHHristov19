@@ -12,8 +12,22 @@
 #include <string>
 #include <vector>
 
+#include "pm.bll.userManagement.h"
+#include "pm.bll.teamManagement.h"
+#include "pm.bll.projectManagement.h"
+#include "pm.bll.taskManagement.h"
+#include "pm.bll.workLogManagement.h"
+
+#include "../pm.dal/pm.dal.tools.h"
+#include "../pm.dal/pm.dal.login.h"
+#include "../pm.dal/pm.dal.userManagement.h"
+#include "../pm.dal/pm.dal.teamsManagement.h"
+#include "../pm.dal/pm.dal.projectManagement.h"
+#include "../pm.dal/pm.dal.taskManagement.h"
+#include "../pm.dal/pm.dal.workLogManagement.h"
+
 #include "../pm.tools/pm.tools.h"
-#include "../pm.dal/pm.dal.h"
+#include "../pm.types/User.h"
 using namespace std;
 
 #endif //PCH_H

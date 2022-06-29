@@ -154,10 +154,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="pm.dal.h" />
+    <ClInclude Include="pm.dal.login.h" />
     <ClInclude Include="pm.dal.projectManagement.h" />
     <ClInclude Include="pm.dal.taskManagement.h" />
     <ClInclude Include="pm.dal.teamsManagement.h" />
+    <ClInclude Include="pm.dal.tools.h" />
     <ClInclude Include="pm.dal.userManagement.h" />
     <ClInclude Include="pm.dal.workLogManagement.h" />
   </ItemGroup>

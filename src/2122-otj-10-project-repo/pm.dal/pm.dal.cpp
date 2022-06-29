@@ -1,17 +1,52 @@
 #include "pch.h"
-#include "pm.dal.h"
+
+#include "pm.dal.tools.h"
+#include "pm.dal.login.h"
+#include "pm.dal.userManagement.h"
+#include "pm.dal.teamsManagement.h"
+#include "pm.dal.projectManagement.h"
+#include "pm.dal.taskManagement.h"
+#include "pm.dal.workLogManagement.h"
+
 #include "../pm.tools/pm.tools.h"
 #include "../pm.types/User.h"
 
 namespace pm::dal
 {
+    namespace tools
+    {
+        // Function for count size of file
+        size_t getSizeOfFile(string fileName)
+        {
+            ifstream file(fileName);
+            string line;
+            size_t counter = 0;
+            if (file.is_open())
+            {
+                while (getline(file, line))
+                {
+                    counter += line.size();
+                }
+                file.close();
+            }
+            return counter;
+        }
+
+        // Function for generate id
+        int generateId(string fileName)
+        {
+            vector<vector<string>> data = pm::dal::userManagement::readDataFromUsersFile(fileName);
+            return stoi(data[data.size() - 1][0]) + 1;
+        }
+    }
+
     namespace login
     {
         // Function for login for the first time like admin
         bool loginAsFirst(pm::types::USER user)
         {
             ifstream file("../pm.data/users.csv");
-            if (file.is_open() && getSizeOfFile("../pm.data/users.csv") == 82 && user.username == "admin" && user.password == "adminpass")
+            if (file.is_open() && pm::dal::tools::getSizeOfFile("../pm.data/users.csv") == 82 && user.username == "admin" && user.password == "adminpass")
             {
                 file.close();
                 return true;
@@ -27,8 +62,8 @@ namespace pm::dal
         bool login(string fileName, pm::types::USER* user, string* idOfUser)
         {
             ifstream file(fileName);
-            vector<string> userAndPass = getUsernameAndPassword(fileName);
-            vector<vector<string>> data = readDataFromUsersFile(fileName);
+            vector<string> userAndPass = pm::dal::userManagement::getUsernameAndPassword(fileName);
+            vector<vector<string>> data = pm::dal::userManagement::readDataFromUsersFile(fileName);
             for (auto check : userAndPass)
             {
                 string checkUsername, checkPassword;
@@ -52,10 +87,10 @@ namespace pm::dal
                 if ((*user).username == checkUsername && pm::tools::hashPassword((*user).password) == checkPassword)
                 {
                     (*user).lastLogin = pm::tools::currentDateTime();
-                    replaceLastLoginTime(&data, user);
-                    data = pm::dal::pushFrontTitleOfUsersFile(data);
-                    pm::dal::addDataInUsersFile(fileName, data);
-                    *idOfUser = getIdOfUserByUsername(fileName, *user);
+                    pm::dal::userManagement::replaceLastLoginTime(&data, user);
+                    data = pm::dal::userManagement::pushFrontTitleOfUsersFile(data);
+                    pm::dal::userManagement::addDataInUsersFile(fileName, data);
+                    *idOfUser = pm::dal::userManagement::getIdOfUserByUsername(fileName, *user);
                     file.close();
                     return true;
                 }
@@ -67,10 +102,10 @@ namespace pm::dal
         // Function for replacing password in file 
         void cnagePassword(string fileName, pm::types::USER data, string newPassword)
         {
-            vector<vector<string>> allDataInFile = readDataFromUsersFile(fileName);
-            replaceDataInUsersFile(&allDataInFile, data, newPassword);
-            allDataInFile = pushFrontTitleOfUsersFile(allDataInFile);
-            addDataInUsersFile(fileName, allDataInFile);
+            vector<vector<string>> allDataInFile = pm::dal::userManagement::readDataFromUsersFile(fileName);
+            pm::dal::userManagement::replaceDataInUsersFile(&allDataInFile, data, newPassword);
+            allDataInFile = pm::dal::userManagement::pushFrontTitleOfUsersFile(allDataInFile);
+            pm::dal::userManagement::addDataInUsersFile(fileName, allDataInFile);
         }
     }
 
@@ -80,7 +115,7 @@ namespace pm::dal
         int registerUser(string fileName, pm::types::USER user)
         {
             ofstream file(fileName, ios_base::app);
-            user.id = to_string(generateId(fileName));
+            user.id = to_string(pm::dal::tools::generateId(fileName));
             user.timeOfRegistration = pm::tools::currentDateTime();
             if (pm::tools::checkPassword(user.password) &&
                 pm::tools::checkStringForSpecialCharacters(user.firstName) &&
@@ -406,7 +441,7 @@ namespace pm::dal
         // Function for checking already existing username #
         bool checkForExistedUser(string fileName, string username)
         {
-            vector<string> userAndPass = pm::dal::getUsernameAndPassword(fileName);
+            vector<string> userAndPass = pm::dal::userManagement::getUsernameAndPassword(fileName);
             for (auto check : userAndPass)
             {
                 string checkUsername;
@@ -625,13 +660,13 @@ namespace pm::dal
         void createTeam(string fileName, pm::types::TEAM team)
         {
             ofstream file(fileName, ios_base::app);
-            if (getSizeOfFile(fileName) == 91)
+            if (pm::dal::tools::getSizeOfFile(fileName) == 91)
             {
                 team.id = "1";
             }
             else
             {
-                team.id = to_string(generateId(fileName));
+                team.id = to_string(pm::dal::tools::generateId(fileName));
             }
             team.dataOfCreation = pm::tools::currentDateTime();
             team.dataOfLastChanges = pm::tools::currentDateTime();
@@ -915,13 +950,13 @@ namespace pm::dal
         void createProject(string fileName, pm::types::PROJECT team)
         {
             ofstream file(fileName, ios_base::app);
-            if (getSizeOfFile(fileName) == 118)
+            if (pm::dal::tools::getSizeOfFile(fileName) == 118)
             {
                 team.id = "1";
             }
             else
             {
-                team.id = to_string(generateId(fileName));
+                team.id = to_string(pm::dal::tools::generateId(fileName));
             }
             team.dataOfCreation = pm::tools::currentDateTime();
             team.dataOfLastChanges = pm::tools::currentDateTime();
@@ -1240,32 +1275,4 @@ namespace pm::dal
     {
 
     }
-
-    namespace tools
-    {
-        // Function for count size of file
-        size_t getSizeOfFile(string fileName)
-        {
-            ifstream file(fileName);
-            string line;
-            size_t counter = 0;
-            if (file.is_open())
-            {
-                while (getline(file, line))
-                {
-                    counter += line.size();
-                }
-                file.close();
-            }
-            return counter;
-        }
-
-        // Function for generate id
-        int generateId(string fileName)
-        {
-            vector<vector<string>> data = readDataFromUsersFile(fileName);
-            return stoi(data[data.size() - 1][0]) + 1;
-        }
-    }
-    
 }

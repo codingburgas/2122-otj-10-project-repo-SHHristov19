@@ -1,9 +1,5 @@
 #include "pch.h"
-#include "pm.bll.userManagement.h"
-#include "pm.bll.teamManagement.h"
-#include "pm.bll.projectManagement.h"
-#include "pm.bll.taskManagement.h"
-#include "pm.bll.workLogManagement.h"
+
 
 namespace pm::bll
 {
@@ -12,8 +8,8 @@ namespace pm::bll
         // Function for edit user data
         void editUserById(string fileName, int idOfUser, int idOfEditData, string newData)
         {
-            vector<vector<string>> temp = pm::dal::pushFrontTitleOfUsersFile(temp);
-            vector<vector<string>> data = pm::dal::readDataFromUsersFile(fileName);
+            vector<vector<string>> temp = pm::dal::userManagement::pushFrontTitleOfUsersFile(temp);
+            vector<vector<string>> data = pm::dal::userManagement::readDataFromUsersFile(fileName);
             for (int i = 0; i < data.size(); i++)
             {
                 if (data[i][0] == to_string(idOfUser))
@@ -39,7 +35,7 @@ namespace pm::bll
             {
                 temp.push_back(row);
             }
-            pm::dal::addDataInUsersFile(fileName, temp);
+            pm::dal::userManagement::addDataInUsersFile(fileName, temp);
         }
     }
 
@@ -79,7 +75,7 @@ namespace pm::bll
         // Function for edit team name or colaborators
         void editTeamById(string fileName, vector<vector<string>> data, int idOfTeam, int idOfEditData, string newData, string idOfUser)
         {
-            vector<vector<string>> temp = pm::dal::pushFrontTitleOfTeamsFile();
+            vector<vector<string>> temp = pm::dal::teamsManagement::pushFrontTitleOfTeamsFile();
             for (int i = 0; i < data.size(); i++)
             {
                 if (data[i][0] == to_string(idOfTeam))
@@ -96,7 +92,7 @@ namespace pm::bll
                     temp.push_back(row2);
                 }
             }
-            pm::dal::addDataInTeamsFile(fileName, temp);
+            pm::dal::teamsManagement::addDataInTeamsFile(fileName, temp);
         }
     }
 
@@ -115,7 +111,7 @@ namespace pm::bll
                 {
                     if (stoi(row[7]) > 0)
                     {
-                        vector<string> team = pm::dal::getTeamDataById("../pm.data/teams.csv", stoi(row[7]));
+                        vector<string> team = pm::dal::teamsManagement::getTeamDataById("../pm.data/teams.csv", stoi(row[7]));
                         string line = team[6], idOfContributor;
                         for (size_t i = 0; i < line.size(); i++)
                         {
@@ -175,7 +171,7 @@ namespace pm::bll
         // Function for add team in project
         void editIdOfTeam(vector<vector<string>> data, vector<vector<string>> allData, int idOfProject, int idOfTeam, string fileName)
         {
-            vector<vector<string>> temp = pm::dal::pushFrontTitleOfProjectsFile();
+            vector<vector<string>> temp = pm::dal::projectManagement::pushFrontTitleOfProjectsFile();
             for (int i = 0; i < allData.size(); i++)
             {
                 if (allData[i][0] == to_string(idOfProject))
@@ -190,13 +186,13 @@ namespace pm::bll
                     temp.push_back(row2);
                 }
             }
-            pm::dal::addDataInProjectsFile(fileName, temp);
+            pm::dal::projectManagement::addDataInProjectsFile(fileName, temp);
         }
 
         // Function for project data
         void editProjectById(string fileName, vector<vector<string>> data, int idOfProject, int idOfEditData, string newData, string idOfUser)
         {
-            vector<vector<string>> temp = pm::dal::pushFrontTitleOfProjectsFile();
+            vector<vector<string>> temp = pm::dal::projectManagement::pushFrontTitleOfProjectsFile();
             for (int i = 0; i < data.size(); i++)
             {
                 if (data[i][0] == to_string(idOfProject))
@@ -210,7 +206,7 @@ namespace pm::bll
             {
                 temp.push_back(row);
             }
-            pm::dal::addDataInUsersFile(fileName, temp);
+            pm::dal::userManagement::addDataInUsersFile(fileName, temp);
         }
     }
 
