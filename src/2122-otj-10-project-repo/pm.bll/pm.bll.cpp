@@ -212,7 +212,32 @@ namespace pm::bll
 
     namespace taskManagement
     {
-
+        // Fimction for add task in the project
+        void addTaskInProject(string idOfProject, string idOfTask)
+        {
+            vector<int> id;
+            vector<vector<string>> data = pm::dal::projectManagement::readDataFromProjectsFile("../pm.data/projects.csv", &id);
+            vector<vector<string>> temp = pm::dal::projectManagement::pushFrontTitleOfProjectsFile();
+            for (int i = 0; i < data.size(); i++)
+            {
+                if (data[i][0] == idOfProject)
+                {
+                    if (data[i][8] == "0")
+                    {
+                        data[i][8] = idOfTask;
+                    }
+                    else
+                    {
+                        data[i][8] += "," + idOfTask;
+                    }
+                }
+            }
+            for (auto row : data)
+            {
+                temp.push_back(row);
+            }
+            pm::dal::projectManagement::addDataInProjectsFile("../pm.data/projects.csv", temp);
+        }
     }
 
     namespace workLogManagement

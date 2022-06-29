@@ -2200,10 +2200,14 @@ namespace pm::consoleApp
 				}
 				else
 				{
+					string idOfTask;
 					task.idOfAssignee = to_string(choise);
-					pm::dal::taskManagement::createTask("../pm.data/tasks.csv", task);
+					pm::dal::taskManagement::createTask("../pm.data/tasks.csv", task, &idOfTask);
+					pm::bll::taskManagement::addTaskInProject(idOfProject, idOfTask);
 				}
 			}
+
+			// Function for show all task in a project
 		}
 	}
 

@@ -8,7 +8,7 @@ namespace pm::dal::projectManagement
     void createProject(std::string fileName, pm::types::PROJECT team);
 
     // Function for read data from project file and add it in vector
-    std::vector<std::vector<std::string>> readDataFromProjectsFile(std::string fileName, std::vector<int>* identification = {});
+    std::vector<std::vector<std::string>> readDataFromProjectsFile(std::string fileName, std::vector<int>* identification = {0});
 
     // Function for getting data by id of team
     std::vector<std::string> getProjetctDataById(std::string fileName, int idUser);

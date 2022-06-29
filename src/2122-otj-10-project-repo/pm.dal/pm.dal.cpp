@@ -1309,15 +1309,15 @@ namespace pm::dal
     namespace taskManagement
     {
         // Function for add new task
-        void createTask(string fileName, pm::types::TASK team)
+        void createTask(string fileName, pm::types::TASK team, string *idOfTask)
         {
             if (pm::dal::tools::getSizeOfFile(fileName) == 142)
             {
-                team.id = "1";
+                team.id = *idOfTask = "1";
             }
             else
             {
-                team.id = to_string(pm::dal::tools::generateId(fileName));
+                team.id = *idOfTask = to_string(pm::dal::tools::generateId(fileName));
             }
             team.dataOfCreation = pm::tools::currentDateTime();
             team.dataOfLastChanges = pm::tools::currentDateTime();
