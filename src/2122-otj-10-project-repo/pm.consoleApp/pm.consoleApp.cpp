@@ -2063,8 +2063,8 @@ namespace pm::consoleApp
 
 		namespace taskManagement
 		{
-			// Function for add task in a project
-			void createTask(string idOfUser, int x, int y)
+			// Function for choose project that you want to see, add, edit and delete tasks
+			void chooseProjectForWorkWithTask(string idOfUser, int x, int y)
 			{
 				system("CLS");
 				pm::tools::outputBorder(24, 7, pm::dal::tools::generateId("../pm.data/projects.csv") * 3 + pm::dal::tools::generateId("../pm.data/projects.csv") / 2, 101);
@@ -2121,7 +2121,87 @@ namespace pm::consoleApp
 				}
 				else
 				{
+					pm::consoleApp::menus::taskManagement(idOfUser, to_string(choise));
+				}
+			}
 
+			// Function for add task in a project
+			void createTask(string idOfUser, string idOfProject, int x, int y)
+			{
+				pm::tools::outputBorder(24, 13, 20, 101);
+				pm::types::TASK task;
+				pm::tools::consoleCoordinates(43, 18);
+				cout << "Title : ";
+				pm::tools::consoleCoordinates(43, 21);
+				cout << "Description : ";
+				pm::tools::consoleCoordinates(51, 18);
+				cin.ignore();
+				getline(cin, task.title);
+				pm::tools::consoleCoordinates(57, 21);
+				getline(cin, task.description);
+				task.idOfCreator = task.idOfLastChanger = idOfUser;
+				task.idOfProject = idOfProject;
+				// Choose the user that have to make the task (Id of the Assignee)
+				system("CLS");
+				pm::tools::outputBorder(24, 7, pm::dal::tools::generateId("../pm.data/users.csv") * 3 + pm::dal::tools::generateId("../pm.data/users.csv") / 2, 101);
+				pm::tools::consoleCoordinates(x, y);
+				cout << "Id\t\tUsername\t\tFirstName\t\tLastName";
+				pm::tools::consoleCoordinates(26, y + 1);
+				cout << "___________________________________________________________________________________________________";
+				vector<int> id;
+				vector<vector<string>> data = pm::dal::userManagement::readDataForIdUsernameFirstAndLastName("../pm.data/users.csv", &id, idOfUser);
+				int tempX = x, tempY = y;
+				y += 2;
+				for (auto row : data)
+				{
+					int counter = 1;
+					y += 3;
+					x = tempX;
+					for (auto col : row)
+					{
+						if (counter == 1)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 16;
+							cout << col;
+						}
+						else if (counter == 2)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 24;
+							cout << col;
+						}
+						else if (counter == 3)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 24;
+							cout << col;
+						}
+						else if (counter == 4)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							cout << col;
+						}
+						counter++;
+					}
+				}
+				int choise = pm::tools::enterNumberWithoutPrintingOnConsole();
+				bool exist = false;
+				for (int i = 0; i < id.size(); i++)
+				{
+					if (choise == id[i])
+					{
+						exist = true;
+					}
+				}
+				if (choise == 0 || !exist)
+				{
+					return;
+				}
+				else
+				{
+					task.idOfAssignee = to_string(choise);
+					pm::dal::taskManagement::createTask("../pm.data/tasks.csv", task);
 				}
 			}
 		}
@@ -2130,7 +2210,7 @@ namespace pm::consoleApp
 	namespace menus
 	{
 		// Function for movement in task management
-		void taskManagement(string idOfUser)
+		void taskManagement(string idOfUser, string idOfProject)
 		{
 			int choice;
 			bool truth;
@@ -2236,6 +2316,7 @@ namespace pm::consoleApp
 						case 2:
 						{
 							system("CLS");
+							pm::consoleApp::windows::taskManagement::createTask(idOfUser, idOfProject, 40, 9);
 							choice = 6;
 							break;
 						}
@@ -2943,7 +3024,7 @@ namespace pm::consoleApp
 						case 2:
 						{
 							system("CLS");
-							taskManagement(idOfUser);
+							pm::consoleApp::windows::taskManagement::chooseProjectForWorkWithTask(idOfUser, 40, 9);
 							choice = 5;
 							break;
 						}

@@ -24,6 +24,9 @@ namespace pm::consoleApp
 	namespace windows::taskManagement
 	{
 		// Function for add task in a project
-		void createTask(std::string idOfUser, int x, int y);
+		void chooseProjectForWorkWithTask(std::string idOfUser, int x, int y);
+
+		// Function for add task in a project
+		void createTask(std::string idOfUser, std::string idOfProject, int x, int y);
 	}
 }

@@ -1309,9 +1309,8 @@ namespace pm::dal
     namespace taskManagement
     {
         // Function for add new task
-        void createProject(string fileName, pm::types::TASK team)
+        void createTask(string fileName, pm::types::TASK team)
         {
-            ofstream file(fileName, ios_base::app);
             if (pm::dal::tools::getSizeOfFile(fileName) == 142)
             {
                 team.id = "1";
@@ -1322,7 +1321,8 @@ namespace pm::dal
             }
             team.dataOfCreation = pm::tools::currentDateTime();
             team.dataOfLastChanges = pm::tools::currentDateTime();
-            file << "\"" << team.id << "\",\"" << team.idOfProject << "\",\"" << team.idOfAssignee << "\",\"" << team.title << "\",\"" << team.description << "\",\"" << team.status << "\",\"" << team.dataOfCreation << "\",\"" << team.idOfCreator << "\",\"" << team.dataOfLastChanges << "\",\"" << team.idOfLastChanger << "\"\n";
+            ofstream file(fileName, ios_base::app);
+            file << "\"" << team.id << "\",\"" << team.idOfProject << "\",\"" << team.idOfAssignee << "\",\"" << team.title << "\",\"" << team.description << "\",\"" << "pending" << "\",\"" << team.dataOfCreation << "\",\"" << team.idOfCreator << "\",\"" << team.dataOfLastChanges << "\",\"" << team.idOfLastChanger << "\"\n";
             file.close();
         }
     }
