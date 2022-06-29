@@ -21,6 +21,21 @@
     <ClInclude Include="pm.dal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="pm.dal.userManagement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pm.dal.teamsManagement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pm.dal.projectManagement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pm.dal.taskManagement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pm.dal.workLogManagement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pm.dal.cpp">

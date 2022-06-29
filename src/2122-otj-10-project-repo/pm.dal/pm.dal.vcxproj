@@ -155,6 +155,11 @@
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="pm.dal.h" />
+    <ClInclude Include="pm.dal.projectManagement.h" />
+    <ClInclude Include="pm.dal.taskManagement.h" />
+    <ClInclude Include="pm.dal.teamsManagement.h" />
+    <ClInclude Include="pm.dal.userManagement.h" />
+    <ClInclude Include="pm.dal.workLogManagement.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
