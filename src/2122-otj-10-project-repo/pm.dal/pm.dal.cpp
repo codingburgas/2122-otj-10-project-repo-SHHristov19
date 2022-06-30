@@ -1325,6 +1325,185 @@ namespace pm::dal
             file << "\"" << team.id << "\",\"" << team.idOfProject << "\",\"" << team.idOfAssignee << "\",\"" << team.title << "\",\"" << team.description << "\",\"" << "pending" << "\",\"" << team.dataOfCreation << "\",\"" << team.idOfCreator << "\",\"" << team.dataOfLastChanges << "\",\"" << team.idOfLastChanger << "\"\n";
             file.close();
         }
+
+        // Function for read data from task file and add it in vector
+        vector<vector<string>> readDataFromTaskFile(string fileName, string idOfProject, vector<int>* identification)
+        {
+            vector<vector<string>> allData;
+            ifstream file(fileName);
+            string line;
+            int counter = -1;
+            if (file.is_open())
+            {
+                while (getline(file, line))
+                {
+                    if (counter > -1)
+                    {
+                        counter = 0;
+                        pm::types::TASK data;
+                        for (size_t i = 0; i < line.size(); i++)
+                        {
+                            if (line[i] == ',' && counter < 10)
+                            {
+                                counter++;
+                                line.erase(i, 0);
+                            }
+                            else if (line[i] == '"')
+                            {
+                                line.erase(i, 0);
+                            }
+                            else if (counter == 0)
+                            {
+                                data.id += line[i];
+                                (*identification).push_back(stoi(data.id));
+                            }
+                            else if (counter == 1)
+                            {
+                                data.idOfProject += line[i];
+                            }
+                            else if (counter == 2)
+                            {
+                                data.idOfAssignee += line[i];
+                            }
+                            else if (counter == 3)
+                            {
+                                data.title += line[i];
+                            }
+                            else if (counter == 4)
+                            {
+                                data.description += line[i];
+                            }
+                            else if (counter == 5)
+                            {
+                                data.status += line[i];
+                            }
+                            else if (counter == 6)
+                            {
+                                data.dataOfCreation += line[i];
+                            }
+                            else if (counter == 7)
+                            {
+                                data.idOfCreator += line[i];
+                            }
+                            else if (counter == 8)
+                            {
+                                data.dataOfLastChanges += line[i];
+                            }
+                            else if (counter == 9)
+                            {
+                                data.idOfLastChanger += line[i];
+                            }
+                        }
+                        vector<string> temp;
+                        if (data.idOfProject == idOfProject)
+                        {
+                            temp.push_back(data.id);
+                            temp.push_back(data.idOfProject);
+                            temp.push_back(data.idOfAssignee);
+                            temp.push_back(data.title);
+                            temp.push_back(data.description);
+                            temp.push_back(data.status);
+                            temp.push_back(data.dataOfCreation);
+                            temp.push_back(data.idOfCreator);
+                            temp.push_back(data.dataOfLastChanges);
+                            temp.push_back(data.idOfLastChanger);
+                            allData.push_back(temp);
+                        }
+                    }
+                    counter++;
+                }
+                file.close();
+            }
+            return allData;
+        }
+
+        // Function for getting data by id of task
+        vector<string> getTaskDataById(string fileName, int idOfTask)
+        {
+            vector<string> allData;
+            ifstream file(fileName);
+            string line;
+            int counter = -1;
+            if (file.is_open())
+            {
+                while (getline(file, line))
+                {
+                    if (counter > -1)
+                    {
+                        counter = 0;
+                        pm::types::TASK data;
+                        for (size_t i = 0; i < line.size(); i++)
+                        {
+                            if (line[i] == ',' && counter < 10)
+                            {
+                                counter++;
+                                line.erase(i, 0);
+                            }
+                            else if (line[i] == '"')
+                            {
+                                line.erase(i, 0);
+                            }
+                            else if (counter == 0)
+                            {
+                                data.id += line[i];
+                            }
+                            else if (counter == 1)
+                            {
+                                data.idOfProject += line[i];
+                            }
+                            else if (counter == 2)
+                            {
+                                data.idOfAssignee += line[i];
+                            }
+                            else if (counter == 3)
+                            {
+                                data.title += line[i];
+                            }
+                            else if (counter == 4)
+                            {
+                                data.description += line[i];
+                            }
+                            else if (counter == 5)
+                            {
+                                data.status += line[i];
+                            }
+                            else if (counter == 6)
+                            {
+                                data.dataOfCreation += line[i];
+                            }
+                            else if (counter == 7)
+                            {
+                                data.idOfCreator += line[i];
+                            }
+                            else if (counter == 8)
+                            {
+                                data.dataOfLastChanges += line[i];
+                            }
+                            else if (counter == 9)
+                            {
+                                data.idOfLastChanger += line[i];
+                            }
+                        }
+                        if (stoi(data.id) == idOfTask)
+                        {
+                            allData.push_back(data.id);
+                            allData.push_back(data.idOfProject);
+                            allData.push_back(data.idOfAssignee);
+                            allData.push_back(data.title);
+                            allData.push_back(data.description);
+                            allData.push_back(data.status);
+                            allData.push_back(data.dataOfCreation);
+                            allData.push_back(data.idOfCreator);
+                            allData.push_back(data.dataOfLastChanges);
+                            allData.push_back(data.idOfLastChanger);
+                        }
+                    }
+                    counter++;
+                }
+                file.close();
+            }
+            return allData;
+        }
     }
 
     namespace workLogManagement

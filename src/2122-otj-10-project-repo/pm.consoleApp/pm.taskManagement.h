@@ -28,5 +28,8 @@ namespace pm::consoleApp
 
 		// Function for add task in a project
 		void createTask(std::string idOfUser, std::string idOfProject, int x, int y);
+
+		// Function for show all task in a project
+		void showAllTask(std::string idOfUser, std::string idOfProject, int x, int y);
 	}
 }

@@ -874,13 +874,15 @@ namespace pm::consoleApp
 			void showUserList(int x, int y)
 			{
 				system("CLS");
-				pm::tools::outputBorder(24, 7, pm::dal::tools::generateId("../pm.data/users.csv") * 3 + pm::dal::tools::generateId("../pm.data/users.csv") / 2, 101);
+				vector<int> id;
+				vector<vector<string>> data = pm::dal::userManagement::readDataForIdUsernameFirstAndLastName("../pm.data/users.csv", &id);
+
+				pm::tools::outputBorder(24, 7, data.size() * 3 + 6, 101);
 				pm::tools::consoleCoordinates(x, y);
 				cout << "Id\t\tUsername\t\tFirstName\t\tLastName";
 				pm::tools::consoleCoordinates(26, y + 1);
 				cout << "___________________________________________________________________________________________________";
-				vector<int> id;
-				vector<vector<string>> data = pm::dal::userManagement::readDataForIdUsernameFirstAndLastName("../pm.data/users.csv", &id);
+				
 				int tempX = x, tempY = y;
 				y += 2;
 				for (auto row : data)
@@ -963,13 +965,15 @@ namespace pm::consoleApp
 			void deleteUser(string idOfUser, int x, int y)
 			{
 				system("CLS");
-				pm::tools::outputBorder(24, 7, pm::dal::tools::generateId("../pm.data/users.csv") * 3 + pm::dal::tools::generateId("../pm.data/users.csv") / 2, 101);
+				vector<int> id;
+				vector<vector<string>> data = pm::dal::userManagement::readDataForIdUsernameFirstAndLastName("../pm.data/users.csv", &id, idOfUser);
+
+				pm::tools::outputBorder(24, 7, data.size() * 3 + 6, 101);
 				pm::tools::consoleCoordinates(x, y);
 				cout << "Id\t\tUsername\t\tFirstName\t\tLastName";
 				pm::tools::consoleCoordinates(26, y + 1);
 				cout << "___________________________________________________________________________________________________";
-				vector<int> id;
-				vector<vector<string>> data = pm::dal::userManagement::readDataForIdUsernameFirstAndLastName("../pm.data/users.csv", &id, idOfUser);
+				
 				int tempX = x, tempY = y;
 				y += 2;
 				for (auto row : data)
@@ -1029,13 +1033,15 @@ namespace pm::consoleApp
 			void editUser(string idOfUser, int x, int y)
 			{
 				system("CLS");
-				pm::tools::outputBorder(24, 7, pm::dal::tools::generateId("../pm.data/users.csv") * 3 + pm::dal::tools::generateId("../pm.data/users.csv") / 2, 101);
+				vector<int> id;
+				vector<vector<string>> data = pm::dal::userManagement::readDataForIdUsernameFirstAndLastName("../pm.data/users.csv", &id, idOfUser);
+
+				pm::tools::outputBorder(24, 7, data.size() * 3 + 6, 101);
 				pm::tools::consoleCoordinates(x, y);
 				cout << "Id\t\tUsername\t\tFirstName\t\tLastName";
 				pm::tools::consoleCoordinates(26, y + 1);
 				cout << "___________________________________________________________________________________________________";
-				vector<int> id;
-				vector<vector<string>> data = pm::dal::userManagement::readDataForIdUsernameFirstAndLastName("../pm.data/users.csv", &id, idOfUser);
+				
 				int tempX = x, tempY = y;
 				y += 2;
 				for (auto row : data)
@@ -1579,17 +1585,20 @@ namespace pm::consoleApp
 				project.idOfCreator = project.idOfLastChanger = idOfUser;
 				pm::tools::consoleCoordinates(43, 28);
 				system("pause");
+
 				system("CLS");
-				pm::tools::outputBorder(24, 7, pm::dal::tools::generateId("../pm.data/teams.csv") * 3 + pm::dal::tools::generateId("../pm.data/teams.csv") / 2, 101);
-				pm::tools::consoleCoordinates(x, y);
-				cout << "Id\t\t\tName of team\t\t\tCreator";
-				pm::tools::consoleCoordinates(26, y + 1);
-				cout << "___________________________________________________________________________________________________";
 				vector<int> id;
 				vector<vector<string>> data = pm::dal::teamsManagement::readDataFromTeamsFile("../pm.data/teams.csv", &id);
 				id = {};
 				pm::bll::teamsManagement::checkForContainUserInTeam(data, idOfUser, &id);
 				data = pm::bll::projectManagement::getDataById(id, data);
+
+				pm::tools::outputBorder(24, 7, data.size() * 3 + 6, 101);
+				pm::tools::consoleCoordinates(x, y);
+				cout << "Id\t\t\tName of team\t\t\tCreator";
+				pm::tools::consoleCoordinates(26, y + 1);
+				cout << "___________________________________________________________________________________________________";
+				
 				int tempX = x, tempY = y;
 				y += 2;
 				for (auto row : data)
@@ -1643,16 +1652,18 @@ namespace pm::consoleApp
 			void showAllProjects(string idOfUser, int x, int y)
 			{
 				system("CLS");
-				pm::tools::outputBorder(24, 7, pm::dal::tools::generateId("../pm.data/projects.csv") * 3 + pm::dal::tools::generateId("../pm.data/projects.csv") / 2, 101);
-				pm::tools::consoleCoordinates(x, y);
-				cout << "Id\t\t\tTitle of project\t\t\tId of creator";
-				pm::tools::consoleCoordinates(26, y + 1);
-				cout << "___________________________________________________________________________________________________";
 				vector<int> idOfProject;
 				vector<vector<string>> projectData = pm::dal::projectManagement::readDataFromProjectsFile("../pm.data/projects.csv", &idOfProject);
 				idOfProject = {};
 				pm::bll::projectManagement::checkProjectForContainUserInTeam(projectData, idOfUser, &idOfProject);
 				projectData = pm::bll::projectManagement::getDataById(idOfProject, projectData);
+
+				pm::tools::outputBorder(24, 7, projectData.size() * 3 + 6, 101);
+				pm::tools::consoleCoordinates(x, y);
+				cout << "Id\t\t\tTitle of project\t\t\tId of creator";
+				pm::tools::consoleCoordinates(26, y + 1);
+				cout << "___________________________________________________________________________________________________";
+				
 				int tempX = x, tempY = y;
 				y += 2;
 				for (auto row : projectData)
@@ -1729,16 +1740,18 @@ namespace pm::consoleApp
 			void deleteProject(string idOfUser, int x, int y)
 			{
 				system("CLS");
-				pm::tools::outputBorder(24, 7, pm::dal::tools::generateId("../pm.data/projects.csv") * 3 + pm::dal::tools::generateId("../pm.data/projects.csv") / 2, 101);
-				pm::tools::consoleCoordinates(x, y);
-				cout << "Id\t\t\tTitle of project\t\t\tId of creator";
-				pm::tools::consoleCoordinates(26, y + 1);
-				cout << "___________________________________________________________________________________________________";
 				vector<int> id;
 				vector<vector<string>> data = pm::dal::projectManagement::readDataFromProjectsFile("../pm.data/projects.csv", &id);
 				id = {};
 				pm::bll::projectManagement::checkProjectForContainUserInTeam(data, idOfUser, &id);
 				data = pm::bll::projectManagement::getDataById(id, data);
+
+				pm::tools::outputBorder(24, 7, data.size() * 3 + 6, 101);
+				pm::tools::consoleCoordinates(x, y);
+				cout << "Id\t\t\tTitle of project\t\t\tId of creator";
+				pm::tools::consoleCoordinates(26, y + 1);
+				cout << "___________________________________________________________________________________________________";
+				
 				int tempX = x, tempY = y;
 				y += 2;
 				for (auto row : data)
@@ -1792,17 +1805,19 @@ namespace pm::consoleApp
 			void addTeamInProject(std::string idOfUser, int x, int y)
 			{
 				system("CLS");
-				pm::tools::outputBorder(24, 7, pm::dal::tools::generateId("../pm.data/projects.csv") * 3 + pm::dal::tools::generateId("../pm.data/projects.csv") / 2, 101);
-				pm::tools::consoleCoordinates(x, y);
-				cout << "Id\t\t\tTitle of project\t\t\tId of creator";
-				pm::tools::consoleCoordinates(26, y + 1);
-				cout << "___________________________________________________________________________________________________";
 				vector<int> idOfProject;
 				vector<vector<string>> projectData = pm::dal::projectManagement::readDataFromProjectsFile("../pm.data/projects.csv", &idOfProject);
 				vector<vector<string>> allProjectData = pm::dal::projectManagement::readDataFromProjectsFile("../pm.data/projects.csv", &idOfProject);
 				idOfProject = {};
 				pm::bll::projectManagement::findProjectWithoutTeam(projectData, idOfUser, &idOfProject);
 				projectData = pm::bll::projectManagement::getDataById(idOfProject, projectData);
+
+				pm::tools::outputBorder(24, 7, projectData.size() * 3 + 6, 101);
+				pm::tools::consoleCoordinates(x, y);
+				cout << "Id\t\t\tTitle of project\t\t\tId of creator";
+				pm::tools::consoleCoordinates(26, y + 1);
+				cout << "___________________________________________________________________________________________________";
+				
 				int tempX = x, tempY = y;
 				y += 2;
 				for (auto row : projectData)
@@ -1849,16 +1864,18 @@ namespace pm::consoleApp
 				{
 					system("CLS");
 					x = tempX; y = tempY;
-					pm::tools::outputBorder(24, 7, pm::dal::tools::generateId("../pm.data/teams.csv") * 3 + pm::dal::tools::generateId("../pm.data/teams.csv") / 2, 101);
-					pm::tools::consoleCoordinates(x, y);
-					cout << "Id\t\t\tName of team\t\t\tCreator";
-					pm::tools::consoleCoordinates(26, y + 1);
-					cout << "___________________________________________________________________________________________________";
 					vector<int> idOfTeam;
 					vector<vector<string>> dataOfTeam = pm::dal::teamsManagement::readDataFromTeamsFile("../pm.data/teams.csv", &idOfTeam);
 					idOfTeam = {};
 					pm::bll::teamsManagement::checkForContainUserInTeam(dataOfTeam, idOfUser, &idOfTeam);
 					dataOfTeam = pm::bll::projectManagement::getDataById(idOfTeam, dataOfTeam);
+
+					pm::tools::outputBorder(24, 7, dataOfTeam.size() * 3 + 6, 101);
+					pm::tools::consoleCoordinates(x, y);
+					cout << "Id\t\t\tName of team\t\t\tCreator";
+					pm::tools::consoleCoordinates(26, y + 1);
+					cout << "___________________________________________________________________________________________________";
+					
 					int temp1 = tempX, temp2 = tempY;
 					y += 2;
 					for (auto row : dataOfTeam)
@@ -1905,17 +1922,19 @@ namespace pm::consoleApp
 			void editProject(std::string idOfUser, int x, int y)
 			{
 				system("CLS");
-				pm::tools::outputBorder(24, 7, pm::dal::tools::generateId("../pm.data/projects.csv") * 3 + pm::dal::tools::generateId("../pm.data/projects.csv") / 2, 101);
-				pm::tools::consoleCoordinates(x, y);
-				cout << "Id\t\t\tTitle of project\t\t\tId of creator";
-				pm::tools::consoleCoordinates(26, y + 1);
-				cout << "___________________________________________________________________________________________________";
 				vector<int> idOfProject;
 				vector<vector<string>> projectData = pm::dal::projectManagement::readDataFromProjectsFile("../pm.data/projects.csv", &idOfProject);
 				vector<vector<string>> allProjectData = pm::dal::projectManagement::readDataFromProjectsFile("../pm.data/projects.csv", &idOfProject);
 				idOfProject = {};
 				pm::bll::projectManagement::checkProjectForContainUserInTeam(projectData, idOfUser, &idOfProject);
 				projectData = pm::bll::projectManagement::getDataById(idOfProject, projectData);
+
+				pm::tools::outputBorder(24, 7, projectData.size() * 3 + 6, 101);
+				pm::tools::consoleCoordinates(x, y);
+				cout << "Id\t\t\tTitle of project\t\t\tId of creator";
+				pm::tools::consoleCoordinates(26, y + 1);
+				cout << "___________________________________________________________________________________________________";
+				
 				int tempX = x, tempY = y;
 				y += 2;
 				for (auto row : projectData)
@@ -2067,16 +2086,18 @@ namespace pm::consoleApp
 			void chooseProjectForWorkWithTask(string idOfUser, int x, int y)
 			{
 				system("CLS");
-				pm::tools::outputBorder(24, 7, pm::dal::tools::generateId("../pm.data/projects.csv") * 3 + pm::dal::tools::generateId("../pm.data/projects.csv") / 2, 101);
-				pm::tools::consoleCoordinates(x, y);
-				cout << "Id\t\t\tTitle of project\t\t\tId of creator";
-				pm::tools::consoleCoordinates(26, y + 1);
-				cout << "___________________________________________________________________________________________________";
 				vector<int> idOfProject;
 				vector<vector<string>> projectData = pm::dal::projectManagement::readDataFromProjectsFile("../pm.data/projects.csv", &idOfProject);
 				idOfProject = {};
 				pm::bll::projectManagement::checkProjectForContainUserInTeam(projectData, idOfUser, &idOfProject);
 				projectData = pm::bll::projectManagement::getDataById(idOfProject, projectData);
+
+				pm::tools::outputBorder(24, 7, projectData.size() * 3 + 6, 101);
+				pm::tools::consoleCoordinates(x, y);
+				cout << "Id\t\t\tTitle of project\t\t\tId of creator";
+				pm::tools::consoleCoordinates(26, y + 1);
+				cout << "___________________________________________________________________________________________________";
+				
 				int tempX = x, tempY = y;
 				y += 2;
 				for (auto row : projectData)
@@ -2143,13 +2164,13 @@ namespace pm::consoleApp
 				task.idOfProject = idOfProject;
 				// Choose the user that have to make the task (Id of the Assignee)
 				system("CLS");
-				pm::tools::outputBorder(24, 7, pm::dal::tools::generateId("../pm.data/users.csv") * 3 + pm::dal::tools::generateId("../pm.data/users.csv") / 2, 101);
+				vector<int> id;
+				vector<vector<string>> data = pm::dal::userManagement::readDataForIdUsernameFirstAndLastName("../pm.data/users.csv", &id, idOfUser);
+				pm::tools::outputBorder(24, 7, data.size() * 3 + 6, 101);
 				pm::tools::consoleCoordinates(x, y);
 				cout << "Id\t\tUsername\t\tFirstName\t\tLastName";
 				pm::tools::consoleCoordinates(26, y + 1);
 				cout << "___________________________________________________________________________________________________";
-				vector<int> id;
-				vector<vector<string>> data = pm::dal::userManagement::readDataForIdUsernameFirstAndLastName("../pm.data/users.csv", &id, idOfUser);
 				int tempX = x, tempY = y;
 				y += 2;
 				for (auto row : data)
@@ -2208,6 +2229,90 @@ namespace pm::consoleApp
 			}
 
 			// Function for show all task in a project
+			void showAllTask(string idOfUser, string idOfProject, int x, int y)
+			{
+				system("CLS");
+				vector<int> idOfTask;
+				vector<vector<string>> taskData = pm::dal::taskManagement::readDataFromTaskFile("../pm.data/tasks.csv", idOfProject, &idOfTask);
+				pm::tools::outputBorder(24, 7, taskData.size() * 3 + 6, 101);
+				pm::tools::consoleCoordinates(x, y);
+				cout << "Id\t\t\tId of the Assignee\t\tTitle of task";
+				pm::tools::consoleCoordinates(26, y + 1);
+				cout << "___________________________________________________________________________________________________";
+				
+				int tempX = x, tempY = y;
+				y += 2;
+				for (auto row : taskData)
+				{
+					int counter = 1;
+					y += 3;
+					x = tempX;
+					for (auto col : row)
+					{
+						if (counter == 1)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 30;
+							cout << col;
+						}
+						else if (counter == 3)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 30;
+							cout << col;
+						}
+						else if (counter == 4)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							cout << col;
+						}
+						counter++;
+					}
+				}
+				int taskChoise = pm::tools::enterNumberWithoutPrintingOnConsole();
+				bool exist = false;
+				for (int i = 0; i < idOfTask.size(); i++)
+				{
+					if (taskChoise == idOfTask[i])
+					{
+						exist = true;
+					}
+				}
+				if (taskChoise == 0 || !exist)
+				{
+					return;
+				}
+				else
+				{
+					system("CLS");
+					pm::tools::outputBorder(24, 13, 21, 101);
+					vector<string> task = pm::dal::taskManagement::getTaskDataById("../pm.data/tasks.csv", taskChoise);
+					x = 40; y = 15;
+					pm::tools::consoleCoordinates(x, y + 1);
+					cout << "Id of the task : " << task[0];
+					pm::tools::consoleCoordinates(x, y + 3);
+					cout << "Id of the project : " << task[1];
+					pm::tools::consoleCoordinates(x, y + 5);
+					cout << "Id of the Assignee : " << task[2];
+					pm::tools::consoleCoordinates(x, y + 7);
+					cout << "Title of the task : " << task[3];
+					pm::tools::consoleCoordinates(x, y + 9);
+					cout << "Description of the task : " << task[4];
+					pm::tools::consoleCoordinates(x, y + 11);
+					cout << "Status of the task : " << task[5];
+					pm::tools::consoleCoordinates(x, y + 13);
+					cout << "Data of creation : " << task[6];
+					pm::tools::consoleCoordinates(x, y + 15);
+					cout << "Id of the creator : " << task[7];
+					pm::tools::consoleCoordinates(x, y + 17);
+					cout << "Date of last changes : " << task[8];
+					pm::tools::consoleCoordinates(x, y + 19);
+					cout << "Id of last changer : " << task[9];
+					pm::tools::consoleCoordinates(x + 20, y + 21);
+					system("pause");
+				}
+				
+			}
 		}
 	}
 
@@ -2314,6 +2419,7 @@ namespace pm::consoleApp
 						case 1:
 						{
 							system("CLS");
+							pm::consoleApp::windows::taskManagement::showAllTask(idOfUser, idOfProject, 40, 9);
 							choice = 6;
 							break;
 						}
