@@ -31,5 +31,8 @@ namespace pm::consoleApp
 
 		// Function for show all task in a project
 		void showAllTask(std::string idOfUser, std::string idOfProject, int x, int y);
+
+		// Function for delete task
+		void deleteTask(std::string idOfUser, std::string idOfProject, int x, int y);
 	}
 }

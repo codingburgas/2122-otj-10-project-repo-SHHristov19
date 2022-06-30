@@ -1327,7 +1327,7 @@ namespace pm::dal
         }
 
         // Function for read data from task file and add it in vector
-        vector<vector<string>> readDataFromTaskFile(string fileName, string idOfProject, vector<int>* identification)
+        vector<vector<string>> readDataFromTaskFile(string fileName, string idOfProject, string idOfUser, vector<int>* identification)
         {
             vector<vector<string>> allData;
             ifstream file(fileName);
@@ -1355,7 +1355,6 @@ namespace pm::dal
                             else if (counter == 0)
                             {
                                 data.id += line[i];
-                                (*identification).push_back(stoi(data.id));
                             }
                             else if (counter == 1)
                             {
@@ -1395,9 +1394,10 @@ namespace pm::dal
                             }
                         }
                         vector<string> temp;
-                        if (data.idOfProject == idOfProject)
+                        if (data.idOfProject == idOfProject && (data.idOfCreator == idOfUser || data.idOfAssignee == idOfUser))
                         {
                             temp.push_back(data.id);
+                            (*identification).push_back(stoi(data.id));
                             temp.push_back(data.idOfProject);
                             temp.push_back(data.idOfAssignee);
                             temp.push_back(data.title);
@@ -1504,8 +1504,149 @@ namespace pm::dal
             }
             return allData;
         }
-    }
 
+        // Function for add titles of the file infront of the matrix vector
+        vector<vector<string>> pushFrontTitleOfTaskFile()
+        {
+            vector<vector<string>> output;
+            vector<string> temp;
+            temp.push_back("Id");
+            temp.push_back("Id of the Project");
+            temp.push_back("Id of the Assignee");
+            temp.push_back("Title");
+            temp.push_back("Description");
+            temp.push_back("Status");
+            temp.push_back("Date of creation");
+            temp.push_back("Id of the creator");
+            temp.push_back("Date of last changes");
+            temp.push_back("Id of last changer");
+            output.push_back(temp);
+            return output;
+        }
+
+        // Function for add data in project file
+        void addDataInTaskFile(string fileName, vector<vector<string>> data)
+        {
+            ofstream out(fileName, ios_base::trunc);
+            if (out.is_open())
+            {
+                for (int i = 0; i < data.size(); i++)
+                {
+                    for (int j = 0; j < data[i].size(); j++)
+                    {
+                        if (j == 9 && i > 0)
+                        {
+                            out << "\"" << data[i][j] << "\"\n";
+                        }
+                        else if (j == 9 && i == 0)
+                        {
+                            out << data[i][j] << "\n";
+                        }
+                        else if (j != 9 && i == 0)
+                        {
+                            out << data[i][j] << ",";
+                        }
+                        else
+                        {
+                            out << "\"" << data[i][j] << "\",";
+                        }
+                    }
+                }
+                out.close();
+            }
+        }
+
+        // Function for deleting project by id
+        void deleteTaskByIdInTaskFile(string fileName, int idOfTask, string idOfUser)
+        {
+            vector<vector<string>> allData = pushFrontTitleOfTaskFile();
+            ifstream file(fileName);
+            string line;
+            int counter = -1;
+            if (file.is_open())
+            {
+                while (getline(file, line))
+                {
+                    if (counter > -1)
+                    {
+                        counter = 0;
+                        pm::types::TASK data;
+                        for (size_t i = 0; i < line.size(); i++)
+                        {
+                            if (line[i] == ',' && counter < 10)
+                            {
+                                counter++;
+                                line.erase(i, 0);
+                            }
+                            else if (line[i] == '"')
+                            {
+                                line.erase(i, 0);
+                            }
+                            else if (counter == 0)
+                            {
+                                data.id += line[i];
+                            }
+                            else if (counter == 1)
+                            {
+                                data.idOfProject += line[i];
+                            }
+                            else if (counter == 2)
+                            {
+                                data.idOfAssignee += line[i];
+                            }
+                            else if (counter == 3)
+                            {
+                                data.title += line[i];
+                            }
+                            else if (counter == 4)
+                            {
+                                data.description += line[i];
+                            }
+                            else if (counter == 5)
+                            {
+                                data.status += line[i];
+                            }
+                            else if (counter == 6)
+                            {
+                                data.dataOfCreation += line[i];
+                            }
+                            else if (counter == 7)
+                            {
+                                data.idOfCreator += line[i];
+                            }
+                            else if (counter == 8)
+                            {
+                                data.dataOfLastChanges += line[i];
+                            }
+                            else if (counter == 9)
+                            {
+                                data.idOfLastChanger += line[i];
+                            }
+                        }
+                        vector<string> temp;
+                        if (!(stoi(data.id) == idOfTask && (data.idOfCreator == idOfUser || data.idOfAssignee == idOfUser)))
+                        {
+                            temp.push_back(data.id);
+                            temp.push_back(data.idOfProject);
+                            temp.push_back(data.idOfAssignee);
+                            temp.push_back(data.title);
+                            temp.push_back(data.description);
+                            temp.push_back(data.status);
+                            temp.push_back(data.dataOfCreation);
+                            temp.push_back(data.idOfCreator);
+                            temp.push_back(data.dataOfLastChanges);
+                            temp.push_back(data.idOfLastChanger);
+                        }
+                        allData.push_back(temp);
+                    }
+                    counter++;
+                }
+                file.close();
+            }
+            addDataInTaskFile(fileName, allData);
+        }
+    }
+    
     namespace workLogManagement
     {
 

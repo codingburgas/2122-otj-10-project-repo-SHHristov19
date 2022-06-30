@@ -2233,10 +2233,10 @@ namespace pm::consoleApp
 			{
 				system("CLS");
 				vector<int> idOfTask;
-				vector<vector<string>> taskData = pm::dal::taskManagement::readDataFromTaskFile("../pm.data/tasks.csv", idOfProject, &idOfTask);
+				vector<vector<string>> taskData = pm::dal::taskManagement::readDataFromTaskFile("../pm.data/tasks.csv", idOfProject, idOfUser, &idOfTask);
 				pm::tools::outputBorder(24, 7, taskData.size() * 3 + 6, 101);
 				pm::tools::consoleCoordinates(x, y);
-				cout << "Id\t\t\tId of the Assignee\t\tTitle of task";
+				cout << "Id\t\t\tId of the Assignee\t\tId of the creator";
 				pm::tools::consoleCoordinates(26, y + 1);
 				cout << "___________________________________________________________________________________________________";
 				
@@ -2252,16 +2252,16 @@ namespace pm::consoleApp
 						if (counter == 1)
 						{
 							pm::tools::consoleCoordinates(x, y);
-							x += 30;
+							x += 32;
 							cout << col;
 						}
 						else if (counter == 3)
 						{
 							pm::tools::consoleCoordinates(x, y);
-							x += 30;
+							x += 32;
 							cout << col;
 						}
-						else if (counter == 4)
+						else if (counter == 8)
 						{
 							pm::tools::consoleCoordinates(x, y);
 							cout << col;
@@ -2311,7 +2311,66 @@ namespace pm::consoleApp
 					pm::tools::consoleCoordinates(x + 20, y + 21);
 					system("pause");
 				}
-				
+			}
+
+			// Function for delete task
+			void deleteTask(string idOfUser, string idOfProject, int x, int y)
+			{
+				system("CLS");
+				vector<int> idOfTask;
+				vector<vector<string>> taskData = pm::dal::taskManagement::readDataFromTaskFile("../pm.data/tasks.csv", idOfProject, idOfUser, &idOfTask);
+				pm::tools::outputBorder(24, 7, taskData.size() * 3 + 6, 101);
+				pm::tools::consoleCoordinates(x, y);
+				cout << "Id\t\t\tId of the Assignee\t\tId of the creator";
+				pm::tools::consoleCoordinates(26, y + 1);
+				cout << "___________________________________________________________________________________________________";
+
+				int tempX = x, tempY = y;
+				y += 2;
+				for (auto row : taskData)
+				{
+					int counter = 1;
+					y += 3;
+					x = tempX;
+					for (auto col : row)
+					{
+						if (counter == 1)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 32;
+							cout << col;
+						}
+						else if (counter == 3)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 32;
+							cout << col;
+						}
+						else if (counter == 8)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							cout << col;
+						}
+						counter++;
+					}
+				}
+				int taskChoise = pm::tools::enterNumberWithoutPrintingOnConsole();
+				bool exist = false;
+				for (int i = 0; i < idOfTask.size(); i++)
+				{
+					if (taskChoise == idOfTask[i])
+					{
+						exist = true;
+					}
+				}
+				if (taskChoise == 0 || !exist)
+				{
+					return;
+				}
+				else
+				{
+					pm::dal::taskManagement::deleteTaskByIdInTaskFile("../pm.data/tasks.csv", taskChoise, idOfUser);
+				}
 			}
 		}
 	}
@@ -2439,6 +2498,7 @@ namespace pm::consoleApp
 						case 4:
 						{
 							system("CLS");
+							pm::consoleApp::windows::taskManagement::deleteTask(idOfUser, idOfProject, 40, 9);
 							choice = 6;
 							break;
 						}
