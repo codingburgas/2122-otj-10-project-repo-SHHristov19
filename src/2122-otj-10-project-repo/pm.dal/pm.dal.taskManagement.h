@@ -20,4 +20,7 @@ namespace pm::dal::taskManagement
 
     // Function for deleting project by id
     void deleteTaskByIdInTaskFile(std::string fileName, int idOfTask, std::string idOfUser);
+
+	// Function for read all data from task file and add it in vector
+	std::vector<std::vector<std::string>> readAllDataFromTaskFile(std::string fileName);
 }

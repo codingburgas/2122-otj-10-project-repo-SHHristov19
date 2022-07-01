@@ -34,5 +34,8 @@ namespace pm::consoleApp
 
 		// Function for delete task
 		void deleteTask(std::string idOfUser, std::string idOfProject, int x, int y);
+
+		// Function for edit data in a task
+		void editTask(std::string idOfUser, std::string idOfProject, int x, int y);
 	}
 }

@@ -1988,8 +1988,6 @@ namespace pm::consoleApp
 					cout << "2. Description of the project";
 					pm::tools::consoleCoordinates(x, y + 8);
 					cout << "3. Id of team";
-					pm::tools::consoleCoordinates(x, y + 11);
-					cout << "4. Id of tasks";
 					int choiseEditInfo = pm::tools::enterNumberWithoutPrintingOnConsole();
 					if (choiseEditInfo <= 0 || choiseEditInfo > 4)
 					{
@@ -2372,6 +2370,258 @@ namespace pm::consoleApp
 					pm::dal::taskManagement::deleteTaskByIdInTaskFile("../pm.data/tasks.csv", taskChoise, idOfUser);
 				}
 			}
+
+			// Function for edit data in a task
+			void editTask(string idOfUser, string idOfProject, int x, int y)
+			{
+				system("CLS");
+				vector<int> idOfTask;
+				vector<vector<string>> taskData = pm::dal::taskManagement::readDataFromTaskFile("../pm.data/tasks.csv", idOfProject, idOfUser, &idOfTask);
+				pm::tools::outputBorder(24, 7, taskData.size() * 3 + 6, 101);
+				pm::tools::consoleCoordinates(x, y);
+				cout << "Id\t\t\tId of the Assignee\t\tId of the creator";
+				pm::tools::consoleCoordinates(26, y + 1);
+				cout << "___________________________________________________________________________________________________";
+
+				int tempX = x, tempY = y;
+				y += 2;
+				for (auto row : taskData)
+				{
+					int counter = 1;
+					y += 3;
+					x = tempX;
+					for (auto col : row)
+					{
+						if (counter == 1)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 32;
+							cout << col;
+						}
+						else if (counter == 3)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 32;
+							cout << col;
+						}
+						else if (counter == 8)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							cout << col;
+						}
+						counter++;
+					}
+				}
+				int taskChoise = pm::tools::enterNumberWithoutPrintingOnConsole();
+				bool exist = false;
+				for (int i = 0; i < idOfTask.size(); i++)
+				{
+					if (taskChoise == idOfTask[i])
+					{
+						exist = true;
+					}
+				}
+				if (taskChoise == 0 || !exist)
+				{
+					return;
+				}
+				else
+				{
+					system("CLS");
+					pm::tools::outputBorder(24, 13, 22, 101);
+					x = 40; y = 15;
+					pm::tools::consoleCoordinates(x, y + 2);
+					cout << "1. Title of the task";
+					pm::tools::consoleCoordinates(x, y + 5);
+					cout << "2. Description of the task";
+					pm::tools::consoleCoordinates(x, y + 8);
+					cout << "3. Id of project";
+					pm::tools::consoleCoordinates(x, y + 11);
+					cout << "4. Id of the Assignee";
+					pm::tools::consoleCoordinates(x, y + 14);
+					cout << "5. Status";
+					int choiseEditInfo = pm::tools::enterNumberWithoutPrintingOnConsole();
+					if (choiseEditInfo <= 0 || choiseEditInfo > 5)
+					{
+						return;
+					}
+					else
+					{
+						string newData;
+
+						switch (choiseEditInfo)
+						{
+						case 1:
+						{
+							pm::tools::consoleCoordinates(35, 33);
+							cout << "ENTER THE NEW TITLE : ";
+							getline(cin, newData);
+							pm::bll::taskManagement::editTaskById("../pm.data/tasks.csv", taskChoise, 3, newData, idOfUser);
+							break;
+						}
+						case 2:
+						{
+							pm::tools::consoleCoordinates(35, 33);
+							cout << "ENTER THE NEW DESCRIPTION : ";
+							getline(cin, newData);
+							pm::bll::taskManagement::editTaskById("../pm.data/tasks.csv", taskChoise, 4, newData, idOfUser);
+							break;
+						}
+						case 3:
+						{
+							system("CLS");
+							vector<int> idOfProject;
+							vector<vector<string>> projectData = pm::dal::projectManagement::readDataFromProjectsFile("../pm.data/projects.csv", &idOfProject);
+							idOfProject = {};
+							pm::bll::projectManagement::checkProjectForContainUserInTeam(projectData, idOfUser, &idOfProject);
+							projectData = pm::bll::projectManagement::getDataById(idOfProject, projectData);
+
+							pm::tools::outputBorder(24, 13, projectData.size() * 3 + 6, 101);
+							pm::tools::consoleCoordinates(x, y);
+							cout << "Id\t\t\tTitle of project\t\t\tId of creator";
+							pm::tools::consoleCoordinates(26, y + 1);
+							cout << "___________________________________________________________________________________________________";
+
+							int tempX = x, tempY = y;
+							y += 2;
+							for (auto row : projectData)
+							{
+								int counter = 1;
+								y += 3;
+								x = tempX;
+								for (auto col : row)
+								{
+									if (counter == 1)
+									{
+										pm::tools::consoleCoordinates(x, y);
+										x += 24;
+										cout << col;
+									}
+									else if (counter == 2)
+									{
+										pm::tools::consoleCoordinates(x, y);
+										x += 45;
+										cout << col;
+									}
+									else if (counter == 5)
+									{
+										pm::tools::consoleCoordinates(x, y);
+										cout << col;
+									}
+									counter++;
+								}
+							}
+							int choise = pm::tools::enterNumberWithoutPrintingOnConsole();
+							bool exist = false;
+							for (int i = 0; i < idOfProject.size(); i++)
+							{
+								if (choise == idOfProject[i])
+								{
+									exist = true;
+								}
+							}
+							if (choise == 0 || !exist)
+							{
+								return;
+							}
+							else
+							{
+								pm::bll::taskManagement::editTaskById("../pm.data/tasks.csv", taskChoise, 1, to_string(choise), idOfUser);
+							}
+							break;
+						}
+						case 4:
+						{
+							system("CLS");
+							vector<int> id;
+							vector<vector<string>> data = pm::dal::userManagement::readDataForIdUsernameFirstAndLastName("../pm.data/users.csv", &id, idOfUser);
+
+							pm::tools::outputBorder(24, 13, data.size() * 3 + 6, 101);
+							pm::tools::consoleCoordinates(x, y);
+							cout << "Id\t\tUsername\t\tFirstName\t\tLastName";
+							pm::tools::consoleCoordinates(26, y + 1);
+							cout << "___________________________________________________________________________________________________";
+
+							int tempX = x, tempY = y;
+							y += 2;
+							for (auto row : data)
+							{
+								int counter = 1;
+								y += 3;
+								x = tempX;
+								for (auto col : row)
+								{
+									if (counter == 1)
+									{
+										pm::tools::consoleCoordinates(x, y);
+										x += 16;
+										cout << col;
+									}
+									else if (counter == 2)
+									{
+										pm::tools::consoleCoordinates(x, y);
+										x += 24;
+										cout << col;
+									}
+									else if (counter == 3)
+									{
+										pm::tools::consoleCoordinates(x, y);
+										x += 24;
+										cout << col;
+									}
+									else if (counter == 4)
+									{
+										pm::tools::consoleCoordinates(x, y);
+										cout << col;
+									}
+									counter++;
+								}
+							}
+							int choise = pm::tools::enterNumberWithoutPrintingOnConsole();
+							bool exist = false;
+							for (int i = 0; i < id.size(); i++)
+							{
+								if (choise == id[i])
+								{
+									exist = true;
+								}
+							}
+							if (choise == 0 || !exist)
+							{
+								return;
+							}
+							else
+							{
+								pm::bll::taskManagement::editTaskById("../pm.data/tasks.csv", taskChoise, 2, to_string(choise), idOfUser);
+							}
+							break;
+						}
+						case 5:
+						{
+							pm::tools::consoleCoordinates(35, 33);
+							cout << "ENTER THE NEW STATUS [pending/inProgress/completed] : ";
+							getline(cin, newData);
+							for (auto row : taskData)
+							{
+								if (row[0] == to_string(taskChoise) && row[5] == "pending" && (newData == "inProgress" || newData == "completed"))
+								{
+									pm::bll::taskManagement::editTaskById("../pm.data/tasks.csv", taskChoise, 5, newData, idOfUser);
+								}
+								else if (row[0] == to_string(taskChoise) && row[5] == "inProgress" && (newData == "pending" || newData == "completed"))
+								{
+									pm::bll::taskManagement::editTaskById("../pm.data/tasks.csv", taskChoise, 5, newData, idOfUser);
+								}
+								else if (row[0] == to_string(taskChoise) && row[5] == "completed" && (newData == "inProgress" || newData == "pending"))
+								{
+									pm::bll::taskManagement::editTaskById("../pm.data/tasks.csv", taskChoise, 5, newData, idOfUser);
+								}
+							}
+							break;
+						}
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -2492,6 +2742,7 @@ namespace pm::consoleApp
 						case 3:
 						{
 							system("CLS");
+							pm::consoleApp::windows::taskManagement::editTask(idOfUser, idOfProject, 40, 9);
 							choice = 6;
 							break;
 						}

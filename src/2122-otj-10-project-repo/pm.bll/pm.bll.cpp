@@ -189,7 +189,7 @@ namespace pm::bll
             pm::dal::projectManagement::addDataInProjectsFile(fileName, temp);
         }
 
-        // Function for project data
+        // Function for edit project data
         void editProjectById(string fileName, vector<vector<string>> data, int idOfProject, int idOfEditData, string newData, string idOfUser)
         {
             vector<vector<string>> temp = pm::dal::projectManagement::pushFrontTitleOfProjectsFile();
@@ -237,6 +237,27 @@ namespace pm::bll
                 temp.push_back(row);
             }
             pm::dal::projectManagement::addDataInProjectsFile("../pm.data/projects.csv", temp);
+        }
+
+        // Function for edit task data
+        void editTaskById(string fileName, int idOfTask, int idOfEditData, string newData, string idOfUser)
+        {
+            vector<vector<string>> temp = pm::dal::taskManagement::pushFrontTitleOfTaskFile();
+            vector<vector<string>> data = pm::dal::taskManagement::readAllDataFromTaskFile(fileName);
+            for (int i = 0; i < data.size(); i++)
+            {
+                if (data[i][0] == to_string(idOfTask))
+                {
+                    data[i][idOfEditData] = newData;
+                    data[i][8] = pm::tools::currentDateTime();
+                    data[i][9] = idOfUser;
+                }
+            }
+            for (auto row : data)
+            {
+                temp.push_back(row);
+            }
+            pm::dal::taskManagement::addDataInTaskFile(fileName, temp);
         }
     }
 
