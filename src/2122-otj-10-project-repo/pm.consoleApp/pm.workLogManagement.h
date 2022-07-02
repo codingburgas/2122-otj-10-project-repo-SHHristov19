@@ -32,5 +32,8 @@ namespace pm::consoleApp
 		// Function for show all work log in a task
 		void showAllWorkLog(std::string idOfUser, std::string idOfTask, int x, int y);
 
+		// Function for delete work log in the task
+		void deleteWorkLog(std::string idOfUser, std::string idOfTask, int x, int y);
+
 	}
 }

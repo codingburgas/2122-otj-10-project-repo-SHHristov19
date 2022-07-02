@@ -2925,6 +2925,65 @@ namespace pm::consoleApp
 					system("pause");
 				}
 			}
+
+			// Function for delete work log in the task
+			void deleteWorkLog(string idOfUser, string idOfTask, int x, int y)
+			{
+				system("CLS");
+				vector<int> idOfWorkLog;
+				vector<vector<string>> workLogData = pm::dal::workLogManagement::readDataFromWorkLogFile("../pm.data/workLogs.csv", idOfUser, &idOfWorkLog);
+				pm::tools::outputBorder(24, 7, workLogData.size() * 3 + 6, 101);
+				pm::tools::consoleCoordinates(x, y);
+				cout << "Id\t\t\tId of the Task\t\t\tWork time";
+				pm::tools::consoleCoordinates(26, y + 1);
+				cout << "___________________________________________________________________________________________________";
+				int tempX = x, tempY = y;
+				y += 2;
+				for (auto row : workLogData)
+				{
+					int counter = 1;
+					x = tempX;
+					y += 3;
+					for (auto col : row)
+					{
+						if (counter == 1)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 32;
+							cout << col;
+						}
+						else if (counter == 2)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 25;
+							cout << col;
+						}
+						else if (counter == 4)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							cout << col;
+						}
+						counter++;
+					}
+				}
+				int workLogChoise = pm::tools::enterNumberWithoutPrintingOnConsole();
+				bool exist = false;
+				for (int i = 0; i < idOfWorkLog.size(); i++)
+				{
+					if (workLogChoise == idOfWorkLog[i])
+					{
+						exist = true;
+					}
+				}
+				if (workLogChoise == 0 || !exist)
+				{
+					return;
+				}
+				else
+				{
+					pm::dal::workLogManagement::deleteWorkById("../pm.data/workLogs.csv", workLogChoise, idOfUser);
+				}
+			}
 		}
 	}
 
@@ -3051,6 +3110,7 @@ namespace pm::consoleApp
 						case 4:
 						{
 							system("CLS");
+							windows::workLogManagement::deleteWorkLog(idOfUser, idOfTask, 40, 9);
 							choice = 6;
 							break;
 						}

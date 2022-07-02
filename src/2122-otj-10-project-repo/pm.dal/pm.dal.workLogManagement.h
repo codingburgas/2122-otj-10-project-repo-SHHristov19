@@ -11,4 +11,13 @@ namespace pm::dal::workLogManagement
 
 	// Function for getting data by id of work log
 	std::vector<std::string> getWorkLogDataById(std::string fileName, int idOfWorkLog);
+
+    // Function for add titles of the file infront of the matrix vector
+	std::vector<std::vector<std::string>> pushFrontTitleOfWorkLogFile();
+
+    // Function for add data in project file
+    void addDataInWorkLogFile(std::string fileName, std::vector<std::vector<std::string>> data);
+
+    // Function for deleting work log by id
+    void deleteWorkById(std::string fileName, int idOfTask, std::string idOfUser);
 }

@@ -1881,5 +1881,116 @@ namespace pm::dal
             }
             return allData;
         }
+
+        // Function for add titles of the file infront of the matrix vector
+        vector<vector<string>> pushFrontTitleOfWorkLogFile()
+        {
+            vector<vector<string>> output;
+            vector<string> temp;
+            temp.push_back("Id");
+            temp.push_back("Id of the task");
+            temp.push_back("Id of the User");
+            temp.push_back("Work time [h]");
+            temp.push_back("Data of working");
+            output.push_back(temp);
+            return output;
+        }
+
+        // Function for add data in project file
+        void addDataInWorkLogFile(string fileName, vector<vector<string>> data)
+        {
+            ofstream out(fileName, ios_base::trunc);
+            if (out.is_open())
+            {
+                for (int i = 0; i < data.size(); i++)
+                {
+                    for (int j = 0; j < data[i].size(); j++)
+                    {
+                        if (j == 4 && i > 0)
+                        {
+                            out << "\"" << data[i][j] << "\"\n";
+                        }
+                        else if (j == 4 && i == 0)
+                        {
+                            out << data[i][j] << "\n";
+                        }
+                        else if (j != 4 && i == 0)
+                        {
+                            out << data[i][j] << ",";
+                        }
+                        else
+                        {
+                            out << "\"" << data[i][j] << "\",";
+                        }
+                    }
+                }
+                out.close();
+            }
+        }
+
+        // Function for deleting work log by id
+        void deleteWorkById(string fileName, int idOfTask, string idOfUser)
+        {
+            vector<vector<string>> allData = pushFrontTitleOfWorkLogFile();
+            ifstream file(fileName);
+            string line;
+            int counter = -1;
+            if (file.is_open())
+            {
+                while (getline(file, line))
+                {
+                    if (counter > -1)
+                    {
+                        counter = 0;
+                        pm::types::WORK_LOG data;
+                        for (size_t i = 0; i < line.size(); i++)
+                        {
+                            if (line[i] == ',' && counter < 10)
+                            {
+                                counter++;
+                                line.erase(i, 0);
+                            }
+                            else if (line[i] == '"')
+                            {
+                                line.erase(i, 0);
+                            }
+                            else if (counter == 0)
+                            {
+                                data.id += line[i];
+                            }
+                            else if (counter == 1)
+                            {
+                                data.idOfTask += line[i];
+                            }
+                            else if (counter == 2)
+                            {
+                                data.idOfUser += line[i];
+                            }
+                            else if (counter == 3)
+                            {
+                                data.workTime += line[i];
+                            }
+                            else if (counter == 4)
+                            {
+                                data.dataOfWorking += line[i];
+                            }
+                        }
+                        vector<string> temp;
+                        if (!(stoi(data.id) == idOfTask && data.idOfUser == idOfUser))
+                        {
+                            temp.push_back(data.id);
+                            temp.push_back(data.idOfTask);
+                            temp.push_back(data.idOfUser);
+                            temp.push_back(data.workTime);
+                            temp.push_back(data.dataOfWorking);
+                        }
+                        allData.push_back(temp);
+                    }
+                    counter++;
+                }
+                file.close();
+            }
+            addDataInWorkLogFile(fileName, allData);
+        }
     }
 }
