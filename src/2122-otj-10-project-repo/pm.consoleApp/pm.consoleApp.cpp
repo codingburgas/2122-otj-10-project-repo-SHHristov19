@@ -171,6 +171,37 @@ namespace pm::consoleApp
 			pm::tools::consoleCoordinates(x, y + 6);
 			cout << "                                                         (_____| 							  " << endl;
 		}
+
+		// Finction for output work log management title in current position
+		void workLogManagement(int x, int y)
+		{
+			pm::tools::consoleCoordinates(x, y);
+			cout << "        _  _  _            _        _                		 " << endl;
+			pm::tools::consoleCoordinates(x, y + 1);
+			cout << "       | || || |          | |      | |               		 " << endl;
+			pm::tools::consoleCoordinates(x, y + 2);
+			cout << "       | || || | ___   ___| |  _   | |    ___   ____ 		 " << endl;
+			pm::tools::consoleCoordinates(x, y + 3);
+			cout << "       | ||_|| |/ _ \\ / __) | / )  | |   / _ \\ / _  |		 " << endl;
+			pm::tools::consoleCoordinates(x, y + 4);
+			cout << "       | |___| | |_| | |  | |< (   | |__| |_| ( ( | |		 " << endl;
+			pm::tools::consoleCoordinates(x, y + 5);
+			cout << "        \\______|\\___/|_|  |_| \\_)  |_____)___/ \\_|| |		 " << endl;
+			pm::tools::consoleCoordinates(x, y + 6);
+			cout << "                                              (_____|		 " << endl;
+			pm::tools::consoleCoordinates(x, y + 7);
+			cout << "                                                       _    " << endl;
+			pm::tools::consoleCoordinates(x, y + 8);
+			cout << " ____   ____ ____   ____  ____  ____ ____   ____ ____ | |_  " << endl;
+			pm::tools::consoleCoordinates(x, y + 9);
+			cout << "|    \\ / _  |  _ \\ / _  |/ _  |/ _  )    \\ / _  )  _ \\|  _) " << endl;
+			pm::tools::consoleCoordinates(x, y + 10);
+			cout << "| | | ( ( | | | | ( ( | ( ( | ( (/ /| | | ( (/ /| | | | |__ " << endl;
+			pm::tools::consoleCoordinates(x, y + 11);
+			cout << "|_|_|_|\\_||_|_| |_|\\_||_|\\_|| |\\____)_|_|_|\\____)_| |_|\\___)" << endl;
+			pm::tools::consoleCoordinates(x, y + 12);
+			cout << "                        (_____| 							 " << endl;
+		}
 	}
 
 	namespace buttons
@@ -609,6 +640,69 @@ namespace pm::consoleApp
 				buttons::inactive::smallButton(63, 27, "        EDIT       ");
 				buttons::inactive::smallButton(63, 32, "       DELETE      ");
 				buttons::active::smallButton(63, 37, "        EXIT       ", 1, 0);
+			}
+		}
+
+		namespace workLogManagement
+		{
+			// Function for output first activ work log management button
+			void firstActive()
+			{
+				pm::tools::outputBorder(23, 3, 40, 101);
+				titles::workLogManagement(44, 5);
+				buttons::active::smallButton(63, 20, "     VIEW ALL      ", 1, 4);
+				buttons::inactive::smallButton(63, 25, "       CREATE      ");
+				buttons::inactive::smallButton(63, 30, "        EDIT       ");
+				buttons::inactive::smallButton(63, 35, "       DELETE      ");
+				buttons::inactive::smallButton(63, 40, "        EXIT       ");
+			}
+
+			// Function for output second activ work log management button
+			void secondActive()
+			{
+				pm::tools::outputBorder(23, 3, 40, 101);
+				titles::workLogManagement(44, 5);
+				buttons::inactive::smallButton(63, 20, "     VIEW ALL      ");
+				buttons::active::smallButton(63, 25, "       CREATE      ", 1, 4);
+				buttons::inactive::smallButton(63, 30, "        EDIT       ");
+				buttons::inactive::smallButton(63, 35, "       DELETE      ");
+				buttons::inactive::smallButton(63, 40, "        EXIT       ");
+			}
+
+			// Function for output third activ work log management button
+			void thirdActive()
+			{
+				pm::tools::outputBorder(23, 3, 40, 101);
+				titles::workLogManagement(44, 5);
+				buttons::inactive::smallButton(63, 20, "     VIEW ALL      ");
+				buttons::inactive::smallButton(63, 25, "       CREATE      ");
+				buttons::active::smallButton(63, 30, "        EDIT       ", 1, 4);
+				buttons::inactive::smallButton(63, 35, "       DELETE      ");
+				buttons::inactive::smallButton(63, 40, "        EXIT       ");
+			}
+
+			// Function for output fourth activ work log management button
+			void fourthActive()
+			{
+				pm::tools::outputBorder(23, 3, 40, 101);
+				titles::workLogManagement(44, 5);
+				buttons::inactive::smallButton(63, 20, "     VIEW ALL      ");
+				buttons::inactive::smallButton(63, 25, "       CREATE      ");
+				buttons::inactive::smallButton(63, 30, "        EDIT       ");
+				buttons::active::smallButton(63, 35, "       DELETE      ", 1, 4);
+				buttons::inactive::smallButton(63, 40, "        EXIT       ");
+			}
+
+			// Function for output fifth activ work log management button
+			void fifthActive()
+			{
+				pm::tools::outputBorder(23, 3, 40, 101);
+				titles::workLogManagement(44, 5);
+				buttons::inactive::smallButton(63, 20, "     VIEW ALL      ");
+				buttons::inactive::smallButton(63, 25, "       CREATE      ");
+				buttons::inactive::smallButton(63, 30, "        EDIT       ");
+				buttons::inactive::smallButton(63, 35, "       DELETE      ");
+				buttons::active::smallButton(63, 40, "        EXIT       ", 1, 4);
 			}
 		}
 	}
@@ -2627,6 +2721,151 @@ namespace pm::consoleApp
 
 	namespace menus
 	{
+		// Function for movement in work log management
+		void workLogManagement(string idOfUser)
+		{
+			int choice;
+			bool truth;
+			system("CLS");
+			buttons::workLogManagement::firstActive();
+			choice = 1;
+			while (true)
+			{
+				truth = true;
+				switch (_getch())
+				{
+				case KEY_UP:
+					switch (choice)
+					{
+					case 1:
+					{
+						system("CLS");
+						buttons::workLogManagement::fifthActive();
+						choice = 5;
+						break;
+					}
+					case 2:
+					{
+						system("CLS");
+						buttons::workLogManagement::firstActive();
+						choice = 1;
+						break;
+					}
+					case 3:
+					{
+						system("CLS");
+						buttons::workLogManagement::secondActive();
+						choice = 2;
+						break;
+					}
+					case 4:
+					{
+						system("CLS");
+						buttons::workLogManagement::thirdActive();
+						choice = 3;
+						break;
+					}
+					case 5:
+					{
+						system("CLS");
+						buttons::workLogManagement::fourthActive();
+						choice = 4;
+						break;
+					}
+					}
+					break;
+				case KEY_DOWN:
+					switch (choice)
+					{
+					case 1:
+					{
+						system("CLS");
+						buttons::workLogManagement::secondActive();
+						choice = 2;
+						break;
+					}
+					case 2:
+					{
+						system("CLS");
+						buttons::workLogManagement::thirdActive();
+						choice = 3;
+						break;
+					}
+					case 3:
+					{
+						system("CLS");
+						buttons::workLogManagement::fourthActive();
+						choice = 4;
+						break;
+					}
+					case 4:
+					{
+						system("CLS");
+						buttons::workLogManagement::fifthActive();
+						choice = 5;
+						break;
+					}
+					case 5:
+					{
+						system("CLS");
+						buttons::workLogManagement::firstActive();
+						choice = 1;
+						break;
+					}
+					}
+					break;
+				case KEY_ENTER:
+					while (truth)
+					{
+						switch (choice)
+						{
+						case 1:
+						{
+							system("CLS");
+							choice = 6;
+							break;
+						}
+						case 2:
+						{
+							system("CLS");
+							choice = 6;
+							break;
+						}
+						case 3:
+						{
+							system("CLS");
+							choice = 6;
+							break;
+						}
+						case 4:
+						{
+							system("CLS");
+							choice = 6;
+							break;
+						}
+						case 5:
+						{
+							truth = false;
+							return;
+							break;
+						}
+						case 6:
+						{
+							system("CLS");
+							buttons::workLogManagement::firstActive();
+							truth = false;
+							choice = 1;
+							break;
+						}
+						}
+					}
+					break;
+				default:
+					break;
+				}
+			}
+		}
+
 		// Function for movement in task management
 		void taskManagement(string idOfUser, string idOfProject)
 		{
@@ -3452,6 +3691,7 @@ namespace pm::consoleApp
 						case 3:
 						{
 							system("CLS");
+							workLogManagement(idOfUser);
 							choice = 5;
 							break;
 						}

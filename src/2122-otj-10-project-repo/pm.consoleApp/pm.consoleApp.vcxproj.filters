@@ -47,5 +47,8 @@
     <ClInclude Include="pm.taskManagement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="pm.workLogManagement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -61,5 +61,8 @@
     <None Include="..\pm.data\tasks.csv">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="..\pm.data\workLogs.csv">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -53,4 +53,12 @@ namespace pm::types
 		std::string	dataOfLastChanges;
 		std::string	idOfLastChanger;
 	};
+
+	struct WORK_LOG
+	{
+		std::string id;
+		std::string idOfTask;
+		std::string workTime;
+		std::string dataOfWorking;
+	};
 }
