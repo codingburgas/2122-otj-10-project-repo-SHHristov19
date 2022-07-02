@@ -1736,6 +1736,21 @@ namespace pm::dal
     
     namespace workLogManagement
     {
-
+        // Function for add new work log
+        void createWorkLog(string fileName, pm::types::WORK_LOG team)
+        {
+            if (pm::dal::tools::getSizeOfFile(fileName) == 62)
+            {
+                team.id = "1";
+            }
+            else
+            {
+                team.id = to_string(pm::dal::tools::generateId(fileName));
+            }
+            team.dataOfWorking = pm::tools::currentDateTime();
+            ofstream file(fileName, ios_base::app);
+            file << "\"" << team.id << "\",\"" << team.idOfTask << "\",\"" << team.idOfUser << "\",\"" << team.workTime << "\",\"" << team.dataOfWorking << "\"\n";
+            file.close();
+        }
     }
 }

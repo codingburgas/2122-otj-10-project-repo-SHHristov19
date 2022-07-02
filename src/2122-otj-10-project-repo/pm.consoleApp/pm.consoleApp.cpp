@@ -827,9 +827,9 @@ namespace pm::consoleApp
 			pm::tools::consoleCoordinates(51, 25);
 			cout << "Enter your password : ";
 			pm::tools::consoleCoordinates(73, 22);
-			cin >> user.username;
+			getline(cin, user.username);
 			pm::tools::consoleCoordinates(73, 25);
-			cin >> user.password;
+			getline(cin, user.password);
 			if (pm::dal::login::loginAsFirst(user))
 			{
 				system("CLS");
@@ -878,13 +878,13 @@ namespace pm::consoleApp
 			cout << "\x1b[1;31m" << "The password must contain uppercase, lowercase letters and special characters." << endl
 				<< "\t\t\t\t\t     It must be not less than 8 and not more than 20 characters!" << "\x1b[1;37m";
 			pm::tools::consoleCoordinates(73, 20);
-			cin >> user.username;
+			getline(cin, user.username);
 			pm::tools::consoleCoordinates(73, 23);
-			cin >> user.password;
+			getline(cin, user.password);
 			if (pm::dal::login::login("../pm.data/users.csv", &user, &idOfUser))
 			{
 				pm::tools::consoleCoordinates(77, 26);
-				cin >> newPassword;
+				getline(cin, newPassword);
 				if (pm::tools::checkPassword(newPassword))
 				{
 					pm::dal::login::cnagePassword("../pm.data/users.csv", user, newPassword);
@@ -931,15 +931,15 @@ namespace pm::consoleApp
 				cout << "\x1b[1;31m" << "The password must contain uppercase, lowercase letters and special characters." << endl
 					<< "\t\t\t\t\t     It must be not less than 8 and not more than 20 characters!" << "\x1b[1;37m";
 				pm::tools::consoleCoordinates(62, 18);
-				cin >> user.username;
+				getline(cin, user.username);
 				pm::tools::consoleCoordinates(64, 21);
-				cin >> user.firstName;
+				getline(cin, user.firstName);
 				pm::tools::consoleCoordinates(63, 24);
-				cin >> user.lastName;
+				getline(cin, user.lastName);
 				pm::tools::consoleCoordinates(57, 27);
-				cin >> user.age;
+				getline(cin, user.age);
 				pm::tools::consoleCoordinates(62, 30);
-				cin >> user.password;
+				getline(cin, user.password);
 				int check = pm::dal::userManagement::registerUser("../pm.data/users.csv", user);
 				if (check == 1)
 				{
@@ -1215,7 +1215,7 @@ namespace pm::consoleApp
 						{
 							pm::tools::consoleCoordinates(35, 31);
 							cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
-							cin.ignore();
+							 
 							getline(cin, newData);
 							pm::bll::userManagement::editUserById("../pm.data/users.csv", chosenID, 3, newData);
 							break;
@@ -1224,7 +1224,7 @@ namespace pm::consoleApp
 						{
 							pm::tools::consoleCoordinates(35, 31);
 							cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
-							cin.ignore();
+							 
 							getline(cin, newData);
 							pm::bll::userManagement::editUserById("../pm.data/users.csv", chosenID, 1, newData);
 							break;
@@ -1233,7 +1233,7 @@ namespace pm::consoleApp
 						{
 							pm::tools::consoleCoordinates(35, 31);
 							cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
-							cin.ignore();
+							 
 							getline(cin, newData);
 							pm::bll::userManagement::editUserById("../pm.data/users.csv", chosenID, 2, newData);
 							break;
@@ -1242,7 +1242,7 @@ namespace pm::consoleApp
 						{
 							pm::tools::consoleCoordinates(35, 31);
 							cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
-							cin.ignore();
+							 
 							getline(cin, newData);
 							pm::bll::userManagement::editUserById("../pm.data/users.csv", chosenID, 5, newData);
 							break;
@@ -1251,7 +1251,7 @@ namespace pm::consoleApp
 						{
 							pm::tools::consoleCoordinates(35, 31);
 							cout << "ENTER THE NEW DATA THAT YOU WANT TO CHANGE : ";
-							cin.ignore();
+							 
 							getline(cin, newData);
 							pm::bll::userManagement::editUserById("../pm.data/users.csv", chosenID, 6, newData);
 							break;
@@ -1279,7 +1279,7 @@ namespace pm::consoleApp
 				pm::tools::consoleCoordinates(51, 22);
 				cout << "Name of team : ";
 				pm::tools::consoleCoordinates(66, 22);
-				cin >> team.name;
+				getline(cin, team.name);
 				team.idOfCreator = team.idOfLastChanger = idOfUser;
 				pm::tools::consoleCoordinates(51, 28);
 				system("pause");
@@ -1574,7 +1574,7 @@ namespace pm::consoleApp
 						{
 							pm::tools::consoleCoordinates(35, 31);
 							cout << "ENTER THE NEW NAME : ";
-							cin.ignore();
+							 
 							getline(cin, newData);
 							pm::bll::teamsManagement::editTeamById("../pm.data/teams.csv", allData, chosenID, 1, newData, idOfUser);
 							break;
@@ -1672,7 +1672,7 @@ namespace pm::consoleApp
 				pm::tools::consoleCoordinates(43, 21);
 				cout << "Description : ";
 				pm::tools::consoleCoordinates(51, 18);
-				cin.ignore();
+				 
 				getline(cin, project.title);
 				pm::tools::consoleCoordinates(57, 21);
 				getline(cin, project.description);
@@ -2097,7 +2097,7 @@ namespace pm::consoleApp
 						{
 							pm::tools::consoleCoordinates(35, 31);
 							cout << "ENTER THE NEW TITLE OF PROJECT : ";
-							cin.ignore();
+							 
 							getline(cin, newData);
 							pm::bll::projectManagement::editProjectById("../pm.data/projects.csv", allProjectData, choiseOfProject, 1, newData, idOfUser);
 							break;
@@ -2106,7 +2106,7 @@ namespace pm::consoleApp
 						{
 							pm::tools::consoleCoordinates(35, 31);
 							cout << "ENTER THE NEW DESCRIPTION : ";
-							cin.ignore();
+							 
 							getline(cin, newData);
 							pm::bll::projectManagement::editProjectById("../pm.data/projects.csv", allProjectData, choiseOfProject, 2, newData, idOfUser);
 							break;
@@ -2248,7 +2248,7 @@ namespace pm::consoleApp
 				pm::tools::consoleCoordinates(43, 21);
 				cout << "Description : ";
 				pm::tools::consoleCoordinates(51, 18);
-				cin.ignore();
+				 
 				getline(cin, task.title);
 				pm::tools::consoleCoordinates(57, 21);
 				getline(cin, task.description);
@@ -2837,6 +2837,20 @@ namespace pm::consoleApp
 					}
 				}
 			}
+
+			// Function for add work log in a task
+			void createWorkLog(string idOfUser, string idOfTask)
+			{
+				pm::tools::outputBorder(24, 13, 20, 101);
+				pm::types::WORK_LOG workLog;
+				pm::tools::consoleCoordinates(43, 22);
+				cout << "How many hours did you spent on task #" << idOfTask << " : ";
+				pm::tools::consoleCoordinates(84 + idOfTask.size(), 22);
+				getline(cin, workLog.workTime);
+				workLog.idOfUser = idOfUser;
+				workLog.idOfTask = idOfTask;
+				pm::dal::workLogManagement::createWorkLog("../pm.data/workLogs.csv", workLog);
+			}
 		}
 	}
 
@@ -2949,6 +2963,7 @@ namespace pm::consoleApp
 						case 2:
 						{
 							system("CLS");
+							windows::workLogManagement::createWorkLog(idOfUser, idOfTask);
 							choice = 6;
 							break;
 						}

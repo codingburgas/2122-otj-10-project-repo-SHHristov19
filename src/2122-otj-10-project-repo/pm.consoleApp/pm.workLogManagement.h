@@ -25,5 +25,8 @@ namespace pm::consoleApp
 	{
 		// Function for choose task that you want to see, add, edit and delete work log
 		void chooseTaskForWorkLog(std::string idOfUser, int x, int y);
+
+		// Function for add work log in a task
+		void createWorkLog(std::string idOfUser, std::string idOfTask);
 	}
 }

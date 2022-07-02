@@ -58,6 +58,7 @@ namespace pm::types
 	{
 		std::string id;
 		std::string idOfTask;
+		std::string idOfUser;
 		std::string workTime;
 		std::string dataOfWorking;
 	};
