@@ -1992,5 +1992,67 @@ namespace pm::dal
             }
             addDataInWorkLogFile(fileName, allData);
         }
+
+        // Function for reading all data in work log file
+        vector<vector<string>> readAllWorkLogData(string fileName)
+        {
+            vector<vector<string>> allData;
+            ifstream file(fileName);
+            string line;
+            int counter = -1;
+            if (file.is_open())
+            {
+                while (getline(file, line))
+                {
+                    if (counter > -1)
+                    {
+                        counter = 0;
+                        pm::types::WORK_LOG data;
+                        for (size_t i = 0; i < line.size(); i++)
+                        {
+                            if (line[i] == ',' && counter < 10)
+                            {
+                                counter++;
+                                line.erase(i, 0);
+                            }
+                            else if (line[i] == '"')
+                            {
+                                line.erase(i, 0);
+                            }
+                            else if (counter == 0)
+                            {
+                                data.id += line[i];
+                            }
+                            else if (counter == 1)
+                            {
+                                data.idOfTask += line[i];
+                            }
+                            else if (counter == 2)
+                            {
+                                data.idOfUser += line[i];
+                            }
+                            else if (counter == 3)
+                            {
+                                data.workTime += line[i];
+                            }
+                            else if (counter == 4)
+                            {
+                                data.dataOfWorking += line[i];
+                            }
+                        }
+                        vector<string> temp;
+                        temp.push_back(data.id);
+                        temp.push_back(data.idOfTask);
+                        temp.push_back(data.idOfUser);
+                        temp.push_back(data.workTime);
+                        temp.push_back(data.dataOfWorking);
+                        allData.push_back(temp);
+                    }
+                    counter++;
+                }
+                file.close();
+            }
+            return allData;
+        }
     }
 }

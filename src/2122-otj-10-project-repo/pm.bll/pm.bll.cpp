@@ -263,6 +263,23 @@ namespace pm::bll
 
     namespace workLogManagement
     {
-
+        // Function for edit work log data
+        void editWorkLogById(string fileName, int idOfWorkLog, int idOfEditData, string newData)
+        {
+            vector<vector<string>> temp = pm::dal::workLogManagement::pushFrontTitleOfWorkLogFile();
+            vector<vector<string>> data = pm::dal::workLogManagement::readAllWorkLogData(fileName);
+            for (int i = 0; i < data.size(); i++)
+            {
+                if (data[i][0] == to_string(idOfWorkLog))
+                {
+                    data[i][idOfEditData] = newData;
+                }
+            }
+            for (auto row : data)
+            {
+                temp.push_back(row);
+            }
+            pm::dal::workLogManagement::addDataInWorkLogFile(fileName, temp);
+        }
     }
 }

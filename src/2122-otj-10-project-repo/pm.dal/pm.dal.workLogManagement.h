@@ -20,4 +20,7 @@ namespace pm::dal::workLogManagement
 
     // Function for deleting work log by id
     void deleteWorkById(std::string fileName, int idOfTask, std::string idOfUser);
+
+	// Function for reading all data in work log file
+	std::vector<std::vector<std::string>> readAllWorkLogData(std::string fileName);
 }

@@ -35,5 +35,7 @@ namespace pm::consoleApp
 		// Function for delete work log in the task
 		void deleteWorkLog(std::string idOfUser, std::string idOfTask, int x, int y);
 
+		// Function for edit data in work log
+		void editWorkLog(std::string idOfUser, std::string idOfTask, int x, int y);
 	}
 }
