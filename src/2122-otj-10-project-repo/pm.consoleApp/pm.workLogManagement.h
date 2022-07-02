@@ -1,4 +1,5 @@
 #pragma once
+#include "string"
 
 namespace pm::consoleApp
 {
@@ -22,6 +23,7 @@ namespace pm::consoleApp
 
 	namespace windows::workLogManagement
 	{
-		
+		// Function for choose task that you want to see, add, edit and delete work log
+		void chooseTaskForWorkLog(std::string idOfUser, int x, int y);
 	}
 }

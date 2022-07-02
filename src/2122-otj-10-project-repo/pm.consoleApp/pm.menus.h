@@ -4,7 +4,7 @@
 namespace pm::consoleApp::menus
 {
 	// Function for movement in work log management
-	void workLogManagement(std::string idOfUser);
+	void workLogManagement(std::string idOfUser, std::string idOfTask);
 
 	// Function for movement in task management
 	void taskManagement(std::string idOfUser, std::string idOfProject);

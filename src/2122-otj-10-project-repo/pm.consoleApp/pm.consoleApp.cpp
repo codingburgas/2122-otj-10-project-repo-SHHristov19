@@ -2717,12 +2717,133 @@ namespace pm::consoleApp
 				}
 			}
 		}
+
+		namespace workLogManagement
+		{
+			// Function for choose task that you want to see, add, edit and delete work log
+			void chooseTaskForWorkLog(string idOfUser, int x, int y)
+			{
+				system("CLS");
+				vector<int> idOfProject;
+				vector<vector<string>> projectData = pm::dal::projectManagement::readDataFromProjectsFile("../pm.data/projects.csv", &idOfProject);
+				idOfProject = {};
+				pm::bll::projectManagement::checkProjectForContainUserInTeam(projectData, idOfUser, &idOfProject);
+				projectData = pm::bll::projectManagement::getDataById(idOfProject, projectData);
+
+				pm::tools::outputBorder(24, 7, projectData.size() * 3 + 6, 101);
+				pm::tools::consoleCoordinates(x, y);
+				cout << "Id\t\t\tTitle of project\t\t\tId of creator";
+				pm::tools::consoleCoordinates(26, y + 1);
+				cout << "___________________________________________________________________________________________________";
+
+				int tempX = x, tempY = y;
+				y += 2;
+				for (auto row : projectData)
+				{
+					int counter = 1;
+					y += 3;
+					x = tempX;
+					for (auto col : row)
+					{
+						if (counter == 1)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 24;
+							cout << col;
+						}
+						else if (counter == 2)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 45;
+							cout << col;
+						}
+						else if (counter == 5)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							cout << col;
+						}
+						counter++;
+					}
+				}
+				int choise = pm::tools::enterNumberWithoutPrintingOnConsole();
+				bool exist = false;
+				for (int i = 0; i < idOfProject.size(); i++)
+				{
+					if (choise == idOfProject[i])
+					{
+						exist = true;
+					}
+				}
+				if (choise == 0 || !exist)
+				{
+					return;
+				}
+				else
+				{
+					x = tempX; y = tempY;
+					system("CLS");
+					vector<int> idOfTask;
+					vector<vector<string>> taskData = pm::dal::taskManagement::readDataFromTaskFile("../pm.data/tasks.csv", to_string(choise), idOfUser, &idOfTask);
+					pm::tools::outputBorder(24, 7, taskData.size() * 3 + 6, 101);
+					pm::tools::consoleCoordinates(x, y);
+					cout << "Id\t\t\tId of the Assignee\t\tId of the creator";
+					pm::tools::consoleCoordinates(26, y + 1);
+					cout << "___________________________________________________________________________________________________";
+					
+					y += 2;
+					for (auto row : taskData)
+					{
+						int counter = 1;
+						y += 3;
+						x = tempX;
+						for (auto col : row)
+						{
+							if (counter == 1)
+							{
+								pm::tools::consoleCoordinates(x, y);
+								x += 32;
+								cout << col;
+							}
+							else if (counter == 3)
+							{
+								pm::tools::consoleCoordinates(x, y);
+								x += 32;
+								cout << col;
+							}
+							else if (counter == 8)
+							{
+								pm::tools::consoleCoordinates(x, y);
+								cout << col;
+							}
+							counter++;
+						}
+					}
+					int taskChoise = pm::tools::enterNumberWithoutPrintingOnConsole();
+					bool exist = false;
+					for (int i = 0; i < idOfTask.size(); i++)
+					{
+						if (taskChoise == idOfTask[i])
+						{
+							exist = true;
+						}
+					}
+					if (taskChoise == 0 || !exist)
+					{
+						return;
+					}
+					else
+					{
+						pm::consoleApp::menus::workLogManagement(idOfUser, to_string(taskChoise));
+					}
+				}
+			}
+		}
 	}
 
 	namespace menus
 	{
 		// Function for movement in work log management
-		void workLogManagement(string idOfUser)
+		void workLogManagement(string idOfUser, string idOfTask)
 		{
 			int choice;
 			bool truth;
@@ -3691,7 +3812,7 @@ namespace pm::consoleApp
 						case 3:
 						{
 							system("CLS");
-							workLogManagement(idOfUser);
+							pm::consoleApp::windows::workLogManagement::chooseTaskForWorkLog(idOfUser, 40, 9);
 							choice = 5;
 							break;
 						}
