@@ -28,5 +28,9 @@ namespace pm::consoleApp
 
 		// Function for add work log in a task
 		void createWorkLog(std::string idOfUser, std::string idOfTask);
+
+		// Function for show all work log in a task
+		void showAllWorkLog(std::string idOfUser, std::string idOfTask, int x, int y);
+
 	}
 }

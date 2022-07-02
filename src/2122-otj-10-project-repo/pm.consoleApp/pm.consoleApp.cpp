@@ -2851,6 +2851,80 @@ namespace pm::consoleApp
 				workLog.idOfTask = idOfTask;
 				pm::dal::workLogManagement::createWorkLog("../pm.data/workLogs.csv", workLog);
 			}
+
+			// Function for show all work log in a task
+			void showAllWorkLog(string idOfUser, string idOfTask, int x, int y)
+			{
+				system("CLS");
+				vector<int> idOfWorkLog;
+				vector<vector<string>> workLogData = pm::dal::workLogManagement::readDataFromWorkLogFile("../pm.data/workLogs.csv", idOfUser, &idOfWorkLog);
+				pm::tools::outputBorder(24, 7, workLogData.size() * 3 + 6, 101);
+				pm::tools::consoleCoordinates(x, y);
+				cout << "Id\t\t\tId of the Task\t\t\tWork time";
+				pm::tools::consoleCoordinates(26, y + 1);
+				cout << "___________________________________________________________________________________________________";
+				int tempX = x, tempY = y;
+				y += 2;
+				for (auto row : workLogData)
+				{
+					int counter = 1;
+					x = tempX;
+					y += 3;
+					for (auto col : row)
+					{
+						if (counter == 1)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 32;
+							cout << col;
+						}
+						else if (counter == 2)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							x += 25;
+							cout << col;
+						}
+						else if (counter == 4)
+						{
+							pm::tools::consoleCoordinates(x, y);
+							cout << col;
+						}
+						counter++;
+					}
+				}
+				int workLogChoise = pm::tools::enterNumberWithoutPrintingOnConsole();
+				bool exist = false;
+				for (int i = 0; i < idOfWorkLog.size(); i++)
+				{
+					if (workLogChoise == idOfWorkLog[i])
+					{
+						exist = true;
+					}
+				}
+				if (workLogChoise == 0 || !exist)
+				{
+					return;
+				}
+				else
+				{
+					system("CLS");
+					pm::tools::outputBorder(24, 13, 21, 101);
+					vector<string> workLog = pm::dal::workLogManagement::getWorkLogDataById("../pm.data/workLogs.csv", workLogChoise);
+					x = 40; y = 18;
+					pm::tools::consoleCoordinates(x, y + 1);
+					cout << "Id of the work log : " << workLog[0];
+					pm::tools::consoleCoordinates(x, y + 3);
+					cout << "Id of the task : " << workLog[1];
+					pm::tools::consoleCoordinates(x, y + 5);
+					cout << "Id of the User : " << workLog[2];
+					pm::tools::consoleCoordinates(x, y + 7);
+					cout << "Title of the task : " << workLog[3];
+					pm::tools::consoleCoordinates(x, y + 9);
+					cout << "Description of the task : " << workLog[4];
+					pm::tools::consoleCoordinates(x + 20, y + 21);
+					system("pause");
+				}
+			}
 		}
 	}
 
@@ -2957,6 +3031,7 @@ namespace pm::consoleApp
 						case 1:
 						{
 							system("CLS");
+							windows::workLogManagement::showAllWorkLog(idOfUser, idOfTask, 40, 9);
 							choice = 6;
 							break;
 						}
