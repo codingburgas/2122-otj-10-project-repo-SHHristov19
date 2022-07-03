@@ -147,16 +147,16 @@
     <ClCompile Include="pm.consoleApp.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\pm.bll\pm.bll.vcxproj">
+    <ProjectReference Include="..\..\lib\pm.bll\pm.bll.vcxproj">
       <Project>{6dcb7445-dd2d-47d1-9775-2dbfff26cb55}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\pm.dal\pm.dal.vcxproj">
+    <ProjectReference Include="..\..\lib\pm.dal\pm.dal.vcxproj">
       <Project>{ad110466-cdc3-4f13-88d4-191bc2d00d86}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\pm.tools\pm.tools.vcxproj">
+    <ProjectReference Include="..\..\lib\pm.tools\pm.tools.vcxproj">
       <Project>{e24d6782-605f-4c20-9920-3e3139515768}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\pm.types\pm.types.vcxproj">
+    <ProjectReference Include="..\..\lib\pm.types\pm.types.vcxproj">
       <Project>{5506118c-432c-42ce-a7ac-5a3d67d09e92}</Project>
     </ProjectReference>
   </ItemGroup>

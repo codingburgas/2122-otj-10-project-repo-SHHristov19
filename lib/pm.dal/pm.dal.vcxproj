@@ -172,11 +172,11 @@
     <ClCompile Include="pm.dal.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\pm.data\projects.csv" />
-    <None Include="..\pm.data\tasks.csv" />
-    <None Include="..\pm.data\teams.csv" />
-    <None Include="..\pm.data\users.csv" />
-    <None Include="..\pm.data\workLogs.csv" />
+    <None Include="..\..\pm.data\projects.csv" />
+    <None Include="..\..\pm.data\tasks.csv" />
+    <None Include="..\..\pm.data\teams.csv" />
+    <None Include="..\..\pm.data\users.csv" />
+    <None Include="..\..\pm.data\workLogs.csv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

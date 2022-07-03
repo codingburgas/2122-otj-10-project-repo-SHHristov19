@@ -111,7 +111,7 @@ namespace pm::bll
                 {
                     if (stoi(row[7]) > 0)
                     {
-                        vector<string> team = pm::dal::teamsManagement::getTeamDataById("../pm.data/teams.csv", stoi(row[7]));
+                        vector<string> team = pm::dal::teamsManagement::getTeamDataById("../../pm.data/teams.csv", stoi(row[7]));
                         string line = team[6], idOfContributor;
                         for (size_t i = 0; i < line.size(); i++)
                         {
@@ -216,7 +216,7 @@ namespace pm::bll
         void addTaskInProject(string idOfProject, string idOfTask)
         {
             vector<int> id;
-            vector<vector<string>> data = pm::dal::projectManagement::readDataFromProjectsFile("../pm.data/projects.csv", &id);
+            vector<vector<string>> data = pm::dal::projectManagement::readDataFromProjectsFile("../../pm.data/projects.csv", &id);
             vector<vector<string>> temp = pm::dal::projectManagement::pushFrontTitleOfProjectsFile();
             for (int i = 0; i < data.size(); i++)
             {
@@ -236,7 +236,7 @@ namespace pm::bll
             {
                 temp.push_back(row);
             }
-            pm::dal::projectManagement::addDataInProjectsFile("../pm.data/projects.csv", temp);
+            pm::dal::projectManagement::addDataInProjectsFile("../../pm.data/projects.csv", temp);
         }
 
         // Function for edit task data

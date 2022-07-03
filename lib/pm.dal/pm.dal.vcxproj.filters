@@ -49,19 +49,19 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\pm.data\users.csv">
+    <None Include="..\..\pm.data\projects.csv">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\pm.data\teams.csv">
+    <None Include="..\..\pm.data\tasks.csv">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\pm.data\projects.csv">
+    <None Include="..\..\pm.data\teams.csv">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\pm.data\tasks.csv">
+    <None Include="..\..\pm.data\users.csv">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\pm.data\workLogs.csv">
+    <None Include="..\..\pm.data\workLogs.csv">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

@@ -9,7 +9,7 @@
 #include "pm.dal.workLogManagement.h"
 
 #include "../pm.tools/pm.tools.h"
-#include "../pm.types/structures.h"
+#include "../pm.types/structures.h" 
 
 namespace pm::dal
 {
@@ -85,8 +85,8 @@ namespace pm::dal
         // Function for login for the first time like admin
         bool loginAsFirst(pm::types::USER user)
         {
-            ifstream file("../pm.data/users.csv");
-            if (file.is_open() && pm::dal::tools::getSizeOfFile("../pm.data/users.csv") == 82 && user.username == "admin" && user.password == "adminpass")
+            ifstream file("../../pm.data/users.csv");
+            if (file.is_open() && pm::dal::tools::getSizeOfFile("../../pm.data/users.csv") == 82 && user.username == "admin" && user.password == "adminpass")
             {
                 file.close();
                 return true;
