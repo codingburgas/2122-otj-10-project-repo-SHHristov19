@@ -212,7 +212,7 @@ namespace pm::bll
 
     namespace taskManagement
     {
-        // Fimction for add task in the project
+        // Function for add task in the project
         void addTaskInProject(string idOfProject, string idOfTask)
         {
             vector<int> id;

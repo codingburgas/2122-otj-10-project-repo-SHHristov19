@@ -17,6 +17,12 @@ namespace pm::consoleApp::titles
 	// Function for output teams management title in current position
 	void teamsManagement(int x, int y);
 
+	// Finction for output task management title in current position
+	void taskManagement(int x, int y);
+
 	// Function for output project management title in current position
 	void projectManagement(int x, int y);
+
+	// Finction for output work log management title in current position
+	void workLogManagement(int x, int y);
 }

@@ -4,22 +4,22 @@ namespace pm::consoleApp
 {
 	namespace buttons::projectManagement
 	{
-		// Function for output first activ project management button
+		// Function for output first active project management button
 		void firstActive();
 
-		// Function for output second activ project management button
+		// Function for output second active project management button
 		void secondActive();
 
-		// Function for output third activ project management button
+		// Function for output third active project management button
 		void thirdActive();
 
-		// Function for output fourth activ project management button
+		// Function for output fourth active project management button
 		void fourthActive();
 
-		// Function for output fifth activ project management button
+		// Function for output fifth active project management button
 		void fifthActive();
 
-		// Function for output sixth activ project management button
+		// Function for output sixth active project management button
 		void sixthActive();
 	}
 

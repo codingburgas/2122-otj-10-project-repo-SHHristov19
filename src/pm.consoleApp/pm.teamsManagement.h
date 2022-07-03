@@ -4,19 +4,19 @@ namespace pm::consoleApp
 {
 	namespace buttons::teamsManagement
 	{
-		// Function for output first activ teams management button
+		// Function for output first active teams management button
 		void firstActive();
 
-		// Function for output second activ teams management button
+		// Function for output second active teams management button
 		void secondActive();
 
-		// Function for output third activ teams management button
+		// Function for output third active teams management button
 		void thirdActive();
 
-		// Function for output fourth activ teams management button
+		// Function for output fourth active teams management button
 		void fourthActive();
 
-		// Function for output fifth activ teams management button
+		// Function for output fifth active teams management button
 		void fifthActive();
 	}
 

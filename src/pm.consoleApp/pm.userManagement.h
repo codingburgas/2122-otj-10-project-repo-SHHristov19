@@ -4,19 +4,19 @@ namespace pm::consoleApp
 {
 	namespace buttons::userManagement
 	{
-		// Function for output first activ user management button
+		// Function for output first active user management button
 		void firstActive();
 
-		// Function for output second activ user management button
+		// Function for output second active user management button
 		void secondActive();
 
-		// Function for output third activ user management button
+		// Function for output third active user management button
 		void thirdActive();
 
-		// Function for output fourth activ user management button
+		// Function for output fourth active user management button
 		void fourthActive();
 
-		// Function for output fifth activ user management button
+		// Function for output fifth active user management button
 		void fifthActive();
 	}
 

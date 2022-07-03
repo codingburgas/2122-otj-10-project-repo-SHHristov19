@@ -262,7 +262,7 @@ namespace pm::consoleApp
 
 		namespace loginPanel
 		{
-			// Function for output first activ main menu button
+			// Function for output first active main menu button
 			void firstActive()
 			{
 				pm::tools::outputBorder(23, 3, 39, 101);
@@ -272,7 +272,7 @@ namespace pm::consoleApp
 				buttons::inactive::bigButton(60, 33, "            EXIT           ");
 			}
 
-			// Function for output second activ main menu button
+			// Function for output second active main menu button
 			void secondActive()
 			{
 				pm::tools::outputBorder(23, 3, 39, 101);
@@ -282,7 +282,7 @@ namespace pm::consoleApp
 				buttons::inactive::bigButton(60, 33, "            EXIT           ");
 			}
 
-			// Function for output third activ main menu button
+			// Function for output third active main menu button
 			void thirdActive()
 			{
 				pm::tools::outputBorder(23, 3, 39, 101);
@@ -295,7 +295,7 @@ namespace pm::consoleApp
 
 		namespace adminPanel
 		{
-			// Function for output first activ admin panel button
+			// Function for output first active admin panel button
 			void firstActive()
 			{
 				pm::tools::outputBorder(23, 3, 39, 101);
@@ -305,7 +305,7 @@ namespace pm::consoleApp
 				buttons::inactive::bigButton(60, 33, "           EXIT            ");
 			}
 
-			// Function for output second activ admin panel button
+			// Function for output second active admin panel button
 			void secondActive()
 			{
 				pm::tools::outputBorder(23, 3, 39, 101);
@@ -315,7 +315,7 @@ namespace pm::consoleApp
 				buttons::inactive::bigButton(60, 33, "           EXIT            ");
 			}
 
-			// Function for output third activ admin panel button
+			// Function for output third active admin panel button
 			void thirdActive()
 			{
 				pm::tools::outputBorder(23, 3, 39, 101);
@@ -328,7 +328,7 @@ namespace pm::consoleApp
 
 		namespace userPanel
 		{
-			// Function for output first activ admin panel button
+			// Function for output first active admin panel button
 			void firstActive()
 			{
 				pm::tools::outputBorder(23, 3, 39, 101);
@@ -339,7 +339,7 @@ namespace pm::consoleApp
 				buttons::inactive::bigButton(60, 37, "           EXIT            ");
 			}
 
-			// Function for output second activ admin panel button
+			// Function for output second active admin panel button
 			void secondActive()
 			{
 				pm::tools::outputBorder(23, 3, 39, 101);
@@ -350,7 +350,7 @@ namespace pm::consoleApp
 				buttons::inactive::bigButton(60, 37, "           EXIT            ");
 			}
 
-			// Function for output third activ admin panel button
+			// Function for output third active admin panel button
 			void thirdActive()
 			{
 				pm::tools::outputBorder(23, 3, 39, 101);
@@ -361,7 +361,7 @@ namespace pm::consoleApp
 				buttons::inactive::bigButton(60, 37, "           EXIT            ");
 			}
 
-			// Function for output fourt activ admin panel button
+			// Function for output fourt active admin panel button
 			void fourthActive()
 			{
 				pm::tools::outputBorder(23, 3, 39, 101);
@@ -375,7 +375,7 @@ namespace pm::consoleApp
 
 		namespace userManagement
 		{
-			// Function for output first activ user management button
+			// Function for output first active user management button
 			void firstActive()
 			{
 				pm::tools::outputBorder(23, 3, 39, 101);
@@ -387,7 +387,7 @@ namespace pm::consoleApp
 				buttons::inactive::smallButton(63, 37, "        EXIT       ");
 			}
 
-			// Function for output second activ user management button
+			// Function for output second active user management button
 			void secondActive()
 			{
 				pm::tools::outputBorder(23, 3, 39, 101);
@@ -399,7 +399,7 @@ namespace pm::consoleApp
 				buttons::inactive::smallButton(63, 37, "        EXIT       ");
 			}
 
-			// Function for output third activ user management button
+			// Function for output third active user management button
 			void thirdActive()
 			{
 				pm::tools::outputBorder(23, 3, 39, 101);
@@ -411,7 +411,7 @@ namespace pm::consoleApp
 				buttons::inactive::smallButton(63, 37, "        EXIT       ");
 			}
 
-			// Function for output fourth activ user management button
+			// Function for output fourth active user management button
 			void fourthActive()
 			{
 				pm::tools::outputBorder(23, 3, 39, 101);
@@ -423,7 +423,7 @@ namespace pm::consoleApp
 				buttons::inactive::smallButton(63, 37, "        EXIT       ");
 			}
 
-			// Function for output fifth activ user management button
+			// Function for output fifth active user management button
 			void fifthActive()
 			{
 				pm::tools::outputBorder(23, 3, 39, 101);
@@ -438,7 +438,7 @@ namespace pm::consoleApp
 
 		namespace teamsManagement
 		{
-			// Function for output first activ teams management button
+			// Function for output first active teams management button
 			void firstActive()
 			{
 				pm::tools::outputBorder(23, 3, 39, 101);
@@ -450,7 +450,7 @@ namespace pm::consoleApp
 				buttons::inactive::smallButton(63, 37, "        EXIT       ");
 			}
 
-			// Function for output second activ teams management button
+			// Function for output second active teams management button
 			void secondActive()
 			{
 				pm::tools::outputBorder(23, 3, 39, 101);
@@ -462,7 +462,7 @@ namespace pm::consoleApp
 				buttons::inactive::smallButton(63, 37, "        EXIT       ");
 			}
 
-			// Function for output third activ teams management button
+			// Function for output third active teams management button
 			void thirdActive()
 			{
 				pm::tools::outputBorder(23, 3, 39, 101);
@@ -474,7 +474,7 @@ namespace pm::consoleApp
 				buttons::inactive::smallButton(63, 37, "        EXIT       ");
 			}
 
-			// Function for output fourth activ teams management button
+			// Function for output fourth active teams management button
 			void fourthActive()
 			{
 				pm::tools::outputBorder(23, 3, 39, 101);
@@ -486,7 +486,7 @@ namespace pm::consoleApp
 				buttons::inactive::smallButton(63, 37, "        EXIT       ");
 			}
 
-			// Function for output fifth activ teams management button
+			// Function for output fifth active teams management button
 			void fifthActive()
 			{
 				pm::tools::outputBorder(23, 3, 39, 101);
@@ -501,7 +501,7 @@ namespace pm::consoleApp
 
 		namespace projectManagement
 		{
-			// Function for output first activ project management button
+			// Function for output first active project management button
 			void firstActive()
 			{
 				pm::tools::outputBorder(20, 3, 39, 108);
@@ -514,7 +514,7 @@ namespace pm::consoleApp
 				buttons::inactive::smallButton(64, 39, "        EXIT       ");
 			}
 
-			// Function for output second activ project management button
+			// Function for output second active project management button
 			void secondActive()
 			{
 				pm::tools::outputBorder(20, 3, 39, 108);
@@ -527,7 +527,7 @@ namespace pm::consoleApp
 				buttons::inactive::smallButton(64, 39, "        EXIT       ");
 			}
 
-			// Function for output third activ project management button
+			// Function for output third active project management button
 			void thirdActive()
 			{
 				pm::tools::outputBorder(20, 3, 39, 108);
@@ -540,7 +540,7 @@ namespace pm::consoleApp
 				buttons::inactive::smallButton(64, 39, "        EXIT       ");
 			}
 
-			// Function for output fourth activ project management button
+			// Function for output fourth active project management button
 			void fourthActive()
 			{
 				pm::tools::outputBorder(20, 3, 39, 108);
@@ -553,7 +553,7 @@ namespace pm::consoleApp
 				buttons::inactive::smallButton(64, 39, "        EXIT       ");
 			}
 
-			// Function for output fifth activ project management button
+			// Function for output fifth active project management button
 			void fifthActive()
 			{
 				pm::tools::outputBorder(20, 3, 39, 108);
@@ -566,7 +566,7 @@ namespace pm::consoleApp
 				buttons::inactive::smallButton(64, 39, "        EXIT       ");
 			}
 
-			// Function for output sixth activ project management button
+			// Function for output sixth active project management button
 			void sixthActive()
 			{
 				pm::tools::outputBorder(20, 3, 39, 108);
@@ -582,7 +582,7 @@ namespace pm::consoleApp
 
 		namespace taskManagement
 		{
-			// Function for output first activ task management button
+			// Function for output first active task management button
 			void firstActive()
 			{
 				pm::tools::outputBorder(23, 3, 39, 101);
@@ -594,7 +594,7 @@ namespace pm::consoleApp
 				buttons::inactive::smallButton(63, 37, "        EXIT       ");
 			}
 
-			// Function for output second activ task management button
+			// Function for output second active task management button
 			void secondActive()
 			{
 				pm::tools::outputBorder(23, 3, 39, 101);
@@ -606,7 +606,7 @@ namespace pm::consoleApp
 				buttons::inactive::smallButton(63, 37, "        EXIT       ");
 			}
 
-			// Function for output third activ task management button
+			// Function for output third active task management button
 			void thirdActive()
 			{
 				pm::tools::outputBorder(23, 3, 39, 101);
@@ -618,7 +618,7 @@ namespace pm::consoleApp
 				buttons::inactive::smallButton(63, 37, "        EXIT       ");
 			}
 
-			// Function for output fourth activ task management button
+			// Function for output fourth active task management button
 			void fourthActive()
 			{
 				pm::tools::outputBorder(23, 3, 39, 101);
@@ -630,7 +630,7 @@ namespace pm::consoleApp
 				buttons::inactive::smallButton(63, 37, "        EXIT       ");
 			}
 
-			// Function for output fifth activ task management button
+			// Function for output fifth active task management button
 			void fifthActive()
 			{
 				pm::tools::outputBorder(23, 3, 39, 101);
@@ -645,7 +645,7 @@ namespace pm::consoleApp
 
 		namespace workLogManagement
 		{
-			// Function for output first activ work log management button
+			// Function for output first active work log management button
 			void firstActive()
 			{
 				pm::tools::outputBorder(23, 3, 40, 101);
@@ -657,7 +657,7 @@ namespace pm::consoleApp
 				buttons::inactive::smallButton(63, 40, "        EXIT       ");
 			}
 
-			// Function for output second activ work log management button
+			// Function for output second active work log management button
 			void secondActive()
 			{
 				pm::tools::outputBorder(23, 3, 40, 101);
@@ -669,7 +669,7 @@ namespace pm::consoleApp
 				buttons::inactive::smallButton(63, 40, "        EXIT       ");
 			}
 
-			// Function for output third activ work log management button
+			// Function for output third active work log management button
 			void thirdActive()
 			{
 				pm::tools::outputBorder(23, 3, 40, 101);
@@ -681,7 +681,7 @@ namespace pm::consoleApp
 				buttons::inactive::smallButton(63, 40, "        EXIT       ");
 			}
 
-			// Function for output fourth activ work log management button
+			// Function for output fourth active work log management button
 			void fourthActive()
 			{
 				pm::tools::outputBorder(23, 3, 40, 101);
@@ -693,7 +693,7 @@ namespace pm::consoleApp
 				buttons::inactive::smallButton(63, 40, "        EXIT       ");
 			}
 
-			// Function for output fifth activ work log management button
+			// Function for output fifth active work log management button
 			void fifthActive()
 			{
 				pm::tools::outputBorder(23, 3, 40, 101);
